@@ -76,7 +76,7 @@ class Navb extends Component {
               ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffc400" }} to="/litepaper/">LitePaper</NavLink></div>
               <div
                 style={{ marginLeft: "25px" }}
-              ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffc400" }} to="/synthetic/">Collateral</NavLink></div>
+              ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffc400" }} to="/collateral/">Collateral</NavLink></div>
             </MediaQuery>
           </div>
 

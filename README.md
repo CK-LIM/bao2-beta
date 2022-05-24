@@ -42,7 +42,7 @@ The owner will use a bridge to monitor the value of the pool in the f(x)core blo
   b.	Add USDT to pool
    i.	Both functions will affect the exchange rate and the value of USDT in the pool
 The owner also has the option of withdrawing from the Fees pool or transferring the fees back to the main pool.
-  c.	Transfer USDT from Fees to pool
-  d.	Withdraw USDT from Fees.
-   i.	Transferring USDT from fees to pool will affect the exchange rate and overall value of the main pool.
+  c.	
+  d.	
+   i.	
 
