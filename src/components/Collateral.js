@@ -354,7 +354,7 @@ class Collateral extends Component {
 
                                                                                             {this.props.collUserSegmentInfo[i] > 0 ?
                                                                                                 <div className='ml-2 mt-2 mb-2'>{this.state.actionOpen[i][0]}
-                                                                                                    {this.state.actionOpen[i][0] &&
+                                                                                                    {this.state.actionOpen[i][0] == true ?
                                                                                                         <ButtonGroup>
                                                                                                             <div>
                                                                                                                 <Buttons className="textTransparentButton center mr-2" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
@@ -375,51 +375,49 @@ class Collateral extends Component {
                                                                                                                     await this.setAction(2, i, true)
                                                                                                                 }}>Withdraw BRT</Buttons></div>
                                                                                                         </ButtonGroup>
-                                                                                                    }
-                                                                                                    {this.state.actionOpen[i][1] &&
-                                                                                                        <ButtonGroup>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textBlackButton center mr-2" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, true)
-                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                }}><b>Resize Vault</b></Buttons></div>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textTransparentButton center mr-2" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                    await this.setAction(1, i, true)
-                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                }}>Repay USB</Buttons></div>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textBlackButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                    await this.setAction(2, i, true)
-                                                                                                                }}>Withdraw BRT</Buttons></div>
-                                                                                                        </ButtonGroup>
-                                                                                                    }
-                                                                                                    {this.state.actionOpen[i][2] &&
-                                                                                                        <ButtonGroup>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textBlackButton center mr-2" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, true)
-                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                }}><b>Resize Vault</b></Buttons></div>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textBlackButton center mr-2" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                    await this.setAction(1, i, true)
-                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                }}>Repay USB</Buttons></div>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textTransparentButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                    await this.setAction(2, i, true)
-                                                                                                                }}>Withdraw BRT</Buttons></div>
-                                                                                                        </ButtonGroup>
-                                                                                                    }
+                                                                                                        : <div>
+                                                                                                            {this.state.actionOpen[i][1] == true ?
+                                                                                                                <ButtonGroup>
+                                                                                                                    <div>
+                                                                                                                        <Buttons className="textBlackButton center mr-2" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                            await this.setAction(0, i, true)
+                                                                                                                            await this.setAction(1, i, false)
+                                                                                                                            await this.setAction(2, i, false)
+                                                                                                                        }}><b>Resize Vault</b></Buttons></div>
+                                                                                                                    <div>
+                                                                                                                        <Buttons className="textTransparentButton center mr-2" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                            await this.setAction(0, i, false)
+                                                                                                                            await this.setAction(1, i, true)
+                                                                                                                            await this.setAction(2, i, false)
+                                                                                                                        }}>Repay USB</Buttons></div>
+                                                                                                                    <div>
+                                                                                                                        <Buttons className="textBlackButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                            await this.setAction(0, i, false)
+                                                                                                                            await this.setAction(1, i, false)
+                                                                                                                            await this.setAction(2, i, true)
+                                                                                                                        }}>Withdraw BRT</Buttons></div>
+                                                                                                                </ButtonGroup>
+                                                                                                                : <ButtonGroup>
+                                                                                                                    <div>
+                                                                                                                        <Buttons className="textBlackButton center mr-2" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                            await this.setAction(0, i, true)
+                                                                                                                            await this.setAction(1, i, false)
+                                                                                                                            await this.setAction(2, i, false)
+                                                                                                                        }}><b>Resize Vault</b></Buttons></div>
+                                                                                                                    <div>
+                                                                                                                        <Buttons className="textBlackButton center mr-2" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                            await this.setAction(0, i, false)
+                                                                                                                            await this.setAction(1, i, true)
+                                                                                                                            await this.setAction(2, i, false)
+                                                                                                                        }}>Repay USB</Buttons></div>
+                                                                                                                    <div>
+                                                                                                                        <Buttons className="textTransparentButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                            await this.setAction(0, i, false)
+                                                                                                                            await this.setAction(1, i, false)
+                                                                                                                            await this.setAction(2, i, true)
+                                                                                                                        }}>Withdraw BRT</Buttons></div>
+                                                                                                                </ButtonGroup>
+                                                                                                            }</div>}
                                                                                                 </div>
                                                                                                 :
                                                                                                 <div className='ml-2 mt-2 mb-2'>
@@ -462,7 +460,7 @@ class Collateral extends Component {
                                                                                                 <div className='ml-2 mr-2' />
                                                                                                 {this.props.collUserSegmentInfo[i] > 0 ?
                                                                                                     <div>
-                                                                                                        {this.state.actionOpen[i][0] &&
+                                                                                                        {this.state.actionOpen[i][0] == true ?
                                                                                                             <div className='ml-2'>
                                                                                                                 <CollResize
                                                                                                                     wallet={this.props.wallet}
@@ -482,46 +480,45 @@ class Collateral extends Component {
                                                                                                                     i={i}
                                                                                                                 />
                                                                                                             </div>
-                                                                                                        }
-                                                                                                        {this.state.actionOpen[i][1] &&
-                                                                                                            <div className='ml-2'>
-                                                                                                                <CollRepay
-                                                                                                                    wallet={this.props.wallet}
-                                                                                                                    walletConnect={this.props.walletConnect}
-                                                                                                                    accountLoading={this.props.accountLoading}
-                                                                                                                    collBRTBalanceAccount={this.props.collBRTBalanceAccount}
-                                                                                                                    collDebtBalance={this.props.collDebtBalance}
-                                                                                                                    collBRTValue={this.props.collBRTValue}
-                                                                                                                    collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
-                                                                                                                    collUserSegmentInfo={this.props.collUserSegmentInfo}
-                                                                                                                    systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                                    systemCoinCollAllowance={this.props.systemCoinCollAllowance}
-                                                                                                                    systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                                    reduceUSBDebtRatio={this.reduceUSBDebtRatio}
-                                                                                                                    systemCoinCollApprove={this.props.systemCoinCollApprove}
-                                                                                                                    repayUSB={this.props.repayUSB}
-                                                                                                                    i={i}
-                                                                                                                />
-                                                                                                            </div>
-                                                                                                        }
-                                                                                                        {this.state.actionOpen[i][2] &&
-                                                                                                            <div className='ml-2'>
-                                                                                                                <CollWithdraw
-                                                                                                                    wallet={this.props.wallet}
-                                                                                                                    walletConnect={this.props.walletConnect}
-                                                                                                                    accountLoading={this.props.accountLoading}
-                                                                                                                    collBRTBalanceAccount={this.props.collBRTBalanceAccount}
-                                                                                                                    collDebtBalance={this.props.collDebtBalance}
-                                                                                                                    collBRTValue={this.props.collBRTValue}
-                                                                                                                    collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
-                                                                                                                    collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
-                                                                                                                    collUserSegmentInfo={this.props.collUserSegmentInfo}
-                                                                                                                    systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                                    reduceLPCollRatio={this.reduceLPCollRatio}
-                                                                                                                    withdrawBRTColl={this.props.withdrawBRTColl}
-                                                                                                                    i={i}
-                                                                                                                />
-                                                                                                            </div>
+                                                                                                            : <div>
+                                                                                                                {this.state.actionOpen[i][1] == true ?
+                                                                                                                    <div className='ml-2'>
+                                                                                                                        <CollRepay
+                                                                                                                            wallet={this.props.wallet}
+                                                                                                                            walletConnect={this.props.walletConnect}
+                                                                                                                            accountLoading={this.props.accountLoading}
+                                                                                                                            collBRTBalanceAccount={this.props.collBRTBalanceAccount}
+                                                                                                                            collDebtBalance={this.props.collDebtBalance}
+                                                                                                                            collBRTValue={this.props.collBRTValue}
+                                                                                                                            collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
+                                                                                                                            collUserSegmentInfo={this.props.collUserSegmentInfo}
+                                                                                                                            systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                            systemCoinCollAllowance={this.props.systemCoinCollAllowance}
+                                                                                                                            systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                            reduceUSBDebtRatio={this.reduceUSBDebtRatio}
+                                                                                                                            systemCoinCollApprove={this.props.systemCoinCollApprove}
+                                                                                                                            repayUSB={this.props.repayUSB}
+                                                                                                                            i={i}
+                                                                                                                        />
+                                                                                                                    </div>
+                                                                                                                    :
+                                                                                                                    <div className='ml-2'>
+                                                                                                                        <CollWithdraw
+                                                                                                                            wallet={this.props.wallet}
+                                                                                                                            walletConnect={this.props.walletConnect}
+                                                                                                                            accountLoading={this.props.accountLoading}
+                                                                                                                            collBRTBalanceAccount={this.props.collBRTBalanceAccount}
+                                                                                                                            collDebtBalance={this.props.collDebtBalance}
+                                                                                                                            collBRTValue={this.props.collBRTValue}
+                                                                                                                            collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
+                                                                                                                            collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
+                                                                                                                            collUserSegmentInfo={this.props.collUserSegmentInfo}
+                                                                                                                            systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                            reduceLPCollRatio={this.reduceLPCollRatio}
+                                                                                                                            withdrawBRTColl={this.props.withdrawBRTColl}
+                                                                                                                            i={i}
+                                                                                                                        />
+                                                                                                                    </div>}</div>
                                                                                                         }</div> :
                                                                                                     <div>
                                                                                                         {this.state.actionOpen[i][1] ?
