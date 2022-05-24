@@ -1,0 +1,9 @@
+node_modules
+Dockerfile
+.git
+.secret
+truffle-config.js
+**/scripts/
+.gitignore
+.cert
+**/nginx/cert
