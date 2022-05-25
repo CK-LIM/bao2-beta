@@ -86,6 +86,7 @@ class CollDepBorrow extends Component {
     let maxBorrow = (parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[this.props.i], 'Ether')) + parseFloat(this.state.addBRT)) * parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i].toLocaleString('en-US'), 'Ether')) / parseFloat(this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio).toLocaleString('en-US') * 100
     let maxBorrow80 = maxBorrow * 0.8
     let newDebt = parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[this.props.i], 'Ether')) + parseFloat(event)
+    let remainingAvailableUSB = (this.props.collateralPoolSegmentInfo[i].assetCeiling - parseFloat(window.web3Ava.utils.fromWei(this.props.collPoolTAA.toLocaleString('en-US'), 'Ether')))
 
     if (event == "") {
       this.setState({
@@ -100,6 +101,11 @@ class CollDepBorrow extends Component {
     } else if ((newDebt < 10) && (newDebt > 0))  {
       this.setState({
         messageUSB: 'Notice: To keep the system at a healthy state. If full repayment cannot be achieved, the remaining USB borrewed must be higher than 10.',
+        txValidAmount: false
+      })
+    } else if (parseFloat(event) > parseFloat(remainingAvailableUSB)) {
+      this.setState({
+        messageUSB: 'Borrow USB more than trove available USB',
         txValidAmount: false
       })
     } else if (newDebt > maxBorrow80) {
@@ -160,6 +166,7 @@ class CollDepBorrow extends Component {
                 <input
                   type="number"
                   id="inputColor"
+                  step="any" 
                   ref={(input) => { this.input = input }}
                   style={{ fontSize: '18px', backgroundColor: '#fffcf0'}}
                   className="form-control cell cardbody"

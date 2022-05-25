@@ -58,7 +58,7 @@ class CollResize extends Component {
             messageUSB: 'Notice: Ratio is lower than Min Coll. Ratio.',
             txValidAmount: false
           })
-        } else if ((newDebt <= 10) && (newDebt > 0))  {
+        } else if ((newDebt <= 10) && (newDebt > 0)) {
           this.setState({
             messageUSB: 'Notice: To keep the system at a healthy state. If full repayment cannot be achieved, the remaining USB borrewed must be higher than 10.',
             txValidAmount: false
@@ -85,6 +85,7 @@ class CollResize extends Component {
     let maxBorrow = (parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[this.props.i], 'Ether')) + parseFloat(this.state.addBRT)) * parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i].toLocaleString('en-US'), 'Ether')) / parseFloat(this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio).toLocaleString('en-US') * 100
     let maxBorrow80 = maxBorrow * 0.8
     let newDebt = parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[this.props.i], 'Ether')) + parseFloat(event)
+    let remainingAvailableUSB = (this.props.collateralPoolSegmentInfo[i].assetCeiling - parseFloat(window.web3Ava.utils.fromWei(this.props.collPoolTAA.toLocaleString('en-US'), 'Ether')))
 
     if (event == "") {
       this.setState({
@@ -96,9 +97,14 @@ class CollResize extends Component {
         messageUSB: 'Input decimal more than 18',
         txValidAmount: false
       })
-    } else if ((newDebt < 10) && (newDebt > 0))  {
+    } else if ((newDebt < 10) && (newDebt > 0)) {
       this.setState({
         messageUSB: 'Notice: To keep the system at a healthy state. If full repayment cannot be achieved, the remaining USB borrewed must be higher than 10.',
+        txValidAmount: false
+      })
+    } else if (parseFloat(event) > parseFloat(remainingAvailableUSB)) {
+      this.setState({
+        messageUSB: 'Borrow USB more than trove available USB',
         txValidAmount: false
       })
     } else if (newDebt > maxBorrow80) {
@@ -111,7 +117,7 @@ class CollResize extends Component {
         this.setState({
           messageUSB: 'Notice: You will take a higher risk of liquidation when your Coll. Ratio is closer to Min Coll. Ratio.',
           txValidAmount: true
-        }) 
+        })
       }
     } else {
       this.setState({
@@ -158,6 +164,7 @@ class CollResize extends Component {
                 <input
                   type="number"
                   id="inputColor"
+                  step="any"
                   ref={(input) => { this.input = input }}
                   style={{ fontSize: '18px', backgroundColor: '#fffcf0' }}
                   className="form-control cell cardbody"
@@ -200,30 +207,30 @@ class CollResize extends Component {
             </div>
             <div className="card-body" style={{ backgroundColor: '#fffcf0', padding: '0 0' }}>
               <div className="input-group mb-2" >
-              {(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? 
-              <input
-                  type="number"
-                  id="inputColor"
-                  step="any"                // Comment: Solve input error: "please enter a valid value. the two nearest valid values are xx adn xx"
-                  ref={(input) => { this.input1 = input }}
-                  style={{ fontSize: '18px', backgroundColor: '#fffcf0' }}
-                  className="form-control cell cardbody"
-                  placeholder="100 USB token"
-                  onKeyPress={(event) => {
-                    if (!/[0-9.]/.test(event.key)) {
-                      event.preventDefault();
-                    }
-                  }}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    this.changeHandlerUSB(value, this.props.i)
-                    this.props.addUSBDebtRatio(value, this.props.i)
-                  }}
-                  
-                  required />
-                  :<input 
-                  disabled/>}
-                
+                {(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ?
+                  <input
+                    type="number"
+                    id="inputColor"
+                    step="any"                // Comment: Solve input error: "please enter a valid value. the two nearest valid values are xx adn xx"
+                    ref={(input) => { this.input1 = input }}
+                    style={{ fontSize: '18px', backgroundColor: '#fffcf0' }}
+                    className="form-control cell cardbody"
+                    placeholder="100 USB token"
+                    onKeyPress={(event) => {
+                      if (!/[0-9.]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      this.changeHandlerUSB(value, this.props.i)
+                      this.props.addUSBDebtRatio(value, this.props.i)
+                    }}
+
+                    required />
+                  : <input
+                    disabled />}
+
 
                 <div className="input-group-append" >
                   <div className="input-group-text cardbodyLeft" style={{ padding: '0 0.5rem' }}>

@@ -156,24 +156,31 @@ class Collateral extends Component {
                         {this.props.wallet || this.props.walletConnect ?
                             <div className="card-body">
                                 <div className='mb-5'>
-                                    <span className="float-left" style={{ color: 'black', fontSize: '16px' }}>
-                                        {/* Your BAVA Balance<br /><b>{parseFloat(window.web3Ava.utils.fromWei(this.props.bavaTokenBalance, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} BAVA / $ {(window.web3Ava.utils.fromWei(this.props.bavaTokenBalance, 'Ether') * this.props.BAVAPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</b> */}
+                                    <span className="float-left" style={{ color: 'black', fontSize: '16px' }}>USB supply&nbsp;
+                                        <Popup
+                                            trigger={open => (
+                                                <span><BsFillQuestionCircleFill size={12} /></span>
+                                            )}
+                                            on="hover"
+                                            offsetX={10}
+                                            position="right center"
+                                        ><span className="textInfo"><small>The total USB minted by the Baklava Protocol.</small></span>
+                                        </Popup><br /><b>{parseFloat(window.web3Ava.utils.fromWei(this.props.systemCoinSupply, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} USB</b>
                                     </span>
                                     <span className="float-right" style={{ color: 'black', fontSize: '16px' }}>
-                                        {/* Your Locked BAVA<br /><b>{parseFloat(window.web3Ava.utils.fromWei(this.props.lockedBavaTokenBalance, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} BAVA / $ {(window.web3Ava.utils.fromWei(this.props.lockedBavaTokenBalance, 'Ether') * this.props.BAVAPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</b> */}
+                                        Troves<br /><b className="float-right">{this.props.collateralPoolLength}</b>
                                     </span>
                                 </div><br /><br />
                                 <div>
-                                    <span className="float-left" style={{ color: 'black', fontSize: '16px' }}>Total pending Debt&nbsp;&nbsp;
+                                    <span className="float-left" style={{ color: 'black', fontSize: '16px' }}>Total pending Debt&nbsp;
                                         <Popup
                                             trigger={open => (
-                                                <span><BsFillQuestionCircleFill size={13} /></span>
+                                                <span><BsFillQuestionCircleFill size={12} /></span>
                                             )}
                                             on="hover"
-                                            offsetY={-10}
                                             offsetX={10}
                                             position="right center"
-                                        ><span className="textInfo"><small>Total BAVA tokens earned acrossed all farm </small></span>
+                                        ><span className="textInfo"><small>Total USB Debt acrossed all collateral troves.</small></span>
                                         </Popup>
                                     </span><br />
                                     <span className="float-left " style={{ color: 'black', fontSize: '16px' }}><b>
@@ -186,12 +193,12 @@ class Collateral extends Component {
                             <div className="card-body ">
                                 <span>
                                     <span className="float-left" style={{ color: 'silver' }}>
-                                        Your BAVA Balance<br />
-                                        <div style={{ color: 'silver' }}><b>0 BAVA</b></div>
+                                        USB supply<br />
+                                        <div style={{ color: 'silver' }}><b>0 USB</b></div>
                                     </span>
                                     <span className="float-right" style={{ color: 'silver' }}>
-                                        Your Locked BAVA<br />
-                                        <div style={{ color: 'silver' }}><b>0 BAVA</b></div>
+                                        Troves<br />
+                                        <div className="float-right" style={{ color: 'silver' }}><b>0 </b></div>
                                     </span>
                                     <br /><br />
                                 </span>
@@ -204,20 +211,19 @@ class Collateral extends Component {
                                     }
                                 </span>
                                 <span>
-                                    <span className="float-left" style={{ color: 'silver' }}>Total pending harvest&nbsp;&nbsp;
+                                    <span className="float-left" style={{ color: 'silver' }}>Your total pending Debt&nbsp;&nbsp;
                                         <Popup
                                             trigger={open => (
-                                                <span><BsFillQuestionCircleFill size={13} /></span>
+                                                <span><BsFillQuestionCircleFill size={12} /></span>
                                             )}
                                             on="hover"
-                                            offsetY={-10}
                                             offsetX={10}
                                             position="right center"
-                                        ><span className="textInfo"><small>Total BAVA tokens earned acrossed all farm </small></span>
+                                        ><span className="textInfo"><small>Total USB Debt acrossed all collateral troves.</small></span>
                                         </Popup>
                                     </span><br />
                                     <span className="float-left ">
-                                        <div style={{ color: 'silver' }}><b>0 BAVA</b></div>
+                                        <div style={{ color: 'silver' }}><b>0 USB</b></div>
                                     </span>
                                 </span>
                             </div>
@@ -311,6 +317,13 @@ class Collateral extends Component {
                                                                                 <div className="rowC mt-3">
                                                                                     <div>
                                                                                         <div className="card cardbody  mr-3 mb-2" style={{ width: '300px' }}>
+                                                                                        <div className="card cardbody  mr-3" style={{ width: '300px' }}>
+                                                                                            <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                                <span className="float-left" style={{ color: 'black' }}><small>Trove available USB</small></span><br />
+                                                                                                <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ? <div>{(this.props.collateralPoolSegmentInfo[i].assetCeiling - parseFloat(window.web3Ava.utils.fromWei(this.props.collPoolTAA.toLocaleString('en-US'), 'Ether'))).toLocaleString('en-US', { maximumFractionDigits: 5 })} USB</div> :
+                                                                                                    <div className="ml-3 lds-facebook"><div></div><div></div><div></div></div>}</small></span>
+                                                                                            </div>
+                                                                                        </div>
                                                                                             <div className="card-body" style={{ padding: '0.5rem' }}>
                                                                                                 <span className="float-left" style={{ color: 'black' }}><small>Your Coll. Ratio</small></span><br />
                                                                                                 <span className="float-left" style={{ marginTop: '8px' }}><small>{this.props.accountLoading ?
@@ -473,6 +486,7 @@ class Collateral extends Component {
                                                                                                                     collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
                                                                                                                     collUserSegmentInfo={this.props.collUserSegmentInfo}
                                                                                                                     systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                    collPoolTAA={this.props.collPoolTAA}
                                                                                                                     addLPCollRatio={this.addLPCollRatio}
                                                                                                                     addUSBDebtRatio={this.addUSBDebtRatio}
                                                                                                                     collateralApprove={this.props.collateralApprove}
@@ -554,6 +568,7 @@ class Collateral extends Component {
                                                                                                                     collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
                                                                                                                     collUserSegmentInfo={this.props.collUserSegmentInfo}
                                                                                                                     systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                    collPoolTAA={this.props.collPoolTAA}
                                                                                                                     addLPCollRatio={this.addLPCollRatio}
                                                                                                                     addUSBDebtRatio={this.addUSBDebtRatio}
                                                                                                                     collateralApprove={this.props.collateralApprove}

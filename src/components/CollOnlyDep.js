@@ -89,6 +89,7 @@ class CollOnlyDep extends Component {
                   <input
                     type="number"
                     id="inputColor"
+                    step="any" 
                     ref={(input) => { this.input = input }}
                     style={{ fontSize: '18px', backgroundColor: '#fffcf0'}}
                     className="form-control cell cardbody"

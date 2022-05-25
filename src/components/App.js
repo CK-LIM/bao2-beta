@@ -124,7 +124,7 @@ class App extends Component {
     const bavaMasterFarmerV2_3 = new web3Ava.eth.Contract(BavaMasterFarmerV2_3.abi, process.env.REACT_APP_bavamasterfarmv2_3address)
     const collateralVault = new web3Ava.eth.Contract(CollateralVault.abi, process.env.REACT_APP_collateral_vault_address)
     const avaxChainlinkOracle = new web3Ava.eth.Contract(AvaxChainlinkOracle.abi, process.env.REACT_APP_chainlink_brt_address)
-    const systemCoin = new web3Ava.eth.Contract(SystemCoin.abi, process.env.REACT_APP_chainlink_usb_address) 
+    const systemCoin = new web3Ava.eth.Contract(SystemCoin.abi, process.env.REACT_APP_usb_address) 
 
     this.setState({ bavaToken })
     this.setState({ bavaMasterFarmer })
@@ -148,6 +148,7 @@ class App extends Component {
     let response9 = this.loadPoolLengthV2_2()
     let response10 = this.loadPoolLengthV2_3()
     let response11 = this.loadCollateralPoolLength()
+    let response12 = this.loadSystemCoinSupply()
 
     let poolLength = await response0
     let bavaPoolLength = await response1
@@ -160,6 +161,7 @@ class App extends Component {
     let poolLengthV2_2 = await response9
     let poolLengthV2_3 = await response10
     let collateralPoolLength = await response11
+    let systemCoinSupply = await response12
 
     this.setState({ poolLength })
     this.setState({ bavaPoolLength })
@@ -172,6 +174,7 @@ class App extends Component {
     this.setState({ poolLengthV2_2 })
     this.setState({ poolLengthV2_3 })
     this.setState({ collateralPoolLength })
+    this.setState({ systemCoinSupply })
 
     if (this.state.wallet == false && this.state.walletConnect == false) {
 
@@ -199,6 +202,7 @@ class App extends Component {
       let collTokensymbols = []
       let collTokenAddresses = []
       let collBRTValue = []
+      let collPoolTAA = []
 
       let bavaLpTokenAddresses = []
       let lpTokenAddresses = []
@@ -221,9 +225,11 @@ class App extends Component {
         responseV2_3[i] = this.loadFarmReinvest(i)
       }
 
-      let collResponse = []
+      let collPoolResponse1 = []
+      let collPoolResponse2 = []
       for (let i = 0; i < this.state.collateralPoolLength; i++) {
-        collResponse[i] = this.loadCollateralBRTValue(i)
+        collPoolResponse1[i] = this.loadCollateralBRTValue(i)
+        collPoolResponse2[i] = this.loadCollateralAsset(i)
       }
 
       for (let i = 0; i < this.state.poolLengthV2_3; i++) {
@@ -312,7 +318,8 @@ class App extends Component {
         collTokensymbols[i] = lpTokenPairsymbol
         collTokenAddresses[i] = lpTokenAddress
         collateralPoolSegmentInfo[i] = poolInfo
-        collBRTValue[i] = await collResponse[i]
+        collBRTValue[i] = await collPoolResponse1[i]
+        collPoolTAA[i] = await collPoolResponse2[i]
         i += 1
       }
 
@@ -339,6 +346,8 @@ class App extends Component {
       this.setState({ returnRatioV2_3 })
       this.setState({ bavaReturnRatio })
       this.setState({ collBRTValue })
+      this.setState({ collPoolTAA })
+      console.log(this.state.collPoolTAA)
 
       this.setState({ reinvestAmount })
       this.setState({ farmloading: true })
@@ -643,6 +652,13 @@ class App extends Component {
     let systemCoinCollAllowance = await this.state.systemCoin.methods.allowance(this.state.account, process.env.REACT_APP_collateral_vault_address).call()
     return systemCoinCollAllowance
   }
+
+  async loadSystemCoinSupply() {
+    let systemCoinTSupply = await this.state.systemCoin.methods.totalSupply().call()
+    console.log(systemCoinTSupply)
+    return systemCoinTSupply
+  }
+
   // bavaMasterFarmerV2
 
   async loadUserInfo(i) {
@@ -799,13 +815,19 @@ class App extends Component {
   }
 
   async loadCollateralBRTValue(i) {
-    let brtAddress = await this.state.collateralVault.methods.poolInfo(i).call()
-    let collateralBRTValue = await this.state.avaxChainlinkOracle.methods.getBRTPrice(brtAddress.collateralToken).call()
+    let poolData = await this.state.collateralVault.methods.poolInfo(i).call()
+    let collateralBRTValue = await this.state.avaxChainlinkOracle.methods.getBRTPrice(poolData.collateralToken).call()
     if (collateralBRTValue[0] == true) {
       return collateralBRTValue[1]
     } else {
       return 0
     }
+  }
+
+  async loadCollateralAsset(i) {
+    let poolData = await this.state.collateralVault.methods.poolInfo(i).call()
+    let poolTotalAsset = poolData.totalAssetAmount
+    return poolTotalAsset
   }
 
   async loadFarmReinvest(i) {
@@ -1688,9 +1710,9 @@ class App extends Component {
     let systemCoin
 
     if (this.state.walletConnect == true) {
-      systemCoin = new window.web3Con.eth.Contract(LpToken.abi, process.env.REACT_APP_chainlink_usb_address)
+      systemCoin = new window.web3Con.eth.Contract(LpToken.abi, process.env.REACT_APP_usb_address)
     } else if (this.state.wallet == true) {
-      systemCoin = new window.web3.eth.Contract(LpToken.abi, process.env.REACT_APP_chainlink_usb_address)
+      systemCoin = new window.web3.eth.Contract(LpToken.abi, process.env.REACT_APP_usb_address)
     }
     await systemCoin.methods.approve(this.state.collateralVault._address, "115792089237316195423570985008687907853269984665640564039457584007913129639935").send({ from: this.state.account }).then(async (result) => {
       this.componentWillMount()
@@ -1914,6 +1936,7 @@ class App extends Component {
       lpTokenValue: [[], []],
       collRatio: [],
       collUserSegmentInfo: [],
+      collPoolTAA: [],
       tvl: [[], []],
       apr: [[], []],
       apyDaily: [[], []],
@@ -1947,7 +1970,9 @@ class App extends Component {
       totalStake: '0',
       rewardRate: '0',
       bavaTokenAllowance: '0',
-      totalPendingDebt: '0'
+      totalPendingDebt: '0',
+      systemCoinSupply: '0',
+      collateralPoolLength: '0'
     }
   }
 
@@ -2314,6 +2339,9 @@ class App extends Component {
       aprloading={this.state.aprloading}
       systemCoinBalance={this.state.systemCoinBalance}
       systemCoinCollAllowance={this.state.systemCoinCollAllowance}
+      collPoolTAA={this.state.collPoolTAA}
+      systemCoinSupply={this.state.systemCoinSupply}
+      collateralPoolLength={this.state.collateralPoolLength}
     />
 
 
