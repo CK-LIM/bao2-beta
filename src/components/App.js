@@ -202,7 +202,7 @@ class App extends Component {
       let collTokensymbols = []
       let collTokenAddresses = []
       let collBRTValue = []
-      let collPoolTAA = []
+      let collPoolRemainingAsset = []
 
       let bavaLpTokenAddresses = []
       let lpTokenAddresses = []
@@ -229,7 +229,7 @@ class App extends Component {
       let collPoolResponse2 = []
       for (let i = 0; i < this.state.collateralPoolLength; i++) {
         collPoolResponse1[i] = this.loadCollateralBRTValue(i)
-        collPoolResponse2[i] = this.loadCollateralAsset(i)
+        collPoolResponse2[i] = this.loadPoolCollateralAsset(i)
       }
 
       for (let i = 0; i < this.state.poolLengthV2_3; i++) {
@@ -319,7 +319,8 @@ class App extends Component {
         collTokenAddresses[i] = lpTokenAddress
         collateralPoolSegmentInfo[i] = poolInfo
         collBRTValue[i] = await collPoolResponse1[i]
-        collPoolTAA[i] = await collPoolResponse2[i]
+        collPoolRemainingAsset[i] = await collPoolResponse2[i]
+        console.log(collPoolRemainingAsset)
         i += 1
       }
 
@@ -346,8 +347,7 @@ class App extends Component {
       this.setState({ returnRatioV2_3 })
       this.setState({ bavaReturnRatio })
       this.setState({ collBRTValue })
-      this.setState({ collPoolTAA })
-      console.log(this.state.collPoolTAA)
+      this.setState({ collPoolRemainingAsset })
 
       this.setState({ reinvestAmount })
       this.setState({ farmloading: true })
@@ -655,7 +655,6 @@ class App extends Component {
 
   async loadSystemCoinSupply() {
     let systemCoinTSupply = await this.state.systemCoin.methods.totalSupply().call()
-    console.log(systemCoinTSupply)
     return systemCoinTSupply
   }
 
@@ -824,10 +823,11 @@ class App extends Component {
     }
   }
 
-  async loadCollateralAsset(i) {
+  async loadPoolCollateralAsset(i) {
     let poolData = await this.state.collateralVault.methods.poolInfo(i).call()
     let poolTotalAsset = poolData.totalAssetAmount
-    return poolTotalAsset
+    let remainingPoolAvailableUSB = (parseFloat(window.web3Ava.utils.fromWei(poolData.assetCeiling, 'Ether')) - parseFloat(window.web3Ava.utils.fromWei(poolTotalAsset, 'Ether')))
+    return (remainingPoolAvailableUSB)
   }
 
   async loadFarmReinvest(i) {
@@ -1936,7 +1936,7 @@ class App extends Component {
       lpTokenValue: [[], []],
       collRatio: [],
       collUserSegmentInfo: [],
-      collPoolTAA: [],
+      collPoolRemainingAsset: [],
       tvl: [[], []],
       apr: [[], []],
       apyDaily: [[], []],
@@ -2339,7 +2339,7 @@ class App extends Component {
       aprloading={this.state.aprloading}
       systemCoinBalance={this.state.systemCoinBalance}
       systemCoinCollAllowance={this.state.systemCoinCollAllowance}
-      collPoolTAA={this.state.collPoolTAA}
+      collPoolRemainingAsset={this.state.collPoolRemainingAsset}
       systemCoinSupply={this.state.systemCoinSupply}
       collateralPoolLength={this.state.collateralPoolLength}
     />

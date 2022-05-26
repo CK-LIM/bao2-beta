@@ -10,9 +10,9 @@ class CollWithdraw extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      addBRT: '0',
-      newBorrowUSB: '0',
-      messageUSB: '',
+      messageCR: '',
+      messageWarningCR: '',
+      messageBRT: '',
       txValidAmount: false
     }
   }
@@ -26,37 +26,51 @@ class CollWithdraw extends Component {
     
     let maxBorrow = (parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[this.props.i], 'Ether')) - parseFloat(event)) * parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i].toLocaleString('en-US'), 'Ether')) / parseFloat(this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio).toLocaleString('en-US') * 100
     let maxBorrow80 = maxBorrow * 0.8
+    let newDebt = parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[this.props.i]))
 
     if (event == "") {
       this.setState({
-        messageUSB: '',
+        messageBRT: '',
         txValidAmount: false
       })
     } else if (this.countDecimals(event) > 18) {
       console.log(event)
       this.setState({
-        messageUSB: 'Input decimal more than 18',
+        messageBRT: 'Input decimal more than 18',
         txValidAmount: false
-      })
-    } else if (parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[this.props.i])) > maxBorrow) {
-      this.setState({
-        messageUSB: 'Notice: Coll. Ratio is lower than Min Coll. Ratio.',
-        txValidAmount: false
-      })
-    } else if (parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[this.props.i])) > maxBorrow80) {
-      this.setState({
-        messageUSB: 'Notice: You will take a higher risk of liquidation when your Coll. Ratio is closer to Min Coll. Ratio.',
-        txValidAmount: true
       })
     } else if (bigInt(window.web3Ava.utils.toWei(event, 'Ether')).value > bigInt(this.props.collUserSegmentInfo[this.props.i]).value) {
       this.setState({
-        messageUSB: 'Amount more than deposited collateral',
+        messageBRT: 'Amount more than deposited collateral',
         txValidAmount: false
       })
     } else {
       this.setState({
-        messageUSB: '',
+        messageBRT: '',
+        messageCR: '',
+        messageWarningCR: '',
         txValidAmount: true
+      })
+    }
+
+    if (parseFloat(newDebt) > parseFloat(maxBorrow)) {
+      this.setState({
+        messageCR: 'Coll. Ratio is lower than Min Coll. Ratio.',
+        txValidAmount: false
+      })
+    } else {
+      this.setState({
+        messageCR: '',
+      })
+    }
+
+    if ((newDebt > maxBorrow80) && (newDebt <= maxBorrow) && (maxBorrow80 > 0)) {
+      this.setState({
+        messageWarningCR: 'Notice: You will take a higher risk of liquidation when your Coll. Ratio is closer to Min Coll. Ratio.',
+      })
+    } else {
+      this.setState({
+        messageWarningCR: ''
       })
     }
   }
@@ -88,8 +102,8 @@ class CollWithdraw extends Component {
         }}>
           <div style={{ minWidth: "300px" }}>
             <div style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}>
-              <div className="mb-2 float-left"><b>Withdraw BRT</b></div>
-              <div className="mb-2 float-right"><b>Max: {window.web3Ava.utils.fromWei(parseInt((this.props.collUserSegmentInfo[this.props.i]*window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i],'Ether') - (this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio / 100 * this.props.collDebtBalance[this.props.i])) / window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i],'Ether')).toLocaleString('en-US', {useGrouping:false}),'Ether')} BRT</b></div>
+              <div className="mb-1 float-left"><b>Withdraw BRT</b></div>
+              <div className="mb-1 float-right"><b>Max: {window.web3Ava.utils.fromWei(parseInt((this.props.collUserSegmentInfo[this.props.i]*window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i],'Ether') - (this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio / 100 * this.props.collDebtBalance[this.props.i])) / window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i],'Ether')).toLocaleString('en-US', {useGrouping:false}),'Ether')} BRT</b></div>
             </div>
             <div className="card-body" style={{ backgroundColor: '#fffcf0', padding: '0 0' }}>
               <div className="input-group mb-2" >
@@ -140,10 +154,13 @@ class CollWithdraw extends Component {
               </div>
             </div>
 
-            <div className="mb-1" style={{ color: 'red' }}>{this.state.messageUSB} </div>
+            <div className="mb-1" style={{ color: 'red' }}>{this.state.messageBRT} </div>
+            <div className="mb-1" style={{ color: 'red' }}>{this.state.messageCR} </div>
+            <div className="mb-1 textWarningColor">{this.state.messageWarningCR} </div>
+
             <div className="mt-3">
               <div className="float-left" style={{ color: 'grey' }}><img src={baklava} height='20' alt="" />&nbsp;<small>Minimum borrowing amount: 10 USB </small></div>
-              <div className="float-right" >{this.props.collUserSegmentInfo[this.props.i] > 0 ?
+              <div className="float-right" >{this.props.collUserSegmentInfo[this.props.i] > 0 && this.state.txValidAmount == true?
                 <Button type="submit" className="btn btn-primary btn-sm">&nbsp;Confirm&nbsp;</Button>
                 : <Button className="textDarkMedium1 btn-sm" variant="outline">
                   &nbsp;Confirm&nbsp;</Button>}&nbsp;

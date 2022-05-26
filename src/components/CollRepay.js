@@ -10,9 +10,10 @@ class CollRepay extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      addBRT: '0',
       newBorrowUSB: '0',
       messageUSB: '',
+      messageCR: '',
+      messageWarningCR: '',
       txValidAmount: false
     }
   }
@@ -44,25 +45,38 @@ class CollRepay extends Component {
         messageUSB: 'Amount more than Debt balance.',
         txValidAmount: false
       })
-    } else if (newDebt > maxBorrow) {
-      this.setState({
-        messageUSB: 'Notice: Coll. Ratio is lower than Min Coll. Ratio.',
-        txValidAmount: true
-      })
     } else if ((newDebt < 10) && (newDebt > 0))  {
       this.setState({
-        messageUSB: 'Notice: To keep the system at a healthy state. If full repayment cannot be achieved, the remaining USB borrewed must be higher than 10.',
+        messageUSB: 'To keep the system at a healthy state. If full repayment cannot be achieved, the remaining USB borrewed must be higher than 10.',
         txValidAmount: false
-      })
-    } else if (newDebt > maxBorrow80) {
-      this.setState({
-        messageUSB: 'Notice: You will take a higher risk of liquidation when your Coll. Ratio is closer to Min Coll. Ratio.',
-        txValidAmount: true
       })
     } else {
       this.setState({
         messageUSB: '',
+        messageCR: '',
+        messageWarningCR: '',
         txValidAmount: true
+      })
+    }
+
+    if (parseFloat(newDebt) > parseFloat(maxBorrow)) {
+      this.setState({
+        messageCR: 'Coll. Ratio is lower than Min Coll. Ratio.',
+        txValidAmount: true
+      })
+    } else {
+      this.setState({
+        messageCR: '',
+      })
+    }
+
+    if ((newDebt > maxBorrow80) && (newDebt <=maxBorrow) ) {
+      this.setState({
+        messageWarningCR: 'Notice: You will take a higher risk of liquidation when your Coll. Ratio is closer to Min Coll. Ratio.'
+      })
+    } else {
+      this.setState({
+        messageWarningCR: ''
       })
     }
   }
@@ -94,8 +108,8 @@ class CollRepay extends Component {
         }}>
           <div style={{ minWidth: "300px" }}>
             <div style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}>
-              <div className="mb-2 float-left"><b>Repay USB</b></div>
-              <div className="mb-2 float-right"><b>USB Balance: {parseFloat(window.web3Ava.utils.fromWei(this.props.systemCoinBalance, "Ether")).toLocaleString('en-US', { maximumFractionDigits: 4 })}</b></div>
+              <div className="mb-1 float-left"><b>Repay USB</b></div>
+              <div className="mb-1 float-right"><b>USB Balance: {parseFloat(window.web3Ava.utils.fromWei(this.props.systemCoinBalance, "Ether")).toLocaleString('en-US', { maximumFractionDigits: 4 })}</b></div>
             </div>
             <div className="card-body" style={{ backgroundColor: '#fffcf0', padding: '0 0' }}>
               <div className="input-group mb-2" >
@@ -135,9 +149,12 @@ class CollRepay extends Component {
             </div>
 
             <div className="mb-1" style={{ color: 'red' }}>{this.state.messageUSB} </div>
+            <div className="mb-1" style={{ color: 'red' }}>{this.state.messageCR} </div>
+            <div className="mb-1 textWarningColor">{this.state.messageWarningCR} </div>
+
             <div className="mt-3">
               <div className="float-left" style={{ color: 'grey' }}><img src={baklava} height='20' alt="" />&nbsp;<small>Minimum borrowing amount: 10 USB </small></div>
-              <div className="float-right" >{this.props.systemCoinCollAllowance > 2000000000000000000000000000 ?
+              <div className="float-right" >{this.props.systemCoinCollAllowance > 2000000000000000000000000000 && (this.state.txValidAmount === true) ?
                 <Button type="submit" className="btn btn-primary btn-sm">&nbsp;Confirm&nbsp;</Button>
                 : <Button className="textDarkMedium1 btn-sm" variant="outline">
                   &nbsp;Confirm&nbsp;</Button>}&nbsp;

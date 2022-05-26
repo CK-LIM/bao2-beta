@@ -96,6 +96,10 @@ background-color: #656069;
 color: #dddddd;
 }
 
+.textWarningColor {
+  color: #ff9c08;
+  }
+
 .textDarkMedium1 {
   color: #dddddd;
   background-color: #656069;
