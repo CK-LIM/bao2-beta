@@ -101,7 +101,7 @@ class CollResize extends Component {
       })
     } else if ((newDebt < 10) && (newDebt > 0)) {
       this.setState({
-        messageUSB: 'To keep the system at a healthy state. If full repayment cannot be achieved, the remaining USB borrewed must be higher than 10.',
+        messageUSB: 'To keep the system at a healthy state. If full repayment cannot be achieved, the remaining USB borrowed must be higher than 10.',
         txUSBValidAmount: false
       })
     } else if (parseFloat(event) > parseFloat(remainingAvailableUSB)) {
