@@ -28,9 +28,9 @@ class Navb extends Component {
               <div className='dropdown0'><NavLink className='dropdown' to='/menu/v2/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Farm</NavLink></div>
               <div className='dropdown0'><NavLink className='dropdown' to='/stake/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Stake</NavLink></div>
               {/* <div className='dropdown0'><NavLink className='dropdown' to='/claim/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Claim</NavLink></div> */}
+              <div className='dropdown0'><NavLink className='dropdown' to='/collateral/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Collateral</NavLink></div>
               <div className='dropdown0'><NavLink className='dropdown' to='/synthetic/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Synthetic</NavLink></div>
               <div className='dropdown0'><NavLink className='dropdown' to='/litepaper/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>LitePaper</NavLink></div>
-              <div className='dropdown0'><NavLink className='dropdown' to='/collateral/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Collateral</NavLink></div>
             </Menu>
           </MediaQuery>
 
@@ -74,13 +74,13 @@ class Navb extends Component {
               ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffc400" }} to="/claim/">Claim</NavLink></div> */}
               <div
                 style={{ marginLeft: "25px" }}
-              ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffc400" }} to="/litepaper/">LitePaper</NavLink></div>
-              <div
-                style={{ marginLeft: "25px" }}
               ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffc400" }} to="/collateral/">Collateral</NavLink></div>
               <div
                 style={{ marginLeft: "25px" }}
               ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffc400" }} to="/synthetic/">Synthetic</NavLink></div>
+              <div
+                style={{ marginLeft: "25px" }}
+              ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffc400" }} to="/litepaper/">LitePaper</NavLink></div>
             </MediaQuery>
           </div>
 
