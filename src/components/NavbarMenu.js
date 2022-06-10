@@ -22,9 +22,10 @@ class Navb extends Component {
             <Menu>
               <div className='dropdown0'><NavLink className='dropdown' to='/menu/v2/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Farm</NavLink></div>
               <div className='dropdown0'><NavLink className='dropdown' to='/stake/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Stake</NavLink></div>
-              <div className='dropdown0'><NavLink className='dropdown' to='/claim/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Claim</NavLink></div>
+              {/* <div className='dropdown0'><NavLink className='dropdown' to='/claim/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Claim</NavLink></div> */}
+              <div className='dropdown0'><NavLink className='dropdown' to='/collateral/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Collateral</NavLink></div>
+              <div className='dropdown0'><NavLink className='dropdown' to='/synthetic/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Synthetic</NavLink></div>
               <div className='dropdown0'><NavLink className='dropdown' to='/litepaper/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>LitePaper</NavLink></div>
-              <div className='dropdown'><NavLink className='dropdown' to='/collateral/' activeStyle={{ fontWeight: "bold", color: "#ffae00" }}>Collateral</NavLink></div>
             </Menu>
           </MediaQuery>
 
@@ -49,7 +50,7 @@ class Navb extends Component {
               )}
                 on="hover"
                 position="bottom center"
-                offsetY={0}
+                offsetY={5}
                 offsetX={0}
                 mouseLeaveDelay={100}
                 contentStyle={{ padding: '3px', width: '90px', textDecoration: "none" }}
@@ -64,15 +65,18 @@ class Navb extends Component {
               <div
                 style={{ marginLeft: "25px" }}
               ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffae00" }} to="/stake/">Stake</NavLink></div>
-              <div
+              {/* <div
                 style={{ marginLeft: "25px" }}
-              ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffae00" }} to="/claim/">Claim</NavLink></div>
-              <div
-                style={{ marginLeft: "25px" }}
-              ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffae00" }} to="/litepaper/">LitePaper</NavLink></div>
+              ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffae00" }} to="/claim/">Claim</NavLink></div> */}
               <div
                 style={{ marginLeft: "25px" }}
               ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffae00" }} to="/collateral/">Collateral</NavLink></div>
+              <div
+                style={{ marginLeft: "25px" }}
+              ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffae00" }} to="/synthetic/">Synthetic</NavLink></div>
+              <div
+                style={{ marginLeft: "25px" }}
+              ><NavLink className="textSmallBold1" activeClassName=" " activeStyle={{ fontWeight: "bold", color: "#ffae00" }} to="/litepaper/">LitePaper</NavLink></div>
             </MediaQuery>
           </div>
 
@@ -94,7 +98,7 @@ class Navb extends Component {
                       )}
                         on="hover"
                         position="bottom right"
-                        offsetY={0}
+                        offsetY={5}
                         offsetX={0}
                         mouseLeaveDelay={100}
                         contentStyle={{ padding: '5px' }}
@@ -118,7 +122,7 @@ class Navb extends Component {
                       )}
                         on="hover"
                         position="bottom right"
-                        offsetY={0}
+                        offsetY={5}
                         offsetX={0}
                         mouseLeaveDelay={100}
                         contentStyle={{ padding: '5px' }}

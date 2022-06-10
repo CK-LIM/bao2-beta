@@ -15,14 +15,18 @@ import BavaCompoundPoolVariable from '../abis/BavaCompoundPoolVariable.json'
 import BavaAirdrop from '../abis/BavaAirdrop.json'
 import StakingRewards from '../abis/StakingRewards.json'
 import CollateralVault from '../abis/CollateralVault.json'
+import SyntheticPool from '../abis/SyntheticPool.json'
 import AvaxChainlinkOracle from '../abis/AvaxChainlinkOracle.json'
 import SystemCoin from '../abis/SystemCoin.json'
+import ChainlinkAggreagator from '../abis/ChainlinkAggreagator.json'
+import WrappedbSynthetic from '../abis/WrappedbSynthetic.json'
 
 import Farm from './tokens_config/farm.json'
 import FarmV1 from './tokens_config/farmV1.json'
 import FarmV2_2 from './tokens_config/farmV2_2.json'
 import FarmV2_3 from './tokens_config/farmV2_3.json'
 import CollVault from './tokens_config/collVault.json'
+import SynPool from './tokens_config/synPool.json'
 import AirdropList from './tokens_config/airdrop.json'
 
 import Navb from './Navbar'
@@ -64,9 +68,12 @@ class App extends Component {
     this.setState({ farmV2_3 })
     const collVault = CollVault.vault
     this.setState({ collVault })
+    const synPool = SynPool.pool
+    this.setState({ synPool })
     const airdropList = AirdropList
     this.setState({ airdropList })
   }
+
 
   async loadBlockchainData() {
     const web3Ava = window.web3Ava
@@ -123,8 +130,9 @@ class App extends Component {
     const bavaMasterFarmerV2_2 = new web3Ava.eth.Contract(BavaMasterFarmerV2_2.abi, process.env.REACT_APP_bavamasterfarmv2_2address)
     const bavaMasterFarmerV2_3 = new web3Ava.eth.Contract(BavaMasterFarmerV2_3.abi, process.env.REACT_APP_bavamasterfarmv2_3address)
     const collateralVault = new web3Ava.eth.Contract(CollateralVault.abi, process.env.REACT_APP_collateral_vault_address)
+    const syntheticPool = new web3Ava.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
     const avaxChainlinkOracle = new web3Ava.eth.Contract(AvaxChainlinkOracle.abi, process.env.REACT_APP_chainlink_brt_address)
-    const systemCoin = new web3Ava.eth.Contract(SystemCoin.abi, process.env.REACT_APP_usb_address) 
+    const systemCoin = new web3Ava.eth.Contract(SystemCoin.abi, process.env.REACT_APP_usb_address)
 
     this.setState({ bavaToken })
     this.setState({ bavaMasterFarmer })
@@ -134,6 +142,7 @@ class App extends Component {
     this.setState({ bavaMasterFarmerV2_2 })
     this.setState({ bavaMasterFarmerV2_3 })
     this.setState({ collateralVault })
+    this.setState({ syntheticPool })
     this.setState({ avaxChainlinkOracle })
     this.setState({ systemCoin })
 
@@ -149,6 +158,7 @@ class App extends Component {
     let response10 = this.loadPoolLengthV2_3()
     let response11 = this.loadCollateralPoolLength()
     let response12 = this.loadSystemCoinSupply()
+    let response13 = this.loadSyntheticPoolLength()
 
     let poolLength = await response0
     let bavaPoolLength = await response1
@@ -162,6 +172,7 @@ class App extends Component {
     let poolLengthV2_3 = await response10
     let collateralPoolLength = await response11
     let systemCoinSupply = await response12
+    let synPoolLength = await response13
 
     this.setState({ poolLength })
     this.setState({ bavaPoolLength })
@@ -175,6 +186,7 @@ class App extends Component {
     this.setState({ poolLengthV2_3 })
     this.setState({ collateralPoolLength })
     this.setState({ systemCoinSupply })
+    this.setState({ synPoolLength })
 
     if (this.state.wallet == false && this.state.walletConnect == false) {
 
@@ -208,6 +220,14 @@ class App extends Component {
       let lpTokenAddresses = []
       let lpTokenAddressesV2_2 = []
       let lpTokenAddressesV2_3 = []
+
+      let synTokensymbols = []
+      let synTokenAddresses = []
+      let synPoolSegmentInfo = []
+      let synOraclePrice = []
+      let synPoolPrice = []
+      let synTotalSupply = []
+
       let returnRatioArray = this.state.myJsonMongo["ReturnRatio"]
       let returnRatioArrayV2_2 = this.state.myJsonMongo["ReturnRatioV2_2"]
       let returnRatioArrayV2_3 = this.state.myJsonMongo["ReturnRatioV2_3"]
@@ -231,6 +251,15 @@ class App extends Component {
         collPoolResponse1[i] = this.loadCollateralBRTValue(i)
         collPoolResponse2[i] = this.loadPoolCollateralAsset(i)
       }
+
+      let synPoolResponse1 = []
+      let synPoolResponse2 = []
+      let synPoolResponse3 = []
+      for (let i = 0; i < this.state.synPoolLength; i++) {
+        synPoolResponse1[i] = this.loadSyntheticValue(i)
+        synPoolResponse2[i] = this.loadSyntheticTotalSupply(i)
+      }
+      synPoolResponse3 = this.loadSyntheticPoolPrice()
 
       for (let i = 0; i < this.state.poolLengthV2_3; i++) {
         let poolInfo = this.state.farmV2_3[i]
@@ -320,34 +349,53 @@ class App extends Component {
         collateralPoolSegmentInfo[i] = poolInfo
         collBRTValue[i] = await collPoolResponse1[i]
         collPoolRemainingAsset[i] = await collPoolResponse2[i]
-        console.log(collPoolRemainingAsset)
-        i += 1
       }
 
+      for (let i = 0; i < this.state.synPoolLength; i++) {
+        let poolInfo = this.state.synPool[i]
+        let syntokenAddress = poolInfo.synTokenAddresses[farmNetworkId]
+        let synTokenPairsymbol = poolInfo.synTokenPairsymbol
+
+        synTokensymbols[i] = synTokenPairsymbol
+        synTokenAddresses[i] = syntokenAddress
+        synPoolSegmentInfo[i] = poolInfo
+        synOraclePrice[i] = await synPoolResponse1[i]
+        synTotalSupply[i] = await synPoolResponse2[i]
+      }
+      synPoolPrice = await synPoolResponse3
+
       this.setState({ poolSegmentInfo })
-      this.setState({ poolSegmentInfoV2_2 })
-      this.setState({ poolSegmentInfoV2_3 })
-      this.setState({ bavaPoolSegmentInfo })
-      this.setState({ collateralPoolSegmentInfo })
-
       this.setState({ lpTokenPairsymbols })
-      this.setState({ lpTokenPairsymbolsV2_2 })
-      this.setState({ lpTokenPairsymbolsV2_3 })
-      this.setState({ bavaLpTokenPairsymbols })
-      this.setState({ collTokensymbols })
-
       this.setState({ lpTokenAddresses })
-      this.setState({ lpTokenAddressesV2_2 })
-      this.setState({ lpTokenAddressesV2_3 })
-      this.setState({ bavaLpTokenAddresses })
-      this.setState({ collTokenAddresses })
-
       this.setState({ returnRatio })
+
+      this.setState({ poolSegmentInfoV2_2 })
+      this.setState({ lpTokenPairsymbolsV2_2 })
+      this.setState({ lpTokenAddressesV2_2 })
       this.setState({ returnRatioV2_2 })
+
+      this.setState({ poolSegmentInfoV2_3 })
+      this.setState({ lpTokenPairsymbolsV2_3 })
+      this.setState({ lpTokenAddressesV2_3 })
       this.setState({ returnRatioV2_3 })
+
+      this.setState({ bavaPoolSegmentInfo })
+      this.setState({ bavaLpTokenPairsymbols })
+      this.setState({ bavaLpTokenAddresses })
       this.setState({ bavaReturnRatio })
+
+      this.setState({ collateralPoolSegmentInfo })
+      this.setState({ collTokensymbols })
+      this.setState({ collTokenAddresses })
       this.setState({ collBRTValue })
       this.setState({ collPoolRemainingAsset })
+
+      this.setState({ synPoolSegmentInfo })
+      this.setState({ synTokensymbols })
+      this.setState({ synTokenAddresses })
+      this.setState({ synOraclePrice })
+      this.setState({ synPoolPrice })
+      this.setState({ synTotalSupply })
 
       this.setState({ reinvestAmount })
       this.setState({ farmloading: true })
@@ -364,6 +412,7 @@ class App extends Component {
     let userResponse4 = this.loadStakeAmount()
     let userResponse5 = this.loadSystemCoinBalance()
     let userResponse6 = this.loadSystemCoinCollAllowance()
+    let userResponse7 = this.loadSystemCoinSynAllowance()
 
     let bavaTokenBalance = await userResponse0
     let lockedBavaTokenBalance = await userResponse1
@@ -372,6 +421,7 @@ class App extends Component {
     let stakeAmount = await userResponse4
     let systemCoinBalance = await userResponse5
     let systemCoinCollAllowance = await userResponse6
+    let systemCoinSynAllowance = await userResponse7
 
     this.setState({ bavaTokenBalance: bavaTokenBalance.toString() })
     this.setState({ lockedBavaTokenBalance: lockedBavaTokenBalance.toString() })
@@ -380,6 +430,7 @@ class App extends Component {
     this.setState({ earnedAmount })
     this.setState({ systemCoinBalance: systemCoinBalance.toString() })
     this.setState({ systemCoinCollAllowance: systemCoinCollAllowance.toString() })
+    this.setState({ systemCoinSynAllowance })
 
     let poolSegmentInfo = [[], []]
     let poolSegmentInfoV2_2 = [[], []]
@@ -415,6 +466,11 @@ class App extends Component {
     let collMaxBorrowAmount = []
     let collRatio = []
 
+    let synUserBalance = []
+    let synUserAllowance = []
+    let synUserOpenOrderLength = []
+    let synUserOrderInfo = []
+
     let b = 0
     let n = 0
     let c = 0
@@ -442,6 +498,9 @@ class App extends Component {
     let collateralResponse2 = []
     let collateralResponse3 = []
     let collateralResponse4 = []
+    let synResponse0 = []
+    let synResponse1 = []
+    let synResponse2 = [[], []]
 
     for (i = 0; i < this.state.poolLength; i++) {
       response0[i] = this.loadUserInfo(i)
@@ -478,6 +537,19 @@ class App extends Component {
       collateralResponse3[i] = this.loadCollateralUserInfo3(i)    // debtBalance
       collateralResponse4[i] = this.loadCollateralUserInfo4(i)    // RemainingMaxBorrowAmount
     }
+
+    for (i = 0; i < this.state.synPoolLength; i++) {
+      synResponse0[i] = this.loadSynUserInfo(i)     // synTokenBalance
+      synResponse1[i] = this.loadSynUserInfo1(i)    // synAllowance
+      synResponse2[i] = this.loadSynUserInfo2(i)    // synPool userOpenOrderLength, user Order info
+    }
+
+    let synPoolResponse3 = []
+    let synPoolPrice = []
+    synPoolResponse3 = this.loadSyntheticPoolPrice()
+    synPoolPrice = await synPoolResponse3
+    this.setState({ synPoolPrice })
+    // **********************************************************************
 
     for (i = 0; i < this.state.poolLength; i++) {
       if (this.state.lpTokenPairsymbols[i] == "PGL" || this.state.lpTokenPairsymbols[i] == "PNG") {
@@ -540,19 +612,25 @@ class App extends Component {
     }
 
     for (i = 0; i < this.state.collateralPoolLength; i++) {
-      if (this.state.lpTokenPairsymbolsV2_3[i] == "PGL" || this.state.lpTokenPairsymbolsV2_3[i] == "PNG") {
-        collUserSegmentInfo[i] = await collateralResponse0[i]
-        collBRTBalanceAccount[i] = await collateralResponse1[i]
-        collBRTSegmentAllowance[i] = await collateralResponse2[i]
-        collDebtBalance[i] = await collateralResponse3[i]
-        collMaxBorrowAmount[i] = await collateralResponse4[i]
-        collRatio[i] = parseFloat(window.web3Ava.utils.fromWei(collUserSegmentInfo[i].toLocaleString('en-US'), 'Ether')) * parseFloat(window.web3Ava.utils.fromWei(this.state.collBRTValue[i].toLocaleString('en-US'), 'Ether')) / parseFloat(window.web3Ava.utils.fromWei(collDebtBalance.toLocaleString('en-US'), 'Ether')) * 100
-        if(isNaN(collRatio[i])) {
-          console.log("NaN")
-          collRatio[i] = 1/0
-        }
+      collUserSegmentInfo[i] = await collateralResponse0[i]
+      collBRTBalanceAccount[i] = await collateralResponse1[i]
+      collBRTSegmentAllowance[i] = await collateralResponse2[i]
+      collDebtBalance[i] = await collateralResponse3[i]
+      collMaxBorrowAmount[i] = await collateralResponse4[i]
+      collRatio[i] = parseFloat(window.web3Ava.utils.fromWei(collUserSegmentInfo[i].toLocaleString('en-US'), 'Ether')) * parseFloat(window.web3Ava.utils.fromWei(this.state.collBRTValue[i].toLocaleString('en-US'), 'Ether')) / parseFloat(window.web3Ava.utils.fromWei(collDebtBalance.toLocaleString('en-US'), 'Ether')) * 100
+      if (isNaN(collRatio[i])) {
+        collRatio[i] = 1 / 0
       }
+
       totalPendingDebt += parseInt(await collateralResponse3[i])
+    }
+
+    for (i = 0; i < this.state.synPoolLength; i++) {
+      synUserBalance[i] = await synResponse0[i]
+      synUserAllowance[i] = await synResponse1[i]
+      let userOrderResponse = await synResponse2[i]
+      synUserOpenOrderLength[i] = userOrderResponse[0]
+      synUserOrderInfo[i] = userOrderResponse[1]
     }
 
     for (i = 0; i < this.state.bavaPoolLength; i++) {
@@ -609,6 +687,11 @@ class App extends Component {
     this.setState({ bavaLpSegmentAllowance })
     this.setState({ bavaPendingSegmentReward })
 
+    this.setState({ synUserBalance })
+    this.setState({ synUserAllowance })
+    this.setState({ synUserOpenOrderLength })
+    this.setState({ synUserOrderInfo })
+
     this.setState({ totalpendingReward: totalpendingReward.toLocaleString('fullwide', { useGrouping: false }) })
     this.setState({ totalPendingDebt: totalPendingDebt.toLocaleString('fullwide', { useGrouping: false }) })
     this.setState({ farmloading: true })
@@ -656,6 +739,11 @@ class App extends Component {
   async loadSystemCoinSupply() {
     let systemCoinTSupply = await this.state.systemCoin.methods.totalSupply().call()
     return systemCoinTSupply
+  }
+
+  async loadSystemCoinSynAllowance() {
+    let systemCoinSynAllowance = await this.state.systemCoin.methods.allowance(this.state.account, process.env.REACT_APP_synthetic_pool_address).call()
+    return systemCoinSynAllowance
   }
 
   // bavaMasterFarmerV2
@@ -770,6 +858,34 @@ class App extends Component {
     let remainingMaxBorrowAmount = await this.state.collateralVault.methods.getMaxBorrowAmount(i, this.state.account, 0).call()
     return remainingMaxBorrowAmount
   }
+  // #############################################################################################################
+  // synthetic
+
+  async loadSynUserInfo(i) {
+    let synAddress = (await this.state.syntheticPool.methods.poolInfo(i).call()).syntheticToken
+    let wrappedbSynthetic = new window.web3Ava.eth.Contract(WrappedbSynthetic.abi, synAddress)
+    let userSynBalance = await wrappedbSynthetic.methods.balanceOf(this.state.account).call()
+    return userSynBalance
+  }
+
+  async loadSynUserInfo1(i) {
+    let synAddress = (await this.state.syntheticPool.methods.poolInfo(i).call()).syntheticToken
+    let wrappedbSynthetic = new window.web3Ava.eth.Contract(WrappedbSynthetic.abi, synAddress)
+    let synAllowance = await wrappedbSynthetic.methods.allowance(this.state.account, this.state.syntheticPool._address).call()
+    return synAllowance
+  }
+
+  async loadSynUserInfo2(i) {
+    let userOrders = await this.state.syntheticPool.methods.getUserOrders(i, this.state.account).call()
+    let pendingOpenOrder = 0
+    for (let n = 0; n < userOrders.length; n++) {
+      let orderStatus = userOrders[n].status
+      if (orderStatus == 0) {
+        pendingOpenOrder += 1
+      }
+    }
+    return [pendingOpenOrder, userOrders]
+  }
 
   // #############################################################################################################
   // bavaMasterFarmerV1 
@@ -821,6 +937,65 @@ class App extends Component {
     } else {
       return 0
     }
+  }
+
+  async loadSyntheticPoolLength() {
+    let synPoolLength = await this.state.syntheticPool.methods.getPoolLength().call()
+    return synPoolLength
+  }
+
+  async loadSyntheticValue(i) {
+    const chainlinkAggreagator = new window.web3Eth.eth.Contract(ChainlinkAggreagator.abi, this.state.synPool[i].chainlink)
+    let synOraclePrice = await chainlinkAggreagator.methods.latestAnswer().call()
+    return synOraclePrice
+  }
+
+  async loadSyntheticPoolPrice() {
+    const response = await fetch("https://trade.testnet.marginx.io/dex/common/queryPair", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+    const myJsonMarginX = await response.json()
+    let marginXPrice = myJsonMarginX["data"]
+    for (let n = 0; n < marginXPrice.length; n++) {
+      if (marginXPrice[n].pair == 'TSLA:USDT') {
+        this.setState({ TSLAPrice: parseFloat(marginXPrice[n].markPrice) })
+      } else if (marginXPrice[n].pair == 'AAPL:USDT') {
+        this.setState({ AAPLPrice: parseFloat(marginXPrice[n].markPrice) })
+      } else if (marginXPrice[n].pair == 'FB:USDT') {
+        this.setState({ FBPrice: parseFloat(marginXPrice[n].markPrice)})
+      } else if (marginXPrice[n].pair == 'GOOG:USDT') {
+        this.setState({ GOOGPrice: parseFloat(marginXPrice[n].markPrice) })
+      } else if (marginXPrice[n].pair == 'BTC:USDT') {
+        this.setState({ BTCPrice: parseFloat(marginXPrice[n].markPrice) })
+      }
+    }
+
+    let synPoolPrice = []
+    for (let i = 0; i < this.state.synPoolLength; i++) {
+      let pairSymbol = this.state.synPool[i].marginXPair
+      if (pairSymbol == 'TSLA:USDT') {
+        synPoolPrice[i] = this.state.TSLAPrice * 100000000
+      } else if (pairSymbol == 'AAPL:USDT') {
+        synPoolPrice[i] = this.state.AAPLPrice * 100000000
+      } else if (pairSymbol == 'FB:USDT') {
+        synPoolPrice[i] = this.state.FBPrice * 100000000
+      } else if (pairSymbol == 'BTC:USDT') {
+        synPoolPrice[i] = this.state.BTCPrice * 100000000
+      }
+    }
+    return synPoolPrice
+  }
+
+  async loadSyntheticTotalSupply(i) {
+    let synAddress = (await this.state.syntheticPool.methods.poolInfo(i).call()).syntheticToken
+    let wrappedbSynthetic = new window.web3Ava.eth.Contract(WrappedbSynthetic.abi, synAddress)
+    let synTotalSupply = await wrappedbSynthetic.methods.totalSupply().call()
+    return synTotalSupply
+
   }
 
   async loadPoolCollateralAsset(i) {
@@ -1084,10 +1259,12 @@ class App extends Component {
     }
     // window.web3Ava = new Web3(`https://api.avax.network/ext/bc/C/rpc`);
     window.web3Ava = new Web3(`https://api.avax-test.network/ext/bc/C/rpc`);
+    window.web3Eth = new Web3(`https://mainnet.infura.io/v3/${process.env.REACT_APP_infuraapiKey}`);
 
     let responseMongo = await fetch(`https://ap-southeast-1.aws.data.mongodb-api.com/app/bdl-uyejj/endpoint/tvl`);
     const myJsonMongo = await responseMongo.json();
     this.setState({ myJsonMongo })
+
 
     let tokenPrice = myJsonMongo["TokenPrice"]
     this.setState({ AVAXPrice: parseFloat(tokenPrice[0].avaxPrice).toFixed(5) })
@@ -1725,12 +1902,151 @@ class App extends Component {
     });
   }
 
+  systemCoinSyntheticApprove = async () => {
+    let systemCoin
+    if (this.state.walletConnect == true) {
+      systemCoin = new window.web3Con.eth.Contract(LpToken.abi, process.env.REACT_APP_usb_address)
+    } else if (this.state.wallet == true) {
+      systemCoin = new window.web3.eth.Contract(LpToken.abi, process.env.REACT_APP_usb_address)
+    }
+    await systemCoin.methods.approve(this.state.syntheticPool._address, "115792089237316195423570985008687907853269984665640564039457584007913129639935").send({ from: this.state.account }).then(async (result) => {
+      this.componentWillMount()
+    }).catch((err) => {
+      if (err.code === 4001) {
+        alert("Something went wrong...Code: 4001 User rejected the request.")
+      } else {
+        console.error(err);
+      }
+    });
+  }
+
+  synTokenSyntheticApprove = async (i) => {
+    let synTokenAddress
+    let synToken
+
+    let syntheticPool = new window.web3.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
+    synTokenAddress = (await syntheticPool.methods.poolInfo(i).call()).syntheticToken
+
+    if (this.state.walletConnect == true) {
+      synToken = new window.web3Con.eth.Contract(LpToken.abi, synTokenAddress)
+    } else if (this.state.wallet == true) {
+      synToken = new window.web3.eth.Contract(LpToken.abi, synTokenAddress)
+    }
+    await synToken.methods.approve(this.state.syntheticPool._address, "115792089237316195423570985008687907853269984665640564039457584007913129639935").send({ from: this.state.account }).then(async (result) => {
+      this.componentWillMount()
+    }).catch((err) => {
+      if (err.code === 4001) {
+        alert("Something went wrong...Code: 4001 User rejected the request.")
+      } else {
+        console.error(err);
+      }
+    });
+  }
+
+  synOpenOrder = async (i, orderType, minSystemCoinTxAmount, synTokenAmount, minSynTokenAmount, synTokenPrice) => {
+    let syntheticPool
+    if (this.state.walletConnect == false && this.state.wallet == false) {
+      alert("Wallet is not connected")
+    } else {
+      if (this.state.walletConnect == true) {
+        syntheticPool = new window.web3Con.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
+      } else if (this.state.wallet == true) {
+        syntheticPool = new window.web3.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
+      }
+      if (orderType == 0) {
+        syntheticPool.methods.openBuyOrder(i, synTokenAmount, minSynTokenAmount, synTokenPrice).send({ from: this.state.account }).then(async (result) => {
+          this.componentWillMount()
+        }).catch((err) => {
+          if (err.code === 4001) {
+            alert("Something went wrong...Code: 4001 User rejected the request.")
+          } else {
+            console.error(err);
+          }
+        });
+      } else if (orderType == 1) {
+        syntheticPool.methods.openSellOrder(i, synTokenAmount, minSystemCoinTxAmount, synTokenPrice).send({ from: this.state.account }).then(async (result) => {
+          this.componentWillMount()
+        }).catch((err) => {
+          if (err.code === 4001) {
+            alert("Something went wrong...Code: 4001 User rejected the request.")
+          } else {
+            console.error(err);
+          }
+        });
+      }
+    }
+  }
+
+  synOpenLimitOrder = async (i, orderType, synTokenAmount, synTokenPrice) => {
+    let syntheticPool
+    if (this.state.walletConnect == false && this.state.wallet == false) {
+      alert("Wallet is not connected")
+    } else {
+      if (this.state.walletConnect == true) {
+        syntheticPool = new window.web3Con.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
+      } else if (this.state.wallet == true) {
+        syntheticPool = new window.web3.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
+      }
+      syntheticPool.methods.openLimitOrder(i, orderType, synTokenAmount, synTokenPrice).send({ from: this.state.account }).then(async (result) => {
+        this.componentWillMount()
+      }).catch((err) => {
+        if (err.code === 4001) {
+          alert("Something went wrong...Code: 4001 User rejected the request.")
+        } else {
+          console.error(err);
+        }
+      });
+    }
+  }
+
+  synCancelOrder = async (i, orderId) => {
+    let syntheticPool
+    if (this.state.walletConnect == false && this.state.wallet == false) {
+      alert("Wallet is not connected")
+    } else {
+      if (this.state.walletConnect == true) {
+        syntheticPool = new window.web3Con.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
+      } else if (this.state.wallet == true) {
+        syntheticPool = new window.web3.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
+      }
+      syntheticPool.methods.cancelOrder(i, orderId).send({ from: this.state.account }).then(async (result) => {
+        this.componentWillMount()
+      }).catch((err) => {
+        if (err.code === 4001) {
+          alert("Something went wrong...Code: 4001 User rejected the request.")
+        } else {
+          console.error(err);
+        }
+      });
+    }
+  }
+
+  synCancelAllOrder = async (i) => {
+    let syntheticPool
+    if (this.state.walletConnect == false && this.state.wallet == false) {
+      alert("Wallet is not connected")
+    } else {
+      if (this.state.walletConnect == true) {
+        syntheticPool = new window.web3Con.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
+      } else if (this.state.wallet == true) {
+        syntheticPool = new window.web3.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
+      }
+      syntheticPool.methods.cancelAllOrders(i).send({ from: this.state.account }).then(async (result) => {
+        this.componentWillMount()
+      }).catch((err) => {
+        if (err.code === 4001) {
+          alert("Something went wrong...Code: 4001 User rejected the request.")
+        } else {
+          console.error(err);
+        }
+      });
+    }
+  }
 
   /** 
    * @description - Bava airdrop function
    * @param {*} address 
    */
-
   checkAirdrop = async (address) => {
     let checksum = window.web3Ava.utils.toChecksumAddress(address)
     if (checksum in this.state.airdropList) {
@@ -1937,6 +2253,9 @@ class App extends Component {
       collRatio: [],
       collUserSegmentInfo: [],
       collPoolRemainingAsset: [],
+      synPoolSegmentInfo: [],
+      synUserAllowance: [],
+      synUserBalance: [],
       tvl: [[], []],
       apr: [[], []],
       apyDaily: [[], []],
@@ -1952,6 +2271,7 @@ class App extends Component {
       returnRatio: [[], []],
       bavaReturnRatio: [[], []],
       reinvestAmount: [[], []],
+      synUserOrderInfo: [],
       totalpendingReward: '0',
       buttonPopup: false,
       networkName: "Loading",
@@ -1972,7 +2292,8 @@ class App extends Component {
       bavaTokenAllowance: '0',
       totalPendingDebt: '0',
       systemCoinSupply: '0',
-      collateralPoolLength: '0'
+      collateralPoolLength: '0',
+      synTotalSupply: '0'
     }
   }
 
@@ -2311,8 +2632,6 @@ class App extends Component {
     />
     litepaperContent = <LitePaper
     />
-    syntheticContent = <Synthetic
-    />
     collateralContent = <Collateral
       connectMetamask={this.connectMetamask}
       collateralApprove={this.collateralApprove}
@@ -2342,6 +2661,32 @@ class App extends Component {
       collPoolRemainingAsset={this.state.collPoolRemainingAsset}
       systemCoinSupply={this.state.systemCoinSupply}
       collateralPoolLength={this.state.collateralPoolLength}
+    />
+    syntheticContent = <Synthetic
+      accountLoading={this.state.accountLoading}
+      farmloading={this.state.farmloading}
+      aprloading={this.state.aprloading}
+      synPool={this.state.synPool}
+      synTokensymbols={this.state.synTokenPairsymbol}
+      synTokenAddresses={this.state.syntokenAddress}
+      synPoolSegmentInfo={this.state.synPoolSegmentInfo}
+      synOraclePrice={this.state.synOraclePrice}
+      synPoolPrice={this.state.synPoolPrice}
+      walletConnect={this.state.walletConnect}
+      wallet={this.state.wallet}
+      systemCoinSynAllowance={this.state.systemCoinSynAllowance}
+      synUserBalance={this.state.synUserBalance}
+      synUserAllowance={this.state.synUserAllowance}
+      synUserOpenOrderLength={this.state.synUserOpenOrderLength}
+      synTotalSupply={this.state.synTotalSupply}
+      systemCoinBalance={this.state.systemCoinBalance}
+      synUserOrderInfo={this.state.synUserOrderInfo}
+      systemCoinSyntheticApprove={this.systemCoinSyntheticApprove}
+      synOpenOrder={this.synOpenOrder}
+      synOpenLimitOrder={this.synOpenLimitOrder}
+      synTokenSyntheticApprove={this.synTokenSyntheticApprove}
+      synCancelOrder={this.synCancelOrder}
+      synCancelAllOrder={this.synCancelAllOrder}
     />
 
 

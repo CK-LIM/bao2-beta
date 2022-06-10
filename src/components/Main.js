@@ -17,9 +17,9 @@ class Main extends Component {
 
   render() {
     return (
-      <div id="content">
+      <div id="content" style={{ marginTop: "150px" }}>
         <MediaQuery minWidth={771}>
-          <div className="text-center" style={{ marginTop: "120px" }}>
+          <div className="text-center" >
             <img src={baklava} width="180" height="180" className="" alt="" />
           </div>
           <div className="center text" style={{ fontSize: "45px" }}>BAKLAVA SPACE</div>
@@ -44,7 +44,7 @@ class Main extends Component {
 
 
         <MediaQuery minWidth={301} maxWidth={770}>
-          <div style={{ minWidth: "300px" }} style={{ marginTop: "120px" }}>
+          <div style={{ minWidth: "300px" }} >
             <div className="center">
               <img src={baklava} width="160" height="160" className="" alt="" />
             </div>
@@ -109,7 +109,7 @@ class Main extends Component {
 
 
         <MediaQuery maxWidth={300}>
-          <div style={{ minWidth: "300px" }} style={{ marginTop: "100px" }}>
+          <div style={{ minWidth: "300px" }}>
             <div className="text-center">
               <img src={baklava} width="140" height="140" className="" alt="" />
             </div>

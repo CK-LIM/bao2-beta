@@ -12,7 +12,7 @@ class Footer extends Component {
     render() {
         return (
             <footer id="content" className="mt-5">
-                <div style={{ marginTop: '18px' }}>
+                <div style={{ marginTop: '200px', marginBottom: '10px' }}>
                     <div className="rowS center ">
                         <img className="center" src={baklava} width="25" alt="" />&nbsp;&nbsp;
                         <div className="center" style={{ color: "black", fontSize: '16px', marginRight: "25px" }}><b>BAKLAVA.SPACE © 2022 </b></div>

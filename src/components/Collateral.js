@@ -24,7 +24,7 @@ class Collateral extends Component {
         this.state = {
             collVaultOpen: [],
             collRatioChange: [],
-            collRatioChangeUpdate: false,
+            collRatioChangeUpdate: [],
             addLP: [],
             borrowUSB: [],
             actionOpen: [[], []]
@@ -51,7 +51,7 @@ class Collateral extends Component {
             this.state.borrowUSB[i] = 0
         }
         this.state.collRatioChange[i] = ((parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')) + parseFloat(this.state.addLP[i])) * parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTValue[i], 'Ether'))) / (parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[i].toLocaleString('en-US', 'Ether'))) + parseFloat(this.state.borrowUSB[i])) * 100
-        this.setState({ collRatioChangeUpdate: true })
+        this.state.collRatioChangeUpdate[i] = true
         this.setState({ ntg })  //do ntg, just to push react setstate
     }
 
@@ -71,7 +71,7 @@ class Collateral extends Component {
                 this.state.collRatioChange[i] = 0
             }
         }
-        this.setState({ collRatioChangeUpdate: true })
+        this.state.collRatioChangeUpdate[i] = true
         this.setState({ ntg })  //do ntg, just to push react setstate
     }
 
@@ -87,7 +87,7 @@ class Collateral extends Component {
         }
 
         this.state.collRatioChange[i] = ((parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')) + parseFloat(this.state.addLP[i])) * parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTValue[i].toLocaleString('en-US'), 'Ether'))) / (parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[i].toLocaleString('en-US', 'Ether'))) + parseFloat(this.state.borrowUSB[i])) * 100
-        this.setState({ collRatioChangeUpdate: true })
+        this.state.collRatioChangeUpdate[i] = true
         this.setState({ ntg })  //do ntg, just to push react setstate
     }
 
@@ -112,7 +112,7 @@ class Collateral extends Component {
             newCollRatioChange = (totalCollateral) * bigInt(100000).value / (totalDebt)
         }
         this.state.collRatioChange[i] = Number(newCollRatioChange) / 1000
-        this.setState({ collRatioChangeUpdate: true })
+        this.state.collRatioChangeUpdate[i] = true
         this.setState({ ntg })  //do ntg, just to push react setstate
     }
 
@@ -127,26 +127,22 @@ class Collateral extends Component {
         return str.split("-")[1] || 0;
     }
 
-    setAction(int, i, boolean) {
+    setAction(page, i, boolean) {
         let ntg = 0
-        this.state.actionOpen[i][int] = boolean
+        this.state.actionOpen[i][page] = boolean
         this.state.collRatioChange[i] = '0'
         this.state.addLP[i] = '0'
         this.state.borrowUSB[i] = '0'
-        this.setState({ collRatioChangeUpdate: false })
+        this.state.collRatioChangeUpdate[i] = false
         this.setState({ ntg })
     }
 
-    clickfarmOpen(pair, boolean) {
+    clickfarmOpen(pair) {
         let ntg = 0
-        this.state.collVaultOpen[pair] = boolean
-        this.state.actionOpen[pair][0] = boolean
+        this.state.collVaultOpen[pair] = !(this.state.collVaultOpen[pair])
+        this.state.actionOpen[pair][0] = true
         this.setState({ ntg })  //do ntg, just to push react setstate
     }
-
-
-
-
 
 
     render() {
@@ -241,7 +237,7 @@ class Collateral extends Component {
                         <div className="textMiddleBold1 float-right" style={{ marginRight: '5px' }}><big>TVL $ {parseFloat(this.props.collTotalTVL).toLocaleString('en-US', { maximumFractionDigits: 0 })}</big></div><br /><br />
                         <span className="float-left">
                             <ButtonGroup>
-                                <Button className="mr-1" variant="outlined" size="small" color="inherit" component={Link} to="/menu/v2">Pangolin</Button>
+                                <Button className="mr-1" variant="outlined" size="small" color="inherit" component={Link} to="/collateral/">Pangolin</Button>
                             </ButtonGroup>
                         </span>
                     </div>
@@ -261,8 +257,10 @@ class Collateral extends Component {
                                                     <div className="card mb-3 cardbody">
                                                         <div className="card-body" style={{ padding: '1rem' }}>
                                                             <div>
-                                                                <div>
-                                                                    <div className="float-left">
+                                                                <div className='rowC' style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
+                                                                    this.clickfarmOpen(i)
+                                                                }}>
+                                                                    <div className="float-left" style={{ minWidth: '200px' }}>
                                                                         <div className="textMiddle"><b>{this.props.collateralPoolSegmentInfo[i].lpName}(BRT){this.props.collateralPoolSegmentInfo[i].status}</b></div>
                                                                         <div className="textGrey exLink0" onClick={() => {
                                                                             window.open(this.props.collateralPoolSegmentInfo[i].projectLink, '_blank')
@@ -274,8 +272,8 @@ class Collateral extends Component {
                                                                             window.open(this.props.collateralPoolSegmentInfo[i].farmContract, '_blank')
                                                                         }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     </div>
-                                                                    <div className="float-right mr-auto">
-                                                                        <table>
+                                                                    <div>
+                                                                        <table className="float-right mr-auto">
                                                                             <thead className="textBlackSmall" style={{ color: 'black' }}>
                                                                                 <tr>
                                                                                     <th scope="col" width="140">Wallet</th>
@@ -288,10 +286,12 @@ class Collateral extends Component {
 
                                                                             <tbody className="textGrey">
                                                                                 <tr>
-                                                                                    <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTBalanceAccount[i]), 'Ether').toLocaleString('en-US', { maximumFractionDigits: 18 })}</div> : <div className="center">
-                                                                                        <div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
-                                                                                    <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 18 })}</div> : <div className="center">
-                                                                                        <div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
+                                                                                    <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTBalanceAccount[i]), 'Ether').toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
+                                                                                        : <div className="center">
+                                                                                            <div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
+                                                                                    <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
+                                                                                        : <div className="center">
+                                                                                            <div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
                                                                                     <td className=""><div>{parseFloat(this.props.collateralPoolSegmentInfo[i].minCollRatio).toLocaleString('en-US', { maximumFractionDigits: 5 })}%</div></td>
                                                                                     <td className="">1%</td>
                                                                                     <td className="">{this.props.aprloading ? <div>$ {parseFloat(this.props.colltvl[i]).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div> : <div className="center">
@@ -301,18 +301,10 @@ class Collateral extends Component {
                                                                         </table>
                                                                     </div>
                                                                 </div>
-                                                                <br /><br /><br /><br />
-
-
-
 
 
                                                                 {this.state.collVaultOpen[i] ?
                                                                     <div>
-                                                                        <div>
-                                                                            <Buttons variant="outline-secondary" size="sm" style={{ width: '60px' }} onClick={() => {
-                                                                                this.clickfarmOpen(i, false)
-                                                                            }}>Close</Buttons>&nbsp;&nbsp;&nbsp;</div>
                                                                         {this.props.wallet || this.props.walletConnect ?
                                                                             <div className="borderTop ">
                                                                                 <div className="rowC mt-3">
@@ -321,7 +313,7 @@ class Collateral extends Component {
                                                                                             <div className="card-body" style={{ padding: '0.5rem' }}>
                                                                                                 <span className="float-left" style={{ color: 'black' }}><small>Trove available USB</small></span><br />
                                                                                                 <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ? <div>{(parseFloat(this.props.collPoolRemainingAsset[i]).toLocaleString('en-US', { maximumFractionDigits: 2 }))} USB</div> :
-                                                                                                    <div className="ml-3 lds-facebook"><div></div><div></div><div></div></div>}</small></span>
+                                                                                                    <div className="ml-3"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small></span>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className="card cardbody  mr-3" style={{ marginBottom: '6px', width: '300px' }}>
@@ -329,13 +321,13 @@ class Collateral extends Component {
                                                                                                 <span className="float-left" style={{ color: 'black' }}><small>Your Coll. Ratio</small></span><br />
                                                                                                 <span className="float-left" style={{ marginTop: '8px' }}><small>{this.props.accountLoading ?
                                                                                                     <div>
-                                                                                                        {(this.state.collRatioChangeUpdate == true) ?
+                                                                                                        {(this.state.collRatioChangeUpdate[i] == true) ?
                                                                                                             <div>{this.state.collRatioChange[i] > this.props.collateralPoolSegmentInfo[i].minCollRatio ? <div style={{ color: 'black' }}>{this.state.collRatioChange[i].toLocaleString('en-US', { maximumFractionDigits: 3 })} %</div>
                                                                                                                 : <div style={{ color: 'red' }}>{parseFloat(this.state.collRatioChange[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })}%</div>}</div>
                                                                                                             : <div>{this.props.collRatio[i] > this.props.collateralPoolSegmentInfo[i].minCollRatio ? <div style={{ color: 'black' }}>{this.props.collRatio[i].toLocaleString('en-US', { maximumFractionDigits: 3 })} %</div>
                                                                                                                 : <div style={{ color: 'red' }}>{parseFloat(this.props.collRatio[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} %</div>}</div>}
                                                                                                     </div>
-                                                                                                    : <div className="ml-3 lds-facebook"><div></div><div></div><div></div></div>}</small>
+                                                                                                    : <div className="ml-3"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small>
                                                                                                 </span>
                                                                                             </div>
                                                                                         </div>
@@ -348,17 +340,15 @@ class Collateral extends Component {
                                                                                                             <div>{(parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')) - parseFloat(this.props.collMaxBorrowAmount / this.props.collBRTValue[i] * this.props.collateralPoolSegmentInfo[i].minCollRatio / 100)).toLocaleString('en-US', { maximumFractionDigits: 18 })} BRT / $ {((parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')) - parseFloat(this.props.collMaxBorrowAmount / this.props.collBRTValue[i] * this.props.collateralPoolSegmentInfo[i].minCollRatio / 100)) * window.web3Ava.utils.fromWei(this.props.collBRTValue[i], 'ether')).toLocaleString('en-US', { maximumFractionDigits: 3 })}</div>
                                                                                                             : <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 18 })} BRT / $ {(parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')) * window.web3Ava.utils.fromWei(this.props.collBRTValue[i], 'ether')).toLocaleString('en-US', { maximumFractionDigits: 2 })} </div>}</div>}
                                                                                                     </div>
-                                                                                                    : <div className="ml-3 lds-facebook"><div></div><div></div><div></div>
-                                                                                                    </div>}
-                                                                                                </small>
+                                                                                                    : <div className="ml-3"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small>
                                                                                                 </span>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className="card cardbody  mr-3" style={{ width: '300px' }}>
                                                                                             <div className="card-body" style={{ padding: '0.5rem' }}>
                                                                                                 <span className="float-left" style={{ color: 'black' }}><small>Total Debt</small></span><br />
-                                                                                                <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[i].toLocaleString('en-US'), 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div> :
-                                                                                                    <div className="ml-3 lds-facebook"><div></div><div></div><div></div></div>}</small></span>
+                                                                                                <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[i].toLocaleString('en-US'), 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div>
+                                                                                                    : <div className="ml-3"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small></span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -536,12 +526,11 @@ class Collateral extends Component {
                                                                                             }
 
                                                                                             <div className='borderBottom'></div>
-                                                                                            <div>
-                                                                                                <div className='ml-2 mr-2' />
+                                                                                            <div className='ml-1 mr-1'>
                                                                                                 {this.props.collUserSegmentInfo[i] > 0 ?
                                                                                                     <div>
                                                                                                         {this.state.actionOpen[i][0] == true ?
-                                                                                                            <div className='ml-2'>
+                                                                                                            <div>
                                                                                                                 <CollResize
                                                                                                                     wallet={this.props.wallet}
                                                                                                                     walletConnect={this.props.walletConnect}
@@ -563,7 +552,7 @@ class Collateral extends Component {
                                                                                                             </div>
                                                                                                             : <div>
                                                                                                                 {this.state.actionOpen[i][1] == true ?
-                                                                                                                    <div className='ml-2'>
+                                                                                                                    <div >
                                                                                                                         <CollOnlyBorrow
                                                                                                                             wallet={this.props.wallet}
                                                                                                                             walletConnect={this.props.walletConnect}
@@ -585,7 +574,7 @@ class Collateral extends Component {
                                                                                                                     </div>
                                                                                                                     : <div>
                                                                                                                         {this.state.actionOpen[i][2] == true ?
-                                                                                                                            <div className='ml-2'>
+                                                                                                                            <div>
                                                                                                                                 <CollRepay
                                                                                                                                     wallet={this.props.wallet}
                                                                                                                                     walletConnect={this.props.walletConnect}
@@ -597,14 +586,13 @@ class Collateral extends Component {
                                                                                                                                     collUserSegmentInfo={this.props.collUserSegmentInfo}
                                                                                                                                     systemCoinBalance={this.props.systemCoinBalance}
                                                                                                                                     systemCoinCollAllowance={this.props.systemCoinCollAllowance}
-                                                                                                                                    systemCoinBalance={this.props.systemCoinBalance}
                                                                                                                                     reduceUSBDebtRatio={this.reduceUSBDebtRatio}
                                                                                                                                     systemCoinCollApprove={this.props.systemCoinCollApprove}
                                                                                                                                     repayUSB={this.props.repayUSB}
                                                                                                                                     i={i}
                                                                                                                                 />
                                                                                                                             </div>
-                                                                                                                            : <div className='ml-2'>
+                                                                                                                            : <div>
                                                                                                                                 <CollWithdraw
                                                                                                                                     wallet={this.props.wallet}
                                                                                                                                     walletConnect={this.props.walletConnect}
@@ -626,7 +614,7 @@ class Collateral extends Component {
                                                                                                         }</div> :
                                                                                                     <div>
                                                                                                         {this.state.actionOpen[i][1] ?
-                                                                                                            <div className='ml-2'>
+                                                                                                            <div>
                                                                                                                 <CollOnlyDep
                                                                                                                     wallet={this.props.wallet}
                                                                                                                     walletConnect={this.props.walletConnect}
@@ -646,7 +634,7 @@ class Collateral extends Component {
                                                                                                                 />
                                                                                                             </div>
                                                                                                             :
-                                                                                                            <div className='ml-2'>
+                                                                                                            <div>
                                                                                                                 <CollDepBorrow
                                                                                                                     wallet={this.props.wallet}
                                                                                                                     walletConnect={this.props.walletConnect}
@@ -678,11 +666,7 @@ class Collateral extends Component {
                                                                                 <span className="mt-3" style={{ color: 'black' }}><small>Wallet Connection to Avalanche required</small></span>
                                                                             </div>}
                                                                     </div> :
-                                                                    <div>
-                                                                        <Buttons variant="outline-secondary" size="sm" style={{ width: '60px' }} onClick={() => {
-                                                                            this.clickfarmOpen(i, true)
-                                                                        }}><b>Open</b></Buttons>
-                                                                    </div>
+                                                                    <div></div>
                                                                 }
                                                             </div>
                                                         </div>

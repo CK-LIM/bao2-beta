@@ -22,12 +22,9 @@ class Menu extends Component {
         this.clickfarmOpen = this.clickfarmOpen.bind(this)
     }
 
-    clickfarmOpen(pair, boolean) {
-        // this.setState({
-        //     farmV2_3Open[pair]: boolean
-        // })
+    clickfarmOpen(pair) {
         let ntg = 0
-        this.state.farmV2_3Open[pair] = boolean
+        this.state.farmV2_3Open[pair] = !(this.state.farmV2_3Open[pair])
         this.setState({ ntg })  //do ntg, just to push react setstate
     }
 
@@ -35,7 +32,7 @@ class Menu extends Component {
         return (
             <div id="content" className="mt-5" style={{ margin: "0", color: '#ff9a04' }}>
                 <div >
-                    <div className="ml-auto mr-auto card mb-3 cardbody" style={{ width: '1000px', height: '170px', color: 'black' }}>
+                    <div className="ml-auto mr-auto card mb-3 cardbody" style={{ height: '170px', color: 'black' }}>
                         {this.props.wallet || this.props.walletConnect ?
                             <div className="card-body">
                                 <div className='mb-5'>
@@ -117,7 +114,7 @@ class Menu extends Component {
 
                 <div className="center" style={{ color: 'grey' }}><small>&nbsp;! Attention:&nbsp;Be sure to read <a href="https://baklavaspace.gitbook.io/" target="_blank">baklavaspace.gitbook</a> before using the pools so you are familiar with protocol risks and fees!</small></div>
 
-                <div className="ml-auto mr-auto mt-3" style={{ width: '1000px' }}>
+                <div className="ml-auto mr-auto mt-3" style={{}}>
                     <div className="">
                         <div className="textMiddleBold1 float-left" style={{ marginLeft: '2px' }}><big>Select Platform</big></div>
                         <div className="textMiddleBold1 float-right" style={{ marginRight: '5px' }}><big>TVL $ {parseFloat(this.props.totalTVL).toLocaleString('en-US', { maximumFractionDigits: 0 })}</big></div><br /><br />
@@ -134,7 +131,7 @@ class Menu extends Component {
 
                     <div>
                         {this.props.farmloading ?
-                            <div className="" style={{ width: '1000px' }}>
+                            <div className="" style={{ }}>
                                 {this.props.poolSegmentInfoV2_3[0].map((poolSegmentInfoV2_3, key) => {
                                     let i = this.props.poolSegmentInfoV2_3[0].indexOf(poolSegmentInfoV2_3)
                                     return (
@@ -144,7 +141,9 @@ class Menu extends Component {
                                                     <div className="card mb-3 cardbody">
                                                         <div className="card-body" style={{ padding: '1rem' }}>
                                                             <div>
-                                                                <div>
+                                                                <div className='rowC' style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
+                                                                    this.clickfarmOpen(i)
+                                                                }}>
                                                                     <div className="float-left">
                                                                         <div className="textMiddle"><b>{this.props.poolSegmentInfoV2_3[0][i].lpName}{this.props.poolSegmentInfoV2_3[0][i].status}</b></div>
                                                                         <div className="textGrey exLink0" onClick={() => {
@@ -157,8 +156,8 @@ class Menu extends Component {
                                                                             window.open(this.props.poolSegmentInfoV2_3[0][i].farmContract, '_blank')
                                                                         }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     </div>
-                                                                    <div className="float-right mr-auto">
-                                                                        <table>
+                                                                    <div >
+                                                                        <table className="float-right mr-auto">
                                                                             <thead className="textBlackSmall" style={{ color: 'black' }}>
                                                                                 <tr>
                                                                                     <th scope="col" width="140">Wallet</th>
@@ -167,7 +166,7 @@ class Menu extends Component {
                                                                                     <th scope="col">APR&nbsp;<Popup
                                                                                         trigger={open => (<span><BsFillQuestionCircleFill style={{ marginBottom: "2px" }} size={10} /></span>)}
                                                                                         on="hover"
-                                                                                        offsetY={-8}
+                                                                                        offsetY={0}
                                                                                         offsetX={5}
                                                                                         position="right center"
                                                                                         contentStyle={{ width: '150px' }}
@@ -178,7 +177,7 @@ class Menu extends Component {
                                                                                     <th scope="col">APY <Popup
                                                                                         trigger={open => (<span><BsFillQuestionCircleFill style={{ marginBottom: "2px" }} size={10} /></span>)}
                                                                                         on="hover"
-                                                                                        offsetY={-8}
+                                                                                        offsetY={0}
                                                                                         offsetX={5}
                                                                                         position="right center"
                                                                                         contentStyle={{ width: '150px' }}
@@ -206,13 +205,12 @@ class Menu extends Component {
                                                                         </table>
                                                                     </div>
                                                                 </div>
-                                                                <br /><br /><br /><br />
+
+
+
+
                                                                 {this.state.farmV2_3Open[i] ?
                                                                     <div>
-                                                                        <div>
-                                                                            <Buttons variant="outline-secondary" size="sm" style={{ width: '60px' }} onClick={() => {
-                                                                                this.clickfarmOpen(i, false)
-                                                                            }}>Close</Buttons>&nbsp;&nbsp;&nbsp;</div>
                                                                         {this.props.wallet || this.props.walletConnect ? <div className="borderTop "><div className="rowC mt-3">
                                                                             <div>
                                                                                 <div className="card cardbody float-left mr-3 mb-3" style={{ width: '300px' }}>
@@ -300,10 +298,7 @@ class Menu extends Component {
                                                                                 <span className="mt-3" style={{ color: 'black' }}><small>Wallet Connection to Avalanche required</small></span>
                                                                             </div>}
                                                                     </div> :
-                                                                    <div>
-                                                                        <Buttons variant="outline-secondary" size="sm" style={{ width: '60px' }} onClick={() => {
-                                                                            this.clickfarmOpen(i, true)
-                                                                        }}><b>Open</b></Buttons></div>}
+                                                                    <div></div>}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -324,8 +319,10 @@ class Menu extends Component {
                                                     <div className="card mb-3 cardbody">
                                                         <div className="card-body" style={{ padding: '1rem' }}>
                                                             <div>
-                                                                <div>
-                                                                    <div className="float-left">
+                                                                <div className='rowC' style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
+                                                                    this.clickfarmOpen(i)
+                                                                }}>
+                                                                    <div className="float-left" style={{ minWidth: '160px' }}>
                                                                         <div className="textMiddle"><b>{this.props.poolSegmentInfoV2_3[0][i].lpName}{this.props.poolSegmentInfoV2_3[0][i].status}</b></div>
                                                                         <div className="textGrey exLink0" onClick={() => {
                                                                             window.open(this.props.poolSegmentInfoV2_3[0][i].projectLink, '_blank')
@@ -337,8 +334,8 @@ class Menu extends Component {
                                                                             window.open(this.props.poolSegmentInfoV2_3[0][i].farmContract, '_blank')
                                                                         }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     </div>
-                                                                    <div className="float-right mr-auto">
-                                                                        <table>
+                                                                    <div>
+                                                                        <table className="float-right mr-auto">
                                                                             <thead className="textBlackSmall" style={{ color: 'black' }}>
                                                                                 <tr>
                                                                                     <th scope="col" width="140">Wallet</th>
@@ -347,7 +344,7 @@ class Menu extends Component {
                                                                                     <th scope="col">APR&nbsp;<Popup
                                                                                         trigger={open => (<span><BsFillQuestionCircleFill style={{ marginBottom: "2px" }} size={10} /></span>)}
                                                                                         on="hover"
-                                                                                        offsetY={-8}
+                                                                                        offsetY={0}
                                                                                         offsetX={5}
                                                                                         position="right center"
                                                                                         contentStyle={{ width: '150px' }}
@@ -358,7 +355,7 @@ class Menu extends Component {
                                                                                     <th scope="col">APY <Popup
                                                                                         trigger={open => (<span><BsFillQuestionCircleFill style={{ marginBottom: "2px" }} size={10} /></span>)}
                                                                                         on="hover"
-                                                                                        offsetY={-8}
+                                                                                        offsetY={0}
                                                                                         offsetX={5}
                                                                                         position="right center"
                                                                                         contentStyle={{ width: '150px' }}
@@ -386,13 +383,11 @@ class Menu extends Component {
                                                                         </table>
                                                                     </div>
                                                                 </div>
-                                                                <br /><br /><br /><br />
+
+
+
                                                                 {this.state.farmV2_3Open[i] ?
                                                                     <div>
-                                                                        <div>
-                                                                            <Buttons variant="outline-secondary" size="sm" style={{ width: '60px' }} onClick={() => {
-                                                                                this.clickfarmOpen(i, false)
-                                                                            }}>Close</Buttons>&nbsp;&nbsp;&nbsp;</div>
                                                                         {this.props.wallet || this.props.walletConnect ? <div className="borderTop "><div className="rowC mt-3">
                                                                             <div>
                                                                                 <div className="card cardbody float-left mr-3 mb-3" style={{ width: '300px' }}>
@@ -480,10 +475,7 @@ class Menu extends Component {
                                                                                 <span className="mt-3" style={{ color: 'black' }}><small>Wallet Connection to Avalanche required</small></span>
                                                                             </div>}
                                                                     </div> :
-                                                                    <div>
-                                                                        <Buttons variant="outline-secondary" size="sm" style={{ width: '60px' }} onClick={() => {
-                                                                            this.clickfarmOpen(i, true)
-                                                                        }}><b>Open</b></Buttons></div>}
+                                                                    <div></div>}
                                                             </div>
                                                         </div>
                                                     </div>

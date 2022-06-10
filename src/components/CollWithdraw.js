@@ -159,11 +159,11 @@ class CollWithdraw extends Component {
             <div className="mb-1 textWarningColor">{this.state.messageWarningCR} </div>
 
             <div className="mt-3">
-              <div className="float-left" style={{ color: 'grey' }}><img src={baklava} height='20' alt="" />&nbsp;<small>Minimum borrowing amount: 10 USB </small></div>
+              <div className="float-left" style={{ color: 'grey' }}><img src={baklava} style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
               <div className="float-right" >{this.props.collUserSegmentInfo[this.props.i] > 0 && this.state.txValidAmount == true?
-                <Button type="submit" className="btn btn-primary btn-sm">&nbsp;Confirm&nbsp;</Button>
+                <Button type="submit" className="btn btn-primary btn-sm">Confirm</Button>
                 : <Button className="textDarkMedium1 btn-sm" variant="outline">
-                  &nbsp;Confirm&nbsp;</Button>}&nbsp;
+                  Confirm</Button>}
               </div>
             </div>
           </div>

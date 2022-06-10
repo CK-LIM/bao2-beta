@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import baklava from '../baklava.png';
+import usbPicture from '../USB.png';
 import Button from 'react-bootstrap/Button'
 import 'reactjs-popup/dist/index.css';
 import './App.css';
@@ -159,7 +160,7 @@ class CollOnlyBorrow extends Component {
                     }}>80%</Button>
                   </div>
                   <div className="input-group-text cardbody" style={{ padding: '0 0.5rem' }}>
-                    <img src={baklava} height='25' className="" alt="" />
+                    <img src={usbPicture} height='25' className="" alt="" />
                   </div>
                 </div >
               </div>
@@ -168,18 +169,18 @@ class CollOnlyBorrow extends Component {
             <div className="mb-1" style={{ color: 'red' }}>{this.state.messageCR} </div>
             <div className="mb-1 textWarningColor">{this.state.messageWarningCR} </div>
             <div className="mt-3">
-              <div className="float-left" style={{ color: 'grey' }}><img src={baklava} height='20' alt="" />&nbsp;<small>Minimum borrowing amount: 10 USB </small></div>
+              <div className="float-left" style={{ color: 'grey' }}><img src={baklava} style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
               <div className="float-right" >{(this.props.collBRTSegmentAllowance[this.props.i] > 2000000000000000000000000000 && this.state.txUSBValidAmount === true) ?
-                <Button type="submit" className="btn btn-primary btn-sm">&nbsp;Confirm&nbsp;</Button>
+                <Button type="submit" className="btn btn-primary btn-sm">Confirm</Button>
                 : <Button className="textDarkMedium1 btn-sm" variant="outline">
-                  &nbsp;Confirm&nbsp;</Button>}&nbsp;
+                  Confirm</Button>}
               </div>
               <div className="float-right mr-1">{this.props.collBRTSegmentAllowance[this.props.i] <= 2000000000000000000000000000 ?
                 <Button className="btn btn-primary btn-sm" onClick={(event) => {
                   this.props.collateralApprove(this.props.i)
-                }}>&nbsp;Approve&nbsp;</Button>
+                }}>Approve</Button>
                 : <Button className="textDarkMedium1 btn-sm" variant="outline">
-                  &nbsp;Approved&nbsp;</Button>}
+                  Approved</Button>}
               </div>
             </div>
           </div>

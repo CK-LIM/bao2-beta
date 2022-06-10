@@ -35,7 +35,7 @@ class Kyber extends Component {
         return (
             <div id="content" className="mt-3" style={{ margin: "0", color: '#ff9a04' }}>
                 <div >
-                    <div className="ml-auto mr-auto card mb-3 cardbody" style={{ width: '1000px', height: '170px', color: 'black' }}>
+                    <div className="ml-auto mr-auto card mb-3 cardbody" style={{ height: '170px', color: 'black' }}>
                         {this.props.wallet || this.props.walletConnect ?
                             <div className="card-body">
                                 <div className='mb-5'>
@@ -117,7 +117,7 @@ class Kyber extends Component {
 
                 <div className="center" style={{ color: 'grey' }}><small>&nbsp;! Attention:&nbsp;Be sure to read <a href="https://baklavaspace.gitbook.io/" target="_blank">baklavaspace.gitbook</a> before using the pools so you are familiar with protocol risks and fees!</small></div>
                
-                <div className="ml-auto mr-auto mt-3" style={{ width: '1000px' }}>
+                <div className="ml-auto mr-auto mt-3" style={{ }}>
                     <div className="">
                         <div className="textMiddleBold1 float-left" style={{ marginLeft: '2px' }}><big>Select Platform</big></div>
                         <div className="textMiddleBold1 float-right" style={{ marginRight: '5px' }}><big>TVL $ {parseFloat(this.props.totalTVL).toLocaleString('en-US', { maximumFractionDigits: 0 })}</big></div><br /><br />
@@ -135,7 +135,7 @@ class Kyber extends Component {
 
                     <div>
                         {this.props.farmloading ?
-                            <div className="" style={{ width: '1000px' }}>
+                            <div className="" style={{ }}>
 
 
 
