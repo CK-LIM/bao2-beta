@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import './App.css';
 import Footer from './Footer'
+import MediaQuery from 'react-responsive';
 import baklava from '../baklava.png';
 import search from '../search.png';
-import { Link } from 'react-router-dom';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Buttons from 'react-bootstrap/Button'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import exlink from '../link.png'
-import Modal from 'react-bootstrap/Modal'
 import { BsFillQuestionCircleFill, BsGearFill } from 'react-icons/bs';
 import 'reactjs-popup/dist/index.css';
 import Popup from 'reactjs-popup';
@@ -216,7 +215,7 @@ class Airdrop extends Component {
 
     render() {
         return (
-            <div id="content" style={{ marginTop: "50px" }}>
+            <div id="content" style={{ marginTop: "50px", minWidth: '350px' }}>
                 <label className="textWhite left mb-2 mt-2" style={{ fontSize: '35px', color: 'black' }}><big><b>Trade</b></big></label>
 
                 <div className="card-body" style={{ backgroundColor: '#fffcf0', padding: '0 0rem' }}>
@@ -255,7 +254,7 @@ class Airdrop extends Component {
 
 
 
-                <div className="ml-auto mr-auto mt-3">
+                <div className="ml-auto mr-auto mt-3" style={{ minWidth: '350px' }}>
                     {this.props.farmloading ?
                         <div className="" style={{ marginBottom: '500px' }}>
                             {this.props.synPoolSegmentInfo.map((synPoolSegmentInfo, key) => {
@@ -270,59 +269,169 @@ class Airdrop extends Component {
                                                             <div className="card-body rowC" style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
                                                                 this.clickfarmOpen(i)
                                                             }} >
-                                                                <div className="float-left rowC" style={{minWidth:'220px'}}>
-                                                                    <span className="mr-3">
-                                                                        <div className="textMiddle"><img src={`https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png`} width="55" height="55" alt="" /></div>
-                                                                        {/* https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png, https://testnet-dex.functionx.io/img/${this.props.synPoolSegmentInfo[i].icon}.svg, https://eodhistoricaldata.com/img/logos/US/TSLA.png, https://cdn.indiawealth.in/public/images/techstars/TSLA.png */}
-                                                                    </span>
-                                                                    <span>
-                                                                        <div className="textMiddle"><b>{this.props.synPoolSegmentInfo[i].synTokenPairsymbol}{this.props.synPoolSegmentInfo[i].status}</b></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.synPoolSegmentInfo[i].projectLink, '_blank')
-                                                                        }}>LP-Platform: {this.props.synPoolSegmentInfo[i].platform} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.synPoolSegmentInfo[i].farmContract, '_blank')
-                                                                        }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
-                                                                    </span>
-                                                                </div>
+                                                                <MediaQuery minWidth={901}>
+                                                                    <div className="float-left rowC" style={{ minWidth: '220px' }}>
+                                                                        <span className="mr-3">
+                                                                            <div className="textMiddle"><img src={`https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png`} width="55" height="55" alt="" /></div>
+                                                                            {/* https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png, https://testnet-dex.functionx.io/img/${this.props.synPoolSegmentInfo[i].icon}.svg, https://eodhistoricaldata.com/img/logos/US/TSLA.png, https://cdn.indiawealth.in/public/images/techstars/TSLA.png */}
+                                                                        </span>
+                                                                        <span>
+                                                                            <div className="textMiddle"><b>{this.props.synPoolSegmentInfo[i].synTokenPairsymbol}{this.props.synPoolSegmentInfo[i].status}</b></div>
+                                                                            <div className="textGrey exLink0" onClick={() => {
+                                                                                window.open(this.props.synPoolSegmentInfo[i].projectLink, '_blank')
+                                                                            }}>{this.props.synPoolSegmentInfo[i].synTokenCompany}</div>
+                                                                            <div className="textGrey exLink0" onClick={() => {
+                                                                                window.open(this.props.synPoolSegmentInfo[i].farmContract, '_blank')
+                                                                            }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                        </span>
+                                                                    </div>
+                                                                </MediaQuery>
+                                                                <MediaQuery maxWidth={900}>
+                                                                    <div className="float-left rowC" style={{ minWidth: '220px' }}>
+                                                                        <span className="mr-3">
+                                                                            <div className="textMiddle"><img src={`https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png`} width="40" height="40" alt="" /></div>
+                                                                            {/* https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png, https://testnet-dex.functionx.io/img/${this.props.synPoolSegmentInfo[i].icon}.svg, https://eodhistoricaldata.com/img/logos/US/TSLA.png, https://cdn.indiawealth.in/public/images/techstars/TSLA.png */}
+                                                                        </span>
+                                                                        <span>
+                                                                            <div className="textMiddle"><b>{this.props.synPoolSegmentInfo[i].synTokenPairsymbol}{this.props.synPoolSegmentInfo[i].status}</b></div>
+                                                                            <div className="textGrey exLink0" onClick={() => {
+                                                                                window.open(this.props.synPoolSegmentInfo[i].projectLink, '_blank')
+                                                                            }}>{this.props.synPoolSegmentInfo[i].synTokenCompany}</div>
+                                                                        </span>
+                                                                    </div>
+                                                                </MediaQuery>
                                                                 <span>
-                                                                    <table className="float-right">
-                                                                        <thead className="textBlackSmall" style={{ color: 'black' }}>
-                                                                            <tr>
-                                                                                <th scope="col">Wallet</th>
-                                                                                <th scope="col">Oracle Price</th>
-                                                                                <th scope="col">Pool Price</th>
-                                                                                <th scope="col">Total Supply</th>
-                                                                            </tr>
-                                                                        </thead>
+                                                                    <MediaQuery minWidth={901}>
+                                                                        <table className="float-right">
+                                                                            <thead className="textBlackSmall" style={{ color: 'black' }}>
+                                                                                <tr>
+                                                                                    <th scope="col">Wallet</th>
+                                                                                    <th scope="col">Oracle Price</th>
+                                                                                    <th scope="col">Pool Price</th>
+                                                                                    <th scope="col">Total Supply</th>
+                                                                                </tr>
+                                                                            </thead>
 
-                                                                        <tbody className="textGrey">
-                                                                            <tr>
-                                                                                <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(this.props.synUserBalance[i] / 1000).toLocaleString('en-US', { maximumFractionDigits: 5 })}</div>
-                                                                                    : <div className="center"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
-                                                                                <td className=""><div>{parseFloat(this.props.synOraclePrice[i] / 100000000).toLocaleString('en-US', { maximumFractionDigits: 18 })} USB</div></td>
-                                                                                <td className=""><div>{(this.props.synPoolPrice[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
-                                                                                <td className="">{this.props.synTotalSupply[i] / 1000}</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
+                                                                            <tbody className="textGrey">
+                                                                                <tr>
+                                                                                    <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(this.props.synUserBalance[i] / 1000).toLocaleString('en-US', { maximumFractionDigits: 5 })}</div>
+                                                                                        : <div className="center"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
+                                                                                    <td className=""><div>{parseFloat(this.props.synOraclePrice[i] / 100000000).toLocaleString('en-US', { maximumFractionDigits: 18 })} USB</div></td>
+                                                                                    <td className=""><div>{(this.props.synPoolPrice[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
+                                                                                    <td className="">{this.props.synTotalSupply[i] / 1000}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </MediaQuery>
+                                                                    <MediaQuery maxWidth={900}>
+                                                                        <table className="float-right">
+                                                                            <thead className="textBlackSmall" style={{ color: 'black' }}>
+                                                                                <tr>
+                                                                                    <th scope="col" style={{textAlign: 'end'}}>Pool Price</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody className="textGrey">
+                                                                                <tr>
+                                                                                    <td className="" style={{textAlign: 'end'}}><div>{(this.props.synPoolPrice[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </MediaQuery>
                                                                 </span>
                                                                 <br />
                                                             </div>
                                                         </div>
 
-
-
-
-
-
                                                         {this.state.synPoolOpen[i] ?
                                                             <div>
                                                                 {this.props.wallet || this.props.walletConnect ?
                                                                     <div className="borderTop ">
-                                                                        <div className="rowC mt-3">
-                                                                            <div>
-                                                                                <div className="card cardbody mr-3 mb-2" style={{ width: '300px' }}>
+                                                                        <div className="mt-3">
+                                                                            <MediaQuery minWidth={761}>
+                                                                                <div className="float-left">
+                                                                                    <div className="card cardbody mr-3 mb-2">
+                                                                                        <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                            <div className="" style={{ marginBottom: '5px', color: 'black' }}><small>Min Received after slippage ({(this.state.slippage[i] / 100).toFixed(2)}%)</small></div>
+                                                                                            <div className="" style={{ color: 'black' }}><small>
+                                                                                                <div>{(this.state.minReceiveChangeUpdate[i] == true) ?
+                                                                                                    <div>{this.state.minReceive[i] >= 0 ?
+                                                                                                        <div style={{ color: 'black' }}>{(parseInt(this.state.minReceive[i] * 1000) / 1000).toLocaleString('en-US', { maximumFractionDigits: 5 })} USB</div>
+                                                                                                        : <div style={{ color: 'red' }}>{(parseInt(this.state.minReceive[i] * 1000) / 1000).toLocaleString('en-US', { maximumFractionDigits: 5 })} USB</div>
+                                                                                                    }</div>
+                                                                                                    : <div>{this.state.minReceive[i] >= 0 ?
+                                                                                                        <div style={{ color: 'black' }}>{(parseInt(this.state.minReceive[i] * 1000) / 1000).toLocaleString('en-US', { maximumFractionDigits: 3 })} {this.props.synPoolSegmentInfo[i].synTokenPairsymbol}</div>
+                                                                                                        : <div style={{ color: 'red' }}>{(parseInt(this.state.minReceive[i] * 1000) / 1000).toLocaleString('en-US', { maximumFractionDigits: 3 })} {this.props.synPoolSegmentInfo[i].synTokenPairsymbol}</div>
+                                                                                                    }</div>}
+                                                                                                </div>
+                                                                                            </small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <Popup trigger={open => (
+                                                                                        <div className="card cardbody textDarkOpenOrder mr-3 mb-2" style={{ width: '300px' }}>
+                                                                                            <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                                <div className="" style={{ marginBottom: '5px', color: 'black' }}><small>Pending Orders</small></div>
+                                                                                                <div className="" style={{ color: 'black' }}><small>{this.props.accountLoading ?
+                                                                                                    <div>{this.props.synUserOpenOrderLength[i]}</div>
+                                                                                                    : <div className="ml-2"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    )}
+                                                                                        on="click"
+                                                                                        position="bottom left"
+                                                                                        offsetY={5}
+                                                                                        mouseLeaveDelay={100}
+                                                                                        contentStyle={{ padding: '2px', minWidth: '300px', backgroundColor: '#fffcf0', boxShadow: '0 0 10px #9ecaed', borderColor: 'green' }}
+                                                                                        arrow={false}
+                                                                                    >
+                                                                                        <div>
+                                                                                            {(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ?
+                                                                                                <table style={{ maxWidth: '280px' }}>
+                                                                                                    <thead className="textBlackSmall" style={{ color: 'black', padding: '0px' }}>
+                                                                                                        <tr>
+                                                                                                            <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '55px' }}>Order</th>
+                                                                                                            <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '55px' }}>Amount</th>
+                                                                                                            <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '95px' }}>Position(USB)</th>
+                                                                                                            <th scope="col" className="center" style={{ fontSize: '12px', padding: '1px', width: '65px' }}>
+                                                                                                                {this.props.synUserOpenOrderLength[i] > 1 ?
+                                                                                                                    <Buttons className='center cell2' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
+                                                                                                                        onClick={async () => {
+                                                                                                                            await this.props.synCancelAllOrder(i)
+                                                                                                                        }}>Cancel All</Buttons>
+                                                                                                                    : <div style={{ padding: '1px', width: '40px' }}></div>}</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    {this.props.synUserOrderInfo[i].map((orderInfo, key) => {
+                                                                                                        return (
+                                                                                                            <tbody key={key} style={{ color: 'black', padding: '0px' }}>
+                                                                                                                {orderInfo.status != 0 ?
+                                                                                                                    <tr></tr> :
+                                                                                                                    <tr>
+                                                                                                                        <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{orderInfo.orderType == 0 ? "Buy" : "Sell"}</div></td>
+                                                                                                                        <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenAmount, 'babbage')}</div></td>
+                                                                                                                        <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{(orderInfo.synTokenPrice / 100000000).toLocaleString('en-US', { maximumFractionDigits: 3 })}</div></td>
+                                                                                                                        <td className="center" style={{ fontSize: '12px', padding: '1px', width: '65px' }}><Buttons className='center cell2' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
+                                                                                                                            onClick={async () => {
+                                                                                                                                await this.props.synCancelOrder(i, orderInfo.orderId)
+                                                                                                                            }}>Cancel</Buttons></td>
+                                                                                                                    </tr>
+                                                                                                                }
+                                                                                                            </tbody>
+                                                                                                        )
+                                                                                                    })
+                                                                                                    }
+                                                                                                </table>
+                                                                                                : <div className="center" style={{ height: '20px' }}><div className="lds-facebook"><div></div><div></div><div></div></div></div>}
+                                                                                        </div>
+                                                                                    </Popup>
+                                                                                </div>
+                                                                            </MediaQuery>
+
+
+
+                                                                            <MediaQuery maxWidth={760}>
+                                                                                <div className="card cardbody mb-2">
                                                                                     <div className="card-body" style={{ padding: '0.5rem' }}>
                                                                                         <div className="" style={{ marginBottom: '5px', color: 'black' }}><small>Min Received after slippage ({(this.state.slippage[i] / 100).toFixed(2)}%)</small></div>
                                                                                         <div className="" style={{ color: 'black' }}><small>
@@ -341,7 +450,7 @@ class Airdrop extends Component {
                                                                                     </div>
                                                                                 </div>
                                                                                 <Popup trigger={open => (
-                                                                                    <div className="card cardbody textDarkOpenOrder mr-3" style={{ width: '300px' }}>
+                                                                                    <div className="card cardbody textDarkOpenOrder mb-2">
                                                                                         <div className="card-body" style={{ padding: '0.5rem' }}>
                                                                                             <div className="" style={{ marginBottom: '5px', color: 'black' }}><small>Pending Orders</small></div>
                                                                                             <div className="" style={{ color: 'black' }}><small>{this.props.accountLoading ?
@@ -355,7 +464,7 @@ class Airdrop extends Component {
                                                                                     position="bottom left"
                                                                                     offsetY={5}
                                                                                     mouseLeaveDelay={100}
-                                                                                    contentStyle={{ padding: '2px', minWidth: '300px', backgroundColor: '#fffcf0', boxShadow: '0 0 10px #9ecaed', borderColor: 'green' }}
+                                                                                    contentStyle={{ padding: '2px', minWidth: '320px', backgroundColor: '#fffcf0', boxShadow: '0 0 10px #9ecaed', borderColor: 'green' }}
                                                                                     arrow={false}
                                                                                 >
                                                                                     <div>
@@ -398,9 +507,14 @@ class Airdrop extends Component {
                                                                                             : <div className="center" style={{ height: '20px' }}><div className="lds-facebook"><div></div><div></div><div></div></div></div>}
                                                                                     </div>
                                                                                 </Popup>
-                                                                            </div>
+                                                                            </MediaQuery>
 
-                                                                            <div className="card cardbody" style={{ width: '650px' }}>
+
+
+
+
+
+                                                                            <div className="card cardbody" style={{ minWidth: '350px' }}>
                                                                                 <div className="card-body" style={{ padding: '0.5rem' }}>
 
                                                                                     <div className='ml-2 mt-2 mb-2'>{this.state.actionOpen[i][0]}
@@ -519,68 +633,68 @@ class Airdrop extends Component {
                                                                                                         </div>
                                                                                                         <div className='mr-2'><small>Limit Order</small></div>
                                                                                                         {this.state.limitOrder[i] == true ? <div style={{ cursor: 'not-allowed' }}><BsGearFill size={16} /></div> :
-                                                                                                        <div style={{ cursor: 'pointer' }}>
-                                                                                                            <Popup trigger={open => (
-                                                                                                                <div><BsGearFill size={16} /></div>
-                                                                                                            )}
-                                                                                                                on="click"
-                                                                                                                position="bottom right"
-                                                                                                                offsetY={10}
-                                                                                                                mouseLeaveDelay={100}
-                                                                                                                contentStyle={{ padding: '10px', minWidth: '300px', backgroundColor: '#fffcf0' }}
-                                                                                                                arrow={false}
-                                                                                                            >
-                                                                                                                <div>
-                                                                                                                    <div className="mb-2" style={{ fontSize: '18px' }}>Slippage tolerance</div>
-                                                                                                                    <div className='rowC'>
-                                                                                                                        {this.state.slippageButtons.map((slippageButton, idx) => (
-                                                                                                                            <ToggleButton
-                                                                                                                                key={idx}
-                                                                                                                                id={`radio-${idx}`}
-                                                                                                                                type="checkbox"
-                                                                                                                                className="switch2 cell2 mr-2"
-                                                                                                                                variant={'outline-secondary'}
-                                                                                                                                name="radio"
-                                                                                                                                size="sm"
-                                                                                                                                style={{ cursor: 'pointer', height: '30px' }}
-                                                                                                                                value={slippageButton.value}
-                                                                                                                                checked={this.state.radioValue[i] == slippageButton.value}
-                                                                                                                                onChange={(e) => this.setSlipageButton(i, 1, e.currentTarget.value)}
-                                                                                                                            >
-                                                                                                                                {slippageButton.name}
-                                                                                                                            </ToggleButton>
-                                                                                                                        ))}
-                                                                                                                        <span>
-                                                                                                                            <div className="input-group mb-2" >
-                                                                                                                                <input
-                                                                                                                                    type="number"
-                                                                                                                                    id="input3Color"
-                                                                                                                                    step="any"
-                                                                                                                                    ref={(input) => { this.input = input }}
-                                                                                                                                    style={{ fontSize: '18px', backgroundColor: '#fffcf0', height: '30px' }}
-                                                                                                                                    className="form-control cell cardbody"
-                                                                                                                                    placeholder={`${this.state.radioValue[i]}`}
-                                                                                                                                    onKeyPress={(event) => {
-                                                                                                                                        if (!/[0-9.]/.test(event.key)) {
-                                                                                                                                            event.preventDefault();
-                                                                                                                                        }
-                                                                                                                                    }}
-                                                                                                                                    onChange={(e) => {
-                                                                                                                                        const value = e.target.value;
-                                                                                                                                        this.setSlippage(i, 1, value);
-                                                                                                                                    }}
-                                                                                                                                    required />
-                                                                                                                                <div className="input-group-append" >
-                                                                                                                                    <div className="input-group-text cardbody" style={{ padding: '0 0.3rem' }}>%
-                                                                                                                                    </div>
+                                                                                                            <div style={{ cursor: 'pointer' }}>
+                                                                                                                <Popup trigger={open => (
+                                                                                                                    <div><BsGearFill size={16} /></div>
+                                                                                                                )}
+                                                                                                                    on="click"
+                                                                                                                    position="bottom right"
+                                                                                                                    offsetY={10}
+                                                                                                                    mouseLeaveDelay={100}
+                                                                                                                    contentStyle={{ padding: '10px', minWidth: '300px', backgroundColor: '#fffcf0' }}
+                                                                                                                    arrow={false}
+                                                                                                                >
+                                                                                                                    <div>
+                                                                                                                        <div className="mb-2" style={{ fontSize: '18px' }}>Slippage tolerance</div>
+                                                                                                                        <div className='rowC'>
+                                                                                                                            {this.state.slippageButtons.map((slippageButton, idx) => (
+                                                                                                                                <ToggleButton
+                                                                                                                                    key={idx}
+                                                                                                                                    id={`radio-${idx}`}
+                                                                                                                                    type="checkbox"
+                                                                                                                                    className="switch2 cell2 mr-2"
+                                                                                                                                    variant={'outline-secondary'}
+                                                                                                                                    name="radio"
+                                                                                                                                    size="sm"
+                                                                                                                                    style={{ cursor: 'pointer', height: '30px' }}
+                                                                                                                                    value={slippageButton.value}
+                                                                                                                                    checked={this.state.radioValue[i] == slippageButton.value}
+                                                                                                                                    onChange={(e) => this.setSlipageButton(i, 1, e.currentTarget.value)}
+                                                                                                                                >
+                                                                                                                                    {slippageButton.name}
+                                                                                                                                </ToggleButton>
+                                                                                                                            ))}
+                                                                                                                            <span>
+                                                                                                                                <div className="input-group mb-2" >
+                                                                                                                                    <input
+                                                                                                                                        type="number"
+                                                                                                                                        id="input3Color"
+                                                                                                                                        step="any"
+                                                                                                                                        ref={(input) => { this.input = input }}
+                                                                                                                                        style={{ fontSize: '18px', backgroundColor: '#fffcf0', height: '30px' }}
+                                                                                                                                        className="form-control cell cardbody"
+                                                                                                                                        placeholder={`${this.state.radioValue[i]}`}
+                                                                                                                                        onKeyPress={(event) => {
+                                                                                                                                            if (!/[0-9.]/.test(event.key)) {
+                                                                                                                                                event.preventDefault();
+                                                                                                                                            }
+                                                                                                                                        }}
+                                                                                                                                        onChange={(e) => {
+                                                                                                                                            const value = e.target.value;
+                                                                                                                                            this.setSlippage(i, 1, value);
+                                                                                                                                        }}
+                                                                                                                                        required />
+                                                                                                                                    <div className="input-group-append" >
+                                                                                                                                        <div className="input-group-text cardbody" style={{ padding: '0 0.3rem' }}>%
+                                                                                                                                        </div>
+                                                                                                                                    </div >
                                                                                                                                 </div >
-                                                                                                                            </div >
-                                                                                                                        </span>
+                                                                                                                            </span>
+                                                                                                                        </div>
                                                                                                                     </div>
-                                                                                                                </div>
-                                                                                                                <div style={{ color: 'red', fontSize: '13px' }}>{this.state.messageSlippage}</div>
-                                                                                                            </Popup>
-                                                                                                        </div>}
+                                                                                                                    <div style={{ color: 'red', fontSize: '13px' }}>{this.state.messageSlippage}</div>
+                                                                                                                </Popup>
+                                                                                                            </div>}
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>

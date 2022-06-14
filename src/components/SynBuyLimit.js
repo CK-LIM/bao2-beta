@@ -129,7 +129,7 @@ class SynBuyLimit extends Component {
           this.props.synOpenLimitOrder(this.props.i, '0', synTokenAmount, synTokenPrice)
         }}>
           <div style={{ minWidth: "300px" }}>
-            <div className="mb-1 ml-1 float-left" style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}><b>Order to Buy</b></div>
+            <div className="mb-1 ml-1 float-left" style={{ color: 'black', fontSize: '16px' }}><b>Order to Buy</b></div>
             <div className="mb-1 float-right"><b>Balance: {(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ?
               <span>
                 {parseFloat(window.web3Ava.utils.fromWei(this.props.systemCoinBalance, "Ether")).toLocaleString('en-US', { maximumFractionDigits: 3 })}
@@ -177,7 +177,7 @@ class SynBuyLimit extends Component {
             <div className='ml-1' style={{ color: 'red', fontSize: '15px' }}>{this.state.messageSyn}</div>
 
 
-            <div className="mt-3 ml-1" style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}>
+            <div className="mt-3 ml-1" style={{ color: 'black', fontSize: '16px' }}>
               <div className="mb-1"><b>At USB per {this.props.synPoolSegmentInfo[this.props.i].synTokenPairsymbol}</b></div>
             </div>
             <div className="card-body" style={{ backgroundColor: '#fffcf0', padding: '0 0' }}>
@@ -223,7 +223,7 @@ class SynBuyLimit extends Component {
 
             {/* *************************************************************************************************** */}
 
-            <div className="mt-3 ml-1" style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}>
+            <div className="mt-3 ml-1" style={{ color: 'black', fontSize: '16px' }}>
               <div className="mb-1"><b>And Pay USB</b></div>
             </div>
             <div className="card-body" style={{ backgroundColor: '#fffcf0', padding: '0 0' }}>

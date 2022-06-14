@@ -102,7 +102,7 @@ class SynBuy extends Component {
           }
         }}>
           <div style={{ minWidth: "300px" }}>
-            <div className="mb-1 float-left" style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}><b>Pay USB</b></div>
+            <div className="mb-1 float-left" style={{ color: 'black', fontSize: '16px' }}><b>Pay USB</b></div>
             <div className="mb-1 float-right"><b>Balance: {(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ?
               <span>
                 {parseFloat(window.web3Ava.utils.fromWei(this.props.systemCoinBalance, "Ether")).toLocaleString('en-US', { maximumFractionDigits: 3 })}
@@ -158,7 +158,7 @@ class SynBuy extends Component {
             </div>
             <div style={{ color: 'red', fontSize: '15px' }}>{this.state.messageUSB}</div>
 
-            <div className="mt-3" style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}>
+            <div className="mt-3" style={{ color: 'black', fontSize: '16px' }}>
               <div className="mb-1 float-left"><b>To Buy</b></div>
             </div>
             <div className="card-body" style={{ backgroundColor: '#fffcf0', padding: '0 0' }}>

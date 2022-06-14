@@ -124,7 +124,7 @@ class SynSell extends Component {
           }
         }}>
           <div style={{ minWidth: "300px" }}>
-            <div className="mb-1 float-left" style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}><b>Sell {this.props.synPoolSegmentInfo[this.props.i].synTokenPairsymbol}</b></div>
+            <div className="mb-1 float-left" style={{ color: 'black', fontSize: '16px' }}><b>Sell {this.props.synPoolSegmentInfo[this.props.i].synTokenPairsymbol}</b></div>
             <div className="mb-1 float-right"><b>Balance: {(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ?
               <span>{window.web3Ava.utils.fromWei(this.props.synUserBalance[this.props.i], 'babbage')}</span>
               : <span > 0 </span>} {`${this.props.synPoolSegmentInfo[this.props.i].synTokenPairsymbol}`}</b></div>
@@ -179,7 +179,7 @@ class SynSell extends Component {
             </div>
             <div style={{ color: 'red', fontSize: '15px' }}>{this.state.messageSyn}</div>
 
-            <div className="mt-3" style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}>
+            <div className="mt-3" style={{ color: 'black', fontSize: '16px'}}>
               <div className="mb-1 float-left"><b>To Get</b></div>
               <div className="mb-1 float-right"><b>Balance: {(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ?
               <span>

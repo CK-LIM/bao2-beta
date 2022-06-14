@@ -725,6 +725,7 @@ input:checked+.slider:before {
 
 table {
   font-family: arial, sans-serif;
+  word-wrap: normal;
   border-collapse: collapse;
   table-layout: fixed;
   width: 90%;
