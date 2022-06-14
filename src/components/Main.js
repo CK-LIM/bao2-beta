@@ -5,7 +5,7 @@ import baklava from '../baklava.png';
 import joe from '../joe.png';
 import pangolin from '../pangolin.png';
 import kyberSwap from '../kyber.png'
-import baklava_mainBottom from '../baklava_mainBottom.png';
+import baklava_mainBottom from '../baklava_mainBottom_removebg.png';
 import discord from '../discord.svg';
 import twitter from '../twitter.svg';
 import medium from '../medium.svg';

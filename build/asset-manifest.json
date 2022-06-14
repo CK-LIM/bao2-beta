@@ -1,7 +1,7 @@
 {
   "main.css": "/static/css/main.8e66fdbb.chunk.css",
-  "main.js": "/static/js/main.7571cb44.chunk.js",
-  "main.js.map": "/static/js/main.7571cb44.chunk.js.map",
+  "main.js": "/static/js/main.9ef45d82.chunk.js",
+  "main.js.map": "/static/js/main.9ef45d82.chunk.js.map",
   "static/css/1.2d712d12.chunk.css": "/static/css/1.2d712d12.chunk.css",
   "static/js/1.25472bdb.chunk.js": "/static/js/1.25472bdb.chunk.js",
   "static/js/1.25472bdb.chunk.js.map": "/static/js/1.25472bdb.chunk.js.map",
@@ -20,13 +20,13 @@
   "static/media/coin98.d2743de3.png": "/static/media/coin98.d2743de3.png",
   "static/media/joe.482a1e15.png": "/static/media/joe.482a1e15.png",
   "static/media/pangolin.11bf90ab.png": "/static/media/pangolin.11bf90ab.png",
-  "static/media/baklava_mainBottom.a40f273f.png": "/static/media/baklava_mainBottom.a40f273f.png",
+  "static/media/baklava_mainBottom_removebg.46084fc4.png": "/static/media/baklava_mainBottom_removebg.46084fc4.png",
   "static/media/logo.d00bb392.png": "/static/media/logo.d00bb392.png",
   "static/media/search.bc8d31a2.png": "/static/media/search.bc8d31a2.png",
   "static/media/USB.19e8b654.png": "/static/media/USB.19e8b654.png",
   "static/css/main.8e66fdbb.chunk.css.map": "/static/css/main.8e66fdbb.chunk.css.map",
   "static/css/1.2d712d12.chunk.css.map": "/static/css/1.2d712d12.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.ec9ebc28d78c7eaab75b16ee628ea5fd.js": "/precache-manifest.ec9ebc28d78c7eaab75b16ee628ea5fd.js",
+  "precache-manifest.f5c887b77b73b5b673f58905a52742aa.js": "/precache-manifest.f5c887b77b73b5b673f58905a52742aa.js",
   "service-worker.js": "/service-worker.js"
 }
