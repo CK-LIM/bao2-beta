@@ -959,6 +959,7 @@ class App extends Component {
       },
     });
     const myJsonMarginX = await response.json()
+    console.log(myJsonMarginX)
     let marginXPrice = myJsonMarginX["data"]
     for (let n = 0; n < marginXPrice.length; n++) {
       if (marginXPrice[n].pair == 'TSLA:USDT') {
@@ -1945,6 +1946,9 @@ class App extends Component {
 
   synOpenOrder = async (i, orderType, minSystemCoinTxAmount, synTokenAmount, minSynTokenAmount, synTokenPrice) => {
     let syntheticPool
+    console.log(minSystemCoinTxAmount)
+    console.log(synTokenAmount)
+    console.log(minSynTokenAmount)
     if (this.state.walletConnect == false && this.state.wallet == false) {
       alert("Wallet is not connected")
     } else {

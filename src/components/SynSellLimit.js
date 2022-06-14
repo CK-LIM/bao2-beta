@@ -43,6 +43,11 @@ class SynSellLimit extends Component {
         messageSyn: 'Amount more than wallet balance',
         txPriceValidAmount: false
       })
+    }  else if (parseFloat(eventSyn) < 0.01) {
+      this.setState({
+        messageSyn: `Notice: Min tx amount must be higher than 0.01 ${this.props.synPoolSegmentInfo[this.props.i].synTokenPairsymbol}.`,
+        txSynValidAmount: false
+      })
     } else {
       this.setState({
         messageSyn: '',
@@ -267,12 +272,16 @@ class SynSellLimit extends Component {
                 : <Button className="btn textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
                   Confirm</Button>}
               </div>
+
               <div className="float-right mr-1">{this.props.systemCoinSynAllowance <= 2000000000000000000000000000 ?
                 <Button className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }} onClick={(event) => {
                   this.props.systemCoinSyntheticApprove()
                 }}>Approve USB</Button>
-                : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
-                  Approved</Button>}
+                : <div>{this.props.synUserAllowance[this.props.i] <= 2000000000000000000000000000 ? <Button className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }} onClick={(event) => {
+                  this.props.synTokenSyntheticApprove(this.props.i)
+                }}>Approve {`${this.props.synPoolSegmentInfo[this.props.i].synTokenPairsymbol}`}</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
+                  Approved</Button>}</div>}
               </div>
             </div>
           </div>

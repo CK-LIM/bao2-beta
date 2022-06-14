@@ -644,6 +644,7 @@ class Airdrop extends Component {
                                                                                                             synOpenOrder={this.props.synOpenOrder}
                                                                                                             synOpenLimitOrder={this.props.synOpenLimitOrder}
                                                                                                             systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
+                                                                                                            synTokenSyntheticApprove={this.props.synTokenSyntheticApprove}
                                                                                                             systemCoinSynAllowance={this.props.systemCoinSynAllowance}
                                                                                                             systemCoinBalance={this.props.systemCoinBalance}
                                                                                                             i={i}

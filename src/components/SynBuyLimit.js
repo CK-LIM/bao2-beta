@@ -33,6 +33,11 @@ class SynBuyLimit extends Component {
         messageSyn: 'Amount must be within 3 decimal points',
         txPriceValidAmount: false
       })
+    } else if (parseFloat(eventSyn) < 0.01) {
+      this.setState({
+        messageSyn: `Notice: Min tx amount must be higher than 0.01 ${this.props.synPoolSegmentInfo[this.props.i].synTokenPairsymbol}.`,
+        txSynValidAmount: false
+      })
     } else {
       this.setState({
         messageSyn: '',
