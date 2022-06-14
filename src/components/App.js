@@ -1945,7 +1945,7 @@ class App extends Component {
   }
 
   synOpenOrder = async (i, orderType, minSystemCoinTxAmount, synTokenAmount, minSynTokenAmount, synTokenPrice) => {
-    synTokenPrice = window.web3Ava.utils.toWei((synTokenPrice/10).toString(), 'shannon')
+    synTokenPrice = window.web3Ava.utils.toWei((synTokenPrice/10).toFixed(5).toString(), 'shannon')
     let syntheticPool
     if (this.state.walletConnect == false && this.state.wallet == false) {
       alert("Wallet is not connected")
