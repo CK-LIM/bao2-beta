@@ -126,7 +126,7 @@ class SynBuy extends Component {
                     }}
                     onChange={(e) => {
                       const value = e.target.value;
-                      this.input1.value = parseInt(parseFloat(value) / parseFloat(this.props.synPoolPrice[this.props.i] / 100000000) * 1000) / 1000
+                      this.input1.value = parseInt(parseFloat(value) / parseFloat(this.props.synPoolPrice[this.props.i]) * 1000) / 1000
                       // this.input1.value = parseInt(parseFloat(bigInt(window.web3Ava.utils.toWei(value.toString(), "Ether")).value / bigInt(this.props.synPoolPrice[this.props.i]).value) / 10000000000 * 1000) / 1000
                       this.changeHandler(value, this.input1.value, this.props.i)
                       this.props.buySyn(this.props.i, this.input1.value)
@@ -145,7 +145,7 @@ class SynBuy extends Component {
                     <Button className="textTransparentButton2" size="sm" onClick={(event1) => {
                       let usbBalance = bigInt(this.props.systemCoinBalance).value - bigInt("500000000000000000").value
                       this.input.value = window.web3Ava.utils.fromWei(usbBalance.toString(), "Ether")
-                      this.input1.value = parseInt(parseFloat(this.input.value) / parseFloat(this.props.synPoolPrice[this.props.i] / 100000000) * 1000) / 1000
+                      this.input1.value = parseInt(parseFloat(this.input.value) / parseFloat(this.props.synPoolPrice[this.props.i]) * 1000) / 1000
                       this.changeHandler(this.input.value, this.input1.value, this.props.i)
                       this.props.buySyn(this.props.i, this.input1.value)
                     }}>Max</Button>
@@ -179,7 +179,7 @@ class SynBuy extends Component {
                     }}
                     onChange={(event) => {
                       const value = event.target.value;
-                      this.input.value = parseInt(parseFloat(value) * parseFloat(this.props.synPoolPrice[this.props.i] / 100000000) * 1000000) / 1000000
+                      this.input.value = parseInt(parseFloat(value) * parseFloat(this.props.synPoolPrice[this.props.i]) * 1000000) / 1000000
                       this.changeHandler(this.input.value, value, this.props.i)
                       this.props.buySyn(this.props.i, this.input1.value)
                     }}

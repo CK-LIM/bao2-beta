@@ -61,9 +61,9 @@ class SynBuyLimit extends Component {
         messagePrice: 'Target price must be greater than 0',
         txSynValidAmount: false
       })
-    } else if (bigInt(window.web3Ava.utils.toWei(eventPrice, 'shannon')).value / bigInt(10).value > bigInt(this.props.synPoolPrice[this.props.i]).value) {
+    } else if (eventPrice > this.props.synPoolPrice[this.props.i]) {
       this.setState({
-        messagePrice: `Target price must be between 0 and ${(parseFloat(window.web3Ava.utils.fromWei(this.props.synPoolPrice[this.props.i].toString(), 'shannon')) * 10).toLocaleString('en-US', { maximumFractionDigits: 3 })}`,
+        messagePrice: `Target price must be between 0 and ${(this.props.synPoolPrice[this.props.i]).toLocaleString('en-US', { maximumFractionDigits: 3 })}`,
         txSynValidAmount: false
       })
     } else {

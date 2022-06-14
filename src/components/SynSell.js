@@ -20,10 +20,16 @@ class SynSell extends Component {
     }
   }
 
-  changeHandler(eventSyn, eventUSB, i) {
+  async changeHandler(eventSyn, eventUSB, i) {
+
     if (eventUSB == "") {
       this.setState({
         messageUSB: '',
+        txUSBValidAmount: false
+      })
+    } else if ((eventUSB) <= (0)) {
+      this.setState({
+        messageUSB: 'Amount must be greater than 0',
         txUSBValidAmount: false
       })
     } else if (this.countDecimals(eventUSB) > 18) {
@@ -48,17 +54,17 @@ class SynSell extends Component {
         messageSyn: '',
         txSynValidAmount: false
       })
+    } else if ((eventSyn) <= (0)) {
+      this.setState({
+        messageSyn: 'Amount must be greater than 0',
+        txSynValidAmount: false
+      })
     } else if (this.countDecimals(eventSyn) > 3) {
       this.setState({
         messageSyn: 'Amount must be within 3 decimal points',
         txSynValidAmount: false
       })
-    } else if (bigInt(window.web3Ava.utils.toWei(eventSyn, 'babbage')).value <= bigInt(0).value) {
-      this.setState({
-        messageSyn: 'Amount must be greater than 0',
-        txSynValidAmount: false
-      })
-    } else if (bigInt(window.web3Ava.utils.toWei(eventSyn, 'babbage')).value > bigInt(this.props.synUserBalance[i]).value) {
+    }  else if (bigInt(window.web3Ava.utils.toWei(eventSyn, 'babbage')).value > bigInt(this.props.synUserBalance[i]).value) {
       this.setState({
         messageSyn: 'Amount more than wallet balance',
         txSynValidAmount: false
@@ -137,10 +143,11 @@ class SynSell extends Component {
                       if (!/[0-9.]/.test(event.key)) {
                         event.preventDefault();
                       }
-                    }}
+                    }
+                  }
                     onChange={(e) => {
                       const value = e.target.value;
-                      let getUSB = parseFloat(window.web3Ava.utils.fromWei(this.props.synPoolPrice[this.props.i].toString(), 'shannon')) * parseFloat(value) * 10
+                      let getUSB = this.props.synPoolPrice[this.props.i] * parseFloat(value)
                       this.input1.value = getUSB.toFixed(3);
                       this.changeHandler(this.input.value, this.input1.value, this.props.i)
                       this.props.sellSyn(this.props.i, this.input1.value)
@@ -158,7 +165,8 @@ class SynSell extends Component {
                   <div className="input-group-text cardbodyLeft" style={{ padding: '0 0.5rem' }}>
                     <Button className="textTransparentButton2" size="sm" onClick={(event1) => {
                       this.input.value = window.web3Ava.utils.fromWei(this.props.synUserBalance[this.props.i], 'babbage')
-                      this.input1.value = parseFloat(window.web3Ava.utils.fromWei(this.props.synUserBalance[this.props.i], 'babbage')) * parseFloat(window.web3Ava.utils.fromWei(this.props.synPoolPrice[this.props.i].toString(), 'shannon')) * 10
+                      let getUSB = (window.web3Ava.utils.fromWei(this.props.synUserBalance[this.props.i], 'babbage')) * this.props.synPoolPrice[this.props.i]
+                      this.input1.value = getUSB.toFixed(3);
                       this.changeHandler(this.input.value, this.input1.value, this.props.i)
                       this.props.sellSyn(this.props.i, this.input1.value)
                     }}>Max</Button>
@@ -197,7 +205,7 @@ class SynSell extends Component {
                     }}
                     onChange={(event) => {
                       const value = event.target.value;
-                      let getSyn = parseFloat(value) / parseFloat(window.web3Ava.utils.fromWei(this.props.synPoolPrice[this.props.i].toString(), 'shannon')) / 10
+                      let getSyn = parseFloat(value) / (this.props.synPoolPrice[this.props.i])
                       this.input1.value = value
                       this.input.value = getSyn.toFixed(3);
                       this.changeHandler(this.input.value, this.input1.value, this.props.i)

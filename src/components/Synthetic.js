@@ -300,7 +300,7 @@ class Airdrop extends Component {
                                                                                 <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(this.props.synUserBalance[i] / 1000).toLocaleString('en-US', { maximumFractionDigits: 5 })}</div>
                                                                                     : <div className="center"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
                                                                                 <td className=""><div>{parseFloat(this.props.synOraclePrice[i] / 100000000).toLocaleString('en-US', { maximumFractionDigits: 18 })} USB</div></td>
-                                                                                <td className=""><div>{(this.props.synPoolPrice[i] / 100000000).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
+                                                                                <td className=""><div>{(this.props.synPoolPrice[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
                                                                                 <td className="">{this.props.synTotalSupply[i] / 1000}</td>
                                                                             </tr>
                                                                         </tbody>

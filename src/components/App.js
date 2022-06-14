@@ -979,13 +979,13 @@ class App extends Component {
     for (let i = 0; i < this.state.synPoolLength; i++) {
       let pairSymbol = this.state.synPool[i].marginXPair
       if (pairSymbol == 'TSLA:USDT') {
-        synPoolPrice[i] = this.state.TSLAPrice * 100000000
+        synPoolPrice[i] = this.state.TSLAPrice
       } else if (pairSymbol == 'AAPL:USDT') {
-        synPoolPrice[i] = this.state.AAPLPrice * 100000000
+        synPoolPrice[i] = this.state.AAPLPrice
       } else if (pairSymbol == 'FB:USDT') {
-        synPoolPrice[i] = this.state.FBPrice * 100000000
+        synPoolPrice[i] = this.state.FBPrice
       } else if (pairSymbol == 'BTC:USDT') {
-        synPoolPrice[i] = this.state.BTCPrice * 100000000
+        synPoolPrice[i] = this.state.BTCPrice
       }
     }
     return synPoolPrice
@@ -1945,10 +1945,8 @@ class App extends Component {
   }
 
   synOpenOrder = async (i, orderType, minSystemCoinTxAmount, synTokenAmount, minSynTokenAmount, synTokenPrice) => {
+    synTokenPrice = window.web3Ava.utils.toWei((synTokenPrice*10).toString(), 'shannon')
     let syntheticPool
-    console.log(minSystemCoinTxAmount)
-    console.log(synTokenAmount)
-    console.log(minSynTokenAmount)
     if (this.state.walletConnect == false && this.state.wallet == false) {
       alert("Wallet is not connected")
     } else {
