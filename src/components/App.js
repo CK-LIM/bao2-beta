@@ -959,7 +959,6 @@ class App extends Component {
       },
     });
     const myJsonMarginX = await response.json()
-    console.log(myJsonMarginX)
     let marginXPrice = myJsonMarginX["data"]
     for (let n = 0; n < marginXPrice.length; n++) {
       if (marginXPrice[n].pair == 'TSLA:USDT') {

@@ -46,6 +46,7 @@ class Airdrop extends Component {
     }
 
     setLimitOrder(i) {
+        console.log("abc")
         let ntg = 0
         this.setState(state => {
             const limitOrder = state.limitOrder.map((item, j) => {
@@ -164,7 +165,7 @@ class Airdrop extends Component {
         if (this.countDecimals(newSlippage) > 2) {
             this.state.messageSlippage[i] = 'Slippage should be within 2 decimal points'
             this.state.slippage[i] = 100
-        } else if (!(newSlippage > 0 && newSlippage < 50)) {
+        } else if (!(newSlippage > 0 && newSlippage < 20)) {
             this.state.messageSlippage[i] = 'Enter a valid slippage percentage'
             this.state.slippage[i] = 100
         } else {
@@ -517,6 +518,7 @@ class Airdrop extends Component {
                                                                                                             </label>
                                                                                                         </div>
                                                                                                         <div className='mr-2'><small>Limit Order</small></div>
+                                                                                                        {this.state.limitOrder[i] == true ? <div style={{ cursor: 'not-allowed' }}><BsGearFill size={16} /></div> :
                                                                                                         <div style={{ cursor: 'pointer' }}>
                                                                                                             <Popup trigger={open => (
                                                                                                                 <div><BsGearFill size={16} /></div>
@@ -578,7 +580,7 @@ class Airdrop extends Component {
                                                                                                                 </div>
                                                                                                                 <div style={{ color: 'red', fontSize: '13px' }}>{this.state.messageSlippage}</div>
                                                                                                             </Popup>
-                                                                                                        </div>
+                                                                                                        </div>}
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
