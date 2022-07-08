@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import MediaQuery from 'react-responsive';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Buttons from 'react-bootstrap/Button'
 import Button from '@material-ui/core/Button';
 import bigInt from 'big-integer'
-import exlink from '../link.png'
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -233,7 +233,7 @@ class Collateral extends Component {
 
                 <div className="ml-auto mr-auto mt-3">
                     <div className="">
-                        <div className="textMiddleBold1 float-left" style={{ marginLeft: '2px' }}><big>Select Platform</big></div>
+                        <div className="textMiddleBold1 float-left" style={{ marginLeft: '2px' }}><big>Platform</big></div>
                         <div className="textMiddleBold1 float-right" style={{ marginRight: '5px' }}><big>TVL $ {parseFloat(this.props.collTotalTVL).toLocaleString('en-US', { maximumFractionDigits: 0 })}</big></div><br /><br />
                         <span className="float-left">
                             <ButtonGroup>
@@ -256,59 +256,211 @@ class Collateral extends Component {
                                                 {this.props.collateralPoolSegmentInfo[i].lpName == "BAVA-AVAX" ? <div></div> :
                                                     <div className="card mb-3 cardbody">
                                                         <div className="card-body" style={{ padding: '1rem' }}>
-                                                            <div>
-                                                                <div className='rowC' style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
-                                                                    this.clickfarmOpen(i)
-                                                                }}>
-                                                                    <div className="float-left" style={{ minWidth: '200px' }}>
-                                                                        <div className="textMiddle"><b>{this.props.collateralPoolSegmentInfo[i].lpName}(BRT){this.props.collateralPoolSegmentInfo[i].status}</b></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.collateralPoolSegmentInfo[i].projectLink, '_blank')
-                                                                        }}>LP-Platform: {this.props.collateralPoolSegmentInfo[i].platform} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.collateralPoolSegmentInfo[i].getLPLink, '_blank')
-                                                                        }}>Get {this.props.collateralPoolSegmentInfo[i].lpName} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.collateralPoolSegmentInfo[i].farmContract, '_blank')
-                                                                        }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <table className="float-right mr-auto">
-                                                                            <thead className="textBlackSmall" style={{ color: 'black' }}>
-                                                                                <tr>
-                                                                                    <th scope="col" width="140">Wallet</th>
-                                                                                    <th scope="col" width="140">Collateral</th>
-                                                                                    <th scope="col">Min Coll. Ratio</th>
-                                                                                    <th scope="col">Borrowing Fee</th>
-                                                                                    <th scope="col">TVL</th>
-                                                                                </tr>
-                                                                            </thead>
-
-                                                                            <tbody className="textGrey">
-                                                                                <tr>
-                                                                                    <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTBalanceAccount[i]), 'Ether').toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
-                                                                                        : <div className="center">
-                                                                                            <div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
-                                                                                    <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
-                                                                                        : <div className="center">
+                                                            <div className="card cardbody" style={{ border: '0px' }}>
+                                                                <MediaQuery minWidth={1001}>
+                                                                    <div className='card-body rowC' style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
+                                                                        this.clickfarmOpen(i)
+                                                                    }}>
+                                                                        <div className="float-left rowC" style={{ minWidth: '250px' }}>
+                                                                            <span className="mr-3 mt-2">
+                                                                                <div className="textMiddle" style={{ width: '48px' }}>
+                                                                                    {this.props.collateralPoolSegmentInfo[i].icon.map((icon, key) => {
+                                                                                        return (
+                                                                                            <img key={key} className={icon.imagePosition} src={`/images/${icon.image}`} width={icon.imageSize} height={icon.imageSize} alt="" />
+                                                                                        )
+                                                                                    })}
+                                                                                </div>
+                                                                            </span>
+                                                                            <span>
+                                                                                <div className="textMiddle"><b>{this.props.collateralPoolSegmentInfo[i].lpName} (BRT){this.props.collateralPoolSegmentInfo[i].status}</b></div>
+                                                                                <div className="textGrey exLink0" style={{ width: "140px" }} onClick={() => {
+                                                                                    window.open(this.props.collateralPoolSegmentInfo[i].projectLink, '_blank')
+                                                                                }}>LP-Platform: {this.props.collateralPoolSegmentInfo[i].platform} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                                <div className="textGrey exLink0" style={{ width: "140px" }} onClick={() => {
+                                                                                    window.open(this.props.collateralPoolSegmentInfo[i].getLPLink, '_blank')
+                                                                                }}>Get {this.props.collateralPoolSegmentInfo[i].lpName}(BRT) <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div className="ml-5">
+                                                                            <table className="float-right mr-auto">
+                                                                                <thead className="textBlackSmall" style={{ color: 'black' }}>
+                                                                                    <tr>
+                                                                                        <th scope="col" width="140">Wallet</th>
+                                                                                        <th scope="col" width="140">Collateral</th>
+                                                                                        <th scope="col">Min Coll. Ratio</th>
+                                                                                        <th scope="col">Borrowing Fee</th>
+                                                                                        <th scope="col">TVL</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody className="textGrey">
+                                                                                    <tr>
+                                                                                        <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTBalanceAccount[i]), 'Ether').toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
+                                                                                            : <div className="center">
+                                                                                                <div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
+                                                                                        <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
+                                                                                            : <div className="center">
+                                                                                                <div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
+                                                                                        <td className=""><div>{parseFloat(this.props.collateralPoolSegmentInfo[i].minCollRatio).toLocaleString('en-US', { maximumFractionDigits: 5 })}%</div></td>
+                                                                                        <td className="">1%</td>
+                                                                                        <td className="">{this.props.aprloading ? <div>$ {parseFloat(this.props.colltvl[i]).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div> : <div className="center">
                                                                                             <div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
-                                                                                    <td className=""><div>{parseFloat(this.props.collateralPoolSegmentInfo[i].minCollRatio).toLocaleString('en-US', { maximumFractionDigits: 5 })}%</div></td>
-                                                                                    <td className="">1%</td>
-                                                                                    <td className="">{this.props.aprloading ? <div>$ {parseFloat(this.props.colltvl[i]).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div> : <div className="center">
-                                                                                        <div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
+                                                                </MediaQuery>
+
+                                                                <MediaQuery maxWidth={1000}>
+                                                                    <div className='card-body' style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
+                                                                        this.clickfarmOpen(i)
+                                                                    }}>
+                                                                        <div className="float-left rowC mb-3" style={{ minWidth: '250px' }}>
+                                                                            <span className="mr-3 mt-2">
+                                                                                <div className="textMiddle" style={{ width: '48px' }}>
+                                                                                    {this.props.collateralPoolSegmentInfo[i].icon.map((icon, key) => {
+                                                                                        return (
+                                                                                            <img key={key} className={icon.imagePosition} src={`/images/${icon.image}`} width={icon.imageSize} height={icon.imageSize} alt="" />
+                                                                                        )
+                                                                                    })}
+                                                                                </div>
+                                                                            </span>
+                                                                            <span>
+                                                                                <div className="textMiddle"><b>{this.props.collateralPoolSegmentInfo[i].lpName} (BRT){this.props.collateralPoolSegmentInfo[i].status}</b></div>
+                                                                                <div className="textGrey exLink0" style={{ width: "140px" }} onClick={() => {
+                                                                                    window.open(this.props.collateralPoolSegmentInfo[i].projectLink, '_blank')
+                                                                                }}>LP-Platform: {this.props.collateralPoolSegmentInfo[i].platform} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                                <div className="textGrey exLink0" style={{ width: "140px" }} onClick={() => {
+                                                                                    window.open(this.props.collateralPoolSegmentInfo[i].getLPLink, '_blank')
+                                                                                }}>Get {this.props.collateralPoolSegmentInfo[i].lpName}(BRT) <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                            </span>
+                                                                        </div>
+                                                                        <MediaQuery minWidth={701}>
+                                                                            <div>
+                                                                                <table className="float-right mr-auto">
+                                                                                    <thead className="textBlackSmall" style={{ color: 'black' }}>
+                                                                                        <tr>
+                                                                                            <th scope="col" width="140">Wallet</th>
+                                                                                            <th scope="col" width="140">Collateral</th>
+                                                                                            <th scope="col">Min Coll. Ratio</th>
+                                                                                            <th scope="col">Borrowing Fee</th>
+                                                                                            <th scope="col">TVL</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody className="textGrey">
+                                                                                        <tr>
+                                                                                            <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTBalanceAccount[i]), 'Ether').toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
+                                                                                                : <div className="center">
+                                                                                                    <div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
+                                                                                            <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
+                                                                                                : <div className="center">
+                                                                                                    <div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
+                                                                                            <td className=""><div>{parseFloat(this.props.collateralPoolSegmentInfo[i].minCollRatio).toLocaleString('en-US', { maximumFractionDigits: 5 })}%</div></td>
+                                                                                            <td className="">1%</td>
+                                                                                            <td className="">{this.props.aprloading ? <div>$ {parseFloat(this.props.colltvl[i]).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div> : <div className="center">
+                                                                                                <div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </MediaQuery>
+                                                                        <MediaQuery maxWidth={700}>
+                                                                            <MediaQuery minWidth={551}>
+                                                                                <div>
+                                                                                    <table className="float-right mr-auto">
+                                                                                        <thead className="textBlackSmall" style={{ color: 'black' }}>
+                                                                                            <tr>
+                                                                                                <th scope="col" width="140">Wallet</th>
+                                                                                                <th scope="col" width="140">Collateral</th>
+                                                                                                <th scope="col">Min Coll. Ratio</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody className="textGrey">
+                                                                                            <tr>
+                                                                                                <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTBalanceAccount[i]), 'Ether').toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
+                                                                                                    : <div className="center">
+                                                                                                        <div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
+                                                                                                <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
+                                                                                                    : <div className="center">
+                                                                                                        <div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
+                                                                                                <td className=""><div>{parseFloat(this.props.collateralPoolSegmentInfo[i].minCollRatio).toLocaleString('en-US', { maximumFractionDigits: 5 })}%</div></td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                        <thead className="textBlackSmall" style={{ color: 'black' }}>
+                                                                                            <tr>
+                                                                                                <th scope="col">Borrowing Fee</th>
+                                                                                                <th scope="col">TVL</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody className="textGrey">
+                                                                                            <tr>
+                                                                                                <td className="">1%</td>
+                                                                                                <td className="">{this.props.aprloading ? <div>$ {parseFloat(this.props.colltvl[i]).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div> : <div className="center">
+                                                                                                    <div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </MediaQuery>
+                                                                            
+                                                                            <MediaQuery maxWidth={550}>
+                                                                                <div>
+                                                                                    <table className="float-right mr-auto">
+                                                                                        <thead className="textBlackSmall" style={{ color: 'black' }}>
+                                                                                            <tr>
+                                                                                                <th scope="col" width="140">Wallet</th>
+                                                                                                <th scope="col" width="140">Collateral</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody className="textGrey">
+                                                                                            <tr>
+                                                                                                <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTBalanceAccount[i]), 'Ether').toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
+                                                                                                    : <div className="center" style={{ height: '15.5px' }}><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
+                                                                                                <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 18 })}</div>
+                                                                                                    : <div className="center" style={{ height: '15.5px' }}><div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+
+                                                                                        <thead className="textBlackSmall" style={{ color: 'black' }}>
+                                                                                            <tr>
+                                                                                                <th scope="col">Min Coll. Ratio</th>
+                                                                                                <th scope="col">Borrowing Fee</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody className="textGrey">
+                                                                                            <tr>
+                                                                                                <td className=""><div>{parseFloat(this.props.collateralPoolSegmentInfo[i].minCollRatio).toLocaleString('en-US', { maximumFractionDigits: 5 })}%</div></td>
+                                                                                                <td className="">1%</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+
+                                                                                        <thead className="textBlackSmall" style={{ color: 'black' }}>
+                                                                                            <tr>
+                                                                                                <th scope="col">TVL</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody className="textGrey">
+                                                                                            <tr>
+                                                                                                <td className="">{this.props.aprloading ? <div>$ {parseFloat(this.props.colltvl[i]).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div> : <div className="center" style={{ height: '15.5px' }}>
+                                                                                                    <div className="lds-facebook"><div></div><div></div><div></div></div></div>} </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </MediaQuery>
+                                                                        </MediaQuery>
+                                                                    </div>
+                                                                </MediaQuery>
+                                                            </div>
 
 
-                                                                {this.state.collVaultOpen[i] ?
-                                                                    <div>
-                                                                        {this.props.wallet || this.props.walletConnect ?
-                                                                            <div className="borderTop ">
-                                                                                <div className="rowC mt-3">
-                                                                                    <div>
+                                                            {this.state.collVaultOpen[i] ?
+                                                                <div>
+                                                                    {this.props.wallet || this.props.walletConnect ?
+                                                                        <div className="borderTop ">
+                                                                            <div className="mt-3">
+                                                                                <MediaQuery minWidth={851}>
+                                                                                    <div className="float-left">
                                                                                         <div className="card cardbody mr-2" style={{ marginBottom: '6px', width: '300px' }}>
                                                                                             <div className="card-body" style={{ padding: '0.5rem' }}>
                                                                                                 <span className="float-left" style={{ color: 'black' }}><small>Trove available USB</small></span><br />
@@ -316,7 +468,7 @@ class Collateral extends Component {
                                                                                                     <div className="ml-3"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small></span>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div className="card cardbody  mr-3" style={{ marginBottom: '6px', width: '300px' }}>
+                                                                                        <div className="card cardbody mr-3" style={{ marginBottom: '6px', width: '300px' }}>
                                                                                             <div className="card-body" style={{ padding: '0.5rem' }}>
                                                                                                 <span className="float-left" style={{ color: 'black' }}><small>Your Coll. Ratio</small></span><br />
                                                                                                 <span className="float-left" style={{ marginTop: '8px' }}><small>{this.props.accountLoading ?
@@ -352,323 +504,371 @@ class Collateral extends Component {
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
+                                                                                </MediaQuery>
 
-                                                                                    <div className="card cardbody" style={{ width: '650px' }}>
-                                                                                        <div className="card-body" style={{ padding: '0.5rem' }}>
-
-                                                                                            {this.props.collUserSegmentInfo[i] > 0 ?
-                                                                                                <div className='ml-2 mt-2 mb-2'>{this.state.actionOpen[i][0]}
-                                                                                                    {this.state.actionOpen[i][0] == true ?
-                                                                                                        <ButtonGroup>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textTransparentButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, true)
-                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                    await this.setAction(3, i, false)
-                                                                                                                }}><b>Resize Vault</b></Buttons></div>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                    await this.setAction(1, i, true)
-                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                    await this.setAction(3, i, false)
-                                                                                                                }}>Borrow USB</Buttons></div>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                    await this.setAction(2, i, true)
-                                                                                                                    await this.setAction(3, i, false)
-                                                                                                                }}>Repay USB</Buttons></div>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textBlackButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                    await this.setAction(3, i, true)
-                                                                                                                }}>Withdraw BRT</Buttons></div>
-                                                                                                        </ButtonGroup>
-                                                                                                        : <div>
-                                                                                                            {this.state.actionOpen[i][1] == true ?
-                                                                                                                <ButtonGroup>
-                                                                                                                    <div>
-                                                                                                                        <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                            await this.setAction(0, i, true)
-                                                                                                                            await this.setAction(1, i, false)
-                                                                                                                            await this.setAction(2, i, false)
-                                                                                                                            await this.setAction(3, i, false)
-                                                                                                                        }}><b>Resize Vault</b></Buttons></div>
-                                                                                                                    <div>
-                                                                                                                        <Buttons className="textTransparentButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                            await this.setAction(0, i, false)
-                                                                                                                            await this.setAction(1, i, true)
-                                                                                                                            await this.setAction(2, i, false)
-                                                                                                                            await this.setAction(3, i, false)
-                                                                                                                        }}>Borrow USB</Buttons></div>
-                                                                                                                    <div>
-                                                                                                                        <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                            await this.setAction(0, i, false)
-                                                                                                                            await this.setAction(1, i, false)
-                                                                                                                            await this.setAction(2, i, true)
-                                                                                                                            await this.setAction(3, i, false)
-                                                                                                                        }}>Repay USB</Buttons></div>
-                                                                                                                    <div>
-                                                                                                                        <Buttons className="textBlackButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                            await this.setAction(0, i, false)
-                                                                                                                            await this.setAction(1, i, false)
-                                                                                                                            await this.setAction(2, i, false)
-                                                                                                                            await this.setAction(3, i, true)
-                                                                                                                        }}>Withdraw BRT</Buttons></div>
-                                                                                                                </ButtonGroup>
-                                                                                                                : <div>
-                                                                                                                    {this.state.actionOpen[i][2] == true ?
-                                                                                                                        <ButtonGroup>
-                                                                                                                            <div>
-                                                                                                                                <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                                    await this.setAction(0, i, true)
-                                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                                    await this.setAction(3, i, false)
-                                                                                                                                }}><b>Resize Vault</b></Buttons></div>
-                                                                                                                            <div>
-                                                                                                                                <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                                    await this.setAction(1, i, true)
-                                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                                    await this.setAction(3, i, false)
-                                                                                                                                }}>Borrow USB</Buttons></div>
-                                                                                                                            <div>
-                                                                                                                                <Buttons className="textTransparentButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                                    await this.setAction(2, i, true)
-                                                                                                                                    await this.setAction(3, i, false)
-                                                                                                                                }}>Repay USB</Buttons></div>
-                                                                                                                            <div>
-                                                                                                                                <Buttons className="textBlackButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                                    await this.setAction(3, i, true)
-                                                                                                                                }}>Withdraw BRT</Buttons></div>
-                                                                                                                        </ButtonGroup>
-                                                                                                                        : <ButtonGroup>
-                                                                                                                            <div>
-                                                                                                                                <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                                    await this.setAction(0, i, true)
-                                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                                    await this.setAction(3, i, false)
-                                                                                                                                }}><b>Resize Vault</b></Buttons></div>
-                                                                                                                            <div>
-                                                                                                                                <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                                    await this.setAction(1, i, true)
-                                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                                    await this.setAction(3, i, false)
-                                                                                                                                }}>Borrow USB</Buttons></div>
-                                                                                                                            <div>
-                                                                                                                                <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                                    await this.setAction(2, i, true)
-                                                                                                                                    await this.setAction(3, i, false)
-                                                                                                                                }}>Repay USB</Buttons></div>
-                                                                                                                            <div>
-                                                                                                                                <Buttons className="textTransparentButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                                    await this.setAction(2, i, false)
-                                                                                                                                    await this.setAction(3, i, true)
-                                                                                                                                }}>Withdraw BRT</Buttons></div>
-                                                                                                                        </ButtonGroup>
-                                                                                                                    }
-                                                                                                                </div>
-                                                                                                            }
-                                                                                                        </div>
-                                                                                                    }
-                                                                                                </div>
-                                                                                                :
-                                                                                                <div className='ml-2 mt-2 mb-2'>
-                                                                                                    {(this.state.actionOpen[i][1]) ?
-                                                                                                        <ButtonGroup>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, true)
-                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                }}><b>Deposit & Borrow</b></Buttons>
-                                                                                                            </div>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textTransparentButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                    await this.setAction(1, i, true)
-                                                                                                                }}>Only Deposit</Buttons>
-                                                                                                            </div>
-                                                                                                        </ButtonGroup>
-                                                                                                        :
-                                                                                                        <ButtonGroup>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textTransparentButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, true)
-                                                                                                                    await this.setAction(1, i, false)
-                                                                                                                }}><b>Deposit & Borrow</b></Buttons>
-                                                                                                            </div>
-                                                                                                            <div>
-                                                                                                                <Buttons className="textBlackButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
-                                                                                                                    await this.setAction(0, i, false)
-                                                                                                                    await this.setAction(1, i, true)
-                                                                                                                }}>Only Deposit</Buttons>
-                                                                                                            </div>
-                                                                                                        </ButtonGroup>
-                                                                                                    }
-                                                                                                </div>
-                                                                                            }
-
-                                                                                            <div className='borderBottom'></div>
-                                                                                            <div className='ml-1 mr-1'>
-                                                                                                {this.props.collUserSegmentInfo[i] > 0 ?
+                                                                                <MediaQuery maxWidth={850}>
+                                                                                    <div>
+                                                                                        <div className="card cardbody" style={{ marginBottom: '6px' }}>
+                                                                                            <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                                <span className="float-left" style={{ color: 'black' }}><small>Trove available USB</small></span><br />
+                                                                                                <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ? <div>{(parseFloat(this.props.collPoolRemainingAsset[i]).toLocaleString('en-US', { maximumFractionDigits: 2 }))} USB</div> :
+                                                                                                    <div className="ml-3"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small></span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="card cardbody" style={{ marginBottom: '6px' }}>
+                                                                                            <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                                <span className="float-left" style={{ color: 'black' }}><small>Your Coll. Ratio</small></span><br />
+                                                                                                <span className="float-left" style={{ marginTop: '8px' }}><small>{this.props.accountLoading ?
                                                                                                     <div>
-                                                                                                        {this.state.actionOpen[i][0] == true ?
-                                                                                                            <div>
-                                                                                                                <CollResize
-                                                                                                                    wallet={this.props.wallet}
-                                                                                                                    walletConnect={this.props.walletConnect}
-                                                                                                                    accountLoading={this.props.accountLoading}
-                                                                                                                    collBRTBalanceAccount={this.props.collBRTBalanceAccount}
-                                                                                                                    collDebtBalance={this.props.collDebtBalance}
-                                                                                                                    collBRTValue={this.props.collBRTValue}
-                                                                                                                    collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
-                                                                                                                    collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
-                                                                                                                    collUserSegmentInfo={this.props.collUserSegmentInfo}
-                                                                                                                    systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                                    collPoolRemainingAsset={this.props.collPoolRemainingAsset}
-                                                                                                                    addLPCollRatio={this.addLPCollRatio}
-                                                                                                                    addUSBDebtRatio={this.addUSBDebtRatio}
-                                                                                                                    collateralApprove={this.props.collateralApprove}
-                                                                                                                    depositAndBorrow={this.props.depositAndBorrow}
-                                                                                                                    i={i}
-                                                                                                                />
-                                                                                                            </div>
+                                                                                                        {(this.state.collRatioChangeUpdate[i] == true) ?
+                                                                                                            <div>{this.state.collRatioChange[i] > this.props.collateralPoolSegmentInfo[i].minCollRatio ? <div style={{ color: 'black' }}>{this.state.collRatioChange[i].toLocaleString('en-US', { maximumFractionDigits: 3 })} %</div>
+                                                                                                                : <div style={{ color: 'red' }}>{parseFloat(this.state.collRatioChange[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })}%</div>}</div>
+                                                                                                            : <div>{this.props.collRatio[i] > this.props.collateralPoolSegmentInfo[i].minCollRatio ? <div style={{ color: 'black' }}>{this.props.collRatio[i].toLocaleString('en-US', { maximumFractionDigits: 3 })} %</div>
+                                                                                                                : <div style={{ color: 'red' }}>{parseFloat(this.props.collRatio[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} %</div>}</div>}
+                                                                                                    </div>
+                                                                                                    : <div className="ml-3"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="card cardbody" style={{ marginBottom: '6px' }}>
+                                                                                            <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                                <span className="float-left" style={{ color: 'black' }}><small>Collateral to be locked </small></span><br />
+                                                                                                <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ?
+                                                                                                    <div>
+                                                                                                        {this.props.collDebtBalance[i] == 0 ? <div>0 / $ 0</div> : <div>{this.props.collMaxBorrowAmount > 0 ?
+                                                                                                            <div>{(parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')) - parseFloat(this.props.collMaxBorrowAmount / this.props.collBRTValue[i] * this.props.collateralPoolSegmentInfo[i].minCollRatio / 100)).toLocaleString('en-US', { maximumFractionDigits: 18 })} BRT / $ {((parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')) - parseFloat(this.props.collMaxBorrowAmount / this.props.collBRTValue[i] * this.props.collateralPoolSegmentInfo[i].minCollRatio / 100)) * window.web3Ava.utils.fromWei(this.props.collBRTValue[i], 'ether')).toLocaleString('en-US', { maximumFractionDigits: 3 })}</div>
+                                                                                                            : <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 18 })} BRT / $ {(parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[i], 'Ether')) * window.web3Ava.utils.fromWei(this.props.collBRTValue[i], 'ether')).toLocaleString('en-US', { maximumFractionDigits: 2 })} </div>}</div>}
+                                                                                                    </div>
+                                                                                                    : <div className="ml-3"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="card cardbody" style={{ marginBottom: '6px' }}>
+                                                                                            <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                                <span className="float-left" style={{ color: 'black' }}><small>Total Debt</small></span><br />
+                                                                                                <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[i].toLocaleString('en-US'), 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div>
+                                                                                                    : <div className="ml-3"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small></span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </MediaQuery>
+
+
+
+                                                                                <div className="card cardbody" style={{ minWidth: '350px' }}>
+                                                                                    <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                        {this.props.collUserSegmentInfo[i] > 0 ?
+                                                                                            <div className='ml-2 mt-2 mb-2'>
+                                                                                                {this.state.actionOpen[i][0] == true ?
+                                                                                                    <ButtonGroup>
+                                                                                                        <div>
+                                                                                                            <Buttons className="textTransparentButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                await this.setAction(0, i, true)
+                                                                                                                await this.setAction(1, i, false)
+                                                                                                                await this.setAction(2, i, false)
+                                                                                                                await this.setAction(3, i, false)
+                                                                                                            }}><b>Resize Vault</b></Buttons></div>
+                                                                                                        <div>
+                                                                                                            <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                await this.setAction(0, i, false)
+                                                                                                                await this.setAction(1, i, true)
+                                                                                                                await this.setAction(2, i, false)
+                                                                                                                await this.setAction(3, i, false)
+                                                                                                            }}>Borrow USB</Buttons></div>
+                                                                                                        <div>
+                                                                                                            <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                await this.setAction(0, i, false)
+                                                                                                                await this.setAction(1, i, false)
+                                                                                                                await this.setAction(2, i, true)
+                                                                                                                await this.setAction(3, i, false)
+                                                                                                            }}>Repay USB</Buttons></div>
+                                                                                                        <div>
+                                                                                                            <Buttons className="textBlackButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                await this.setAction(0, i, false)
+                                                                                                                await this.setAction(1, i, false)
+                                                                                                                await this.setAction(2, i, false)
+                                                                                                                await this.setAction(3, i, true)
+                                                                                                            }}>Withdraw BRT</Buttons></div>
+                                                                                                    </ButtonGroup>
+                                                                                                    : <div>
+                                                                                                        {this.state.actionOpen[i][1] == true ?
+                                                                                                            <ButtonGroup>
+                                                                                                                <div>
+                                                                                                                    <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                        await this.setAction(0, i, true)
+                                                                                                                        await this.setAction(1, i, false)
+                                                                                                                        await this.setAction(2, i, false)
+                                                                                                                        await this.setAction(3, i, false)
+                                                                                                                    }}><b>Resize Vault</b></Buttons></div>
+                                                                                                                <div>
+                                                                                                                    <Buttons className="textTransparentButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                        await this.setAction(0, i, false)
+                                                                                                                        await this.setAction(1, i, true)
+                                                                                                                        await this.setAction(2, i, false)
+                                                                                                                        await this.setAction(3, i, false)
+                                                                                                                    }}>Borrow USB</Buttons></div>
+                                                                                                                <div>
+                                                                                                                    <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                        await this.setAction(0, i, false)
+                                                                                                                        await this.setAction(1, i, false)
+                                                                                                                        await this.setAction(2, i, true)
+                                                                                                                        await this.setAction(3, i, false)
+                                                                                                                    }}>Repay USB</Buttons></div>
+                                                                                                                <div>
+                                                                                                                    <Buttons className="textBlackButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                        await this.setAction(0, i, false)
+                                                                                                                        await this.setAction(1, i, false)
+                                                                                                                        await this.setAction(2, i, false)
+                                                                                                                        await this.setAction(3, i, true)
+                                                                                                                    }}>Withdraw BRT</Buttons></div>
+                                                                                                            </ButtonGroup>
                                                                                                             : <div>
-                                                                                                                {this.state.actionOpen[i][1] == true ?
-                                                                                                                    <div >
-                                                                                                                        <CollOnlyBorrow
-                                                                                                                            wallet={this.props.wallet}
-                                                                                                                            walletConnect={this.props.walletConnect}
-                                                                                                                            accountLoading={this.props.accountLoading}
-                                                                                                                            collBRTBalanceAccount={this.props.collBRTBalanceAccount}
-                                                                                                                            collDebtBalance={this.props.collDebtBalance}
-                                                                                                                            collBRTValue={this.props.collBRTValue}
-                                                                                                                            collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
-                                                                                                                            collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
-                                                                                                                            collUserSegmentInfo={this.props.collUserSegmentInfo}
-                                                                                                                            systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                                            collPoolRemainingAsset={this.props.collPoolRemainingAsset}
-                                                                                                                            addLPCollRatio={this.addLPCollRatio}
-                                                                                                                            addUSBDebtRatio={this.addUSBDebtRatio}
-                                                                                                                            collateralApprove={this.props.collateralApprove}
-                                                                                                                            depositAndBorrow={this.props.depositAndBorrow}
-                                                                                                                            i={i}
-                                                                                                                        />
-                                                                                                                    </div>
-                                                                                                                    : <div>
-                                                                                                                        {this.state.actionOpen[i][2] == true ?
-                                                                                                                            <div>
-                                                                                                                                <CollRepay
-                                                                                                                                    wallet={this.props.wallet}
-                                                                                                                                    walletConnect={this.props.walletConnect}
-                                                                                                                                    accountLoading={this.props.accountLoading}
-                                                                                                                                    collBRTBalanceAccount={this.props.collBRTBalanceAccount}
-                                                                                                                                    collDebtBalance={this.props.collDebtBalance}
-                                                                                                                                    collBRTValue={this.props.collBRTValue}
-                                                                                                                                    collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
-                                                                                                                                    collUserSegmentInfo={this.props.collUserSegmentInfo}
-                                                                                                                                    systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                                                    systemCoinCollAllowance={this.props.systemCoinCollAllowance}
-                                                                                                                                    reduceUSBDebtRatio={this.reduceUSBDebtRatio}
-                                                                                                                                    systemCoinCollApprove={this.props.systemCoinCollApprove}
-                                                                                                                                    repayUSB={this.props.repayUSB}
-                                                                                                                                    i={i}
-                                                                                                                                />
-                                                                                                                            </div>
-                                                                                                                            : <div>
-                                                                                                                                <CollWithdraw
-                                                                                                                                    wallet={this.props.wallet}
-                                                                                                                                    walletConnect={this.props.walletConnect}
-                                                                                                                                    accountLoading={this.props.accountLoading}
-                                                                                                                                    collBRTBalanceAccount={this.props.collBRTBalanceAccount}
-                                                                                                                                    collDebtBalance={this.props.collDebtBalance}
-                                                                                                                                    collBRTValue={this.props.collBRTValue}
-                                                                                                                                    collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
-                                                                                                                                    collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
-                                                                                                                                    collUserSegmentInfo={this.props.collUserSegmentInfo}
-                                                                                                                                    systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                                                    reduceLPCollRatio={this.reduceLPCollRatio}
-                                                                                                                                    withdrawBRTColl={this.props.withdrawBRTColl}
-                                                                                                                                    i={i}
-                                                                                                                                />
-                                                                                                                            </div>}
-                                                                                                                    </div>
-                                                                                                                }</div>
-                                                                                                        }</div> :
-                                                                                                    <div>
-                                                                                                        {this.state.actionOpen[i][1] ?
-                                                                                                            <div>
-                                                                                                                <CollOnlyDep
-                                                                                                                    wallet={this.props.wallet}
-                                                                                                                    walletConnect={this.props.walletConnect}
-                                                                                                                    accountLoading={this.props.accountLoading}
-                                                                                                                    collBRTBalanceAccount={this.props.collBRTBalanceAccount}
-                                                                                                                    collDebtBalance={this.props.collDebtBalance}
-                                                                                                                    collBRTValue={this.props.collBRTValue}
-                                                                                                                    collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
-                                                                                                                    collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
-                                                                                                                    collUserSegmentInfo={this.props.collUserSegmentInfo}
-                                                                                                                    systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                                    addLPCollRatio={this.addLPCollRatio}
-                                                                                                                    addUSBDebtRatio={this.addUSBDebtRatio}
-                                                                                                                    collateralApprove={this.props.collateralApprove}
-                                                                                                                    depositAndBorrow={this.props.depositAndBorrow}
-                                                                                                                    i={i}
-                                                                                                                />
-                                                                                                            </div>
-                                                                                                            :
-                                                                                                            <div>
-                                                                                                                <CollDepBorrow
-                                                                                                                    wallet={this.props.wallet}
-                                                                                                                    walletConnect={this.props.walletConnect}
-                                                                                                                    accountLoading={this.props.accountLoading}
-                                                                                                                    collBRTBalanceAccount={this.props.collBRTBalanceAccount}
-                                                                                                                    collDebtBalance={this.props.collDebtBalance}
-                                                                                                                    collBRTValue={this.props.collBRTValue}
-                                                                                                                    collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
-                                                                                                                    collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
-                                                                                                                    collUserSegmentInfo={this.props.collUserSegmentInfo}
-                                                                                                                    systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                                    collPoolRemainingAsset={this.props.collPoolRemainingAsset}
-                                                                                                                    addLPCollRatio={this.addLPCollRatio}
-                                                                                                                    addUSBDebtRatio={this.addUSBDebtRatio}
-                                                                                                                    collateralApprove={this.props.collateralApprove}
-                                                                                                                    depositAndBorrow={this.props.depositAndBorrow}
-                                                                                                                    i={i}
-                                                                                                                />
+                                                                                                                {this.state.actionOpen[i][2] == true ?
+                                                                                                                    <ButtonGroup>
+                                                                                                                        <div>
+                                                                                                                            <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                await this.setAction(0, i, true)
+                                                                                                                                await this.setAction(1, i, false)
+                                                                                                                                await this.setAction(2, i, false)
+                                                                                                                                await this.setAction(3, i, false)
+                                                                                                                            }}><b>Resize Vault</b></Buttons></div>
+                                                                                                                        <div>
+                                                                                                                            <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                await this.setAction(0, i, false)
+                                                                                                                                await this.setAction(1, i, true)
+                                                                                                                                await this.setAction(2, i, false)
+                                                                                                                                await this.setAction(3, i, false)
+                                                                                                                            }}>Borrow USB</Buttons></div>
+                                                                                                                        <div>
+                                                                                                                            <Buttons className="textTransparentButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                await this.setAction(0, i, false)
+                                                                                                                                await this.setAction(1, i, false)
+                                                                                                                                await this.setAction(2, i, true)
+                                                                                                                                await this.setAction(3, i, false)
+                                                                                                                            }}>Repay USB</Buttons></div>
+                                                                                                                        <div>
+                                                                                                                            <Buttons className="textBlackButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                await this.setAction(0, i, false)
+                                                                                                                                await this.setAction(1, i, false)
+                                                                                                                                await this.setAction(2, i, false)
+                                                                                                                                await this.setAction(3, i, true)
+                                                                                                                            }}>Withdraw BRT</Buttons></div>
+                                                                                                                    </ButtonGroup>
+                                                                                                                    : <ButtonGroup>
+                                                                                                                        <div>
+                                                                                                                            <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                await this.setAction(0, i, true)
+                                                                                                                                await this.setAction(1, i, false)
+                                                                                                                                await this.setAction(2, i, false)
+                                                                                                                                await this.setAction(3, i, false)
+                                                                                                                            }}><b>Resize Vault</b></Buttons></div>
+                                                                                                                        <div>
+                                                                                                                            <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                await this.setAction(0, i, false)
+                                                                                                                                await this.setAction(1, i, true)
+                                                                                                                                await this.setAction(2, i, false)
+                                                                                                                                await this.setAction(3, i, false)
+                                                                                                                            }}>Borrow USB</Buttons></div>
+                                                                                                                        <div>
+                                                                                                                            <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                await this.setAction(0, i, false)
+                                                                                                                                await this.setAction(1, i, false)
+                                                                                                                                await this.setAction(2, i, true)
+                                                                                                                                await this.setAction(3, i, false)
+                                                                                                                            }}>Repay USB</Buttons></div>
+                                                                                                                        <div>
+                                                                                                                            <Buttons className="textTransparentButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                await this.setAction(0, i, false)
+                                                                                                                                await this.setAction(1, i, false)
+                                                                                                                                await this.setAction(2, i, false)
+                                                                                                                                await this.setAction(3, i, true)
+                                                                                                                            }}>Withdraw BRT</Buttons></div>
+                                                                                                                    </ButtonGroup>
+                                                                                                                }
                                                                                                             </div>
                                                                                                         }
                                                                                                     </div>
                                                                                                 }
                                                                                             </div>
+                                                                                            :
+                                                                                            <div className='ml-2 mt-2 mb-2'>
+                                                                                                {(this.state.actionOpen[i][1]) ?
+                                                                                                    <ButtonGroup>
+                                                                                                        <div>
+                                                                                                            <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                await this.setAction(0, i, true)
+                                                                                                                await this.setAction(1, i, false)
+                                                                                                            }}><b>Deposit & Borrow</b></Buttons>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <Buttons className="textTransparentButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                await this.setAction(0, i, false)
+                                                                                                                await this.setAction(1, i, true)
+                                                                                                            }}>Only Deposit</Buttons>
+                                                                                                        </div>
+                                                                                                    </ButtonGroup>
+                                                                                                    :
+                                                                                                    <ButtonGroup>
+                                                                                                        <div>
+                                                                                                            <Buttons className="textTransparentButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                await this.setAction(0, i, true)
+                                                                                                                await this.setAction(1, i, false)
+                                                                                                            }}><b>Deposit & Borrow</b></Buttons>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <Buttons className="textBlackButton center" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                await this.setAction(0, i, false)
+                                                                                                                await this.setAction(1, i, true)
+                                                                                                            }}>Only Deposit</Buttons>
+                                                                                                        </div>
+                                                                                                    </ButtonGroup>
+                                                                                                }
+                                                                                            </div>
+                                                                                        }
+
+                                                                                        <div className='borderBottom'></div>
+                                                                                        <div className='ml-1 mr-1'>
+                                                                                            {this.props.collUserSegmentInfo[i] > 0 ?
+                                                                                                <div>
+                                                                                                    {this.state.actionOpen[i][0] == true ?
+                                                                                                        <div>
+                                                                                                            <CollResize
+                                                                                                                wallet={this.props.wallet}
+                                                                                                                walletConnect={this.props.walletConnect}
+                                                                                                                accountLoading={this.props.accountLoading}
+                                                                                                                collBRTBalanceAccount={this.props.collBRTBalanceAccount}
+                                                                                                                collDebtBalance={this.props.collDebtBalance}
+                                                                                                                collBRTValue={this.props.collBRTValue}
+                                                                                                                collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
+                                                                                                                collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
+                                                                                                                collUserSegmentInfo={this.props.collUserSegmentInfo}
+                                                                                                                systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                collPoolRemainingAsset={this.props.collPoolRemainingAsset}
+                                                                                                                addLPCollRatio={this.addLPCollRatio}
+                                                                                                                addUSBDebtRatio={this.addUSBDebtRatio}
+                                                                                                                collateralApprove={this.props.collateralApprove}
+                                                                                                                depositAndBorrow={this.props.depositAndBorrow}
+                                                                                                                i={i}
+                                                                                                            />
+                                                                                                        </div>
+                                                                                                        : <div>
+                                                                                                            {this.state.actionOpen[i][1] == true ?
+                                                                                                                <div >
+                                                                                                                    <CollOnlyBorrow
+                                                                                                                        wallet={this.props.wallet}
+                                                                                                                        walletConnect={this.props.walletConnect}
+                                                                                                                        accountLoading={this.props.accountLoading}
+                                                                                                                        collBRTBalanceAccount={this.props.collBRTBalanceAccount}
+                                                                                                                        collDebtBalance={this.props.collDebtBalance}
+                                                                                                                        collBRTValue={this.props.collBRTValue}
+                                                                                                                        collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
+                                                                                                                        collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
+                                                                                                                        collUserSegmentInfo={this.props.collUserSegmentInfo}
+                                                                                                                        systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                        collPoolRemainingAsset={this.props.collPoolRemainingAsset}
+                                                                                                                        addLPCollRatio={this.addLPCollRatio}
+                                                                                                                        addUSBDebtRatio={this.addUSBDebtRatio}
+                                                                                                                        collateralApprove={this.props.collateralApprove}
+                                                                                                                        depositAndBorrow={this.props.depositAndBorrow}
+                                                                                                                        i={i}
+                                                                                                                    />
+                                                                                                                </div>
+                                                                                                                : <div>
+                                                                                                                    {this.state.actionOpen[i][2] == true ?
+                                                                                                                        <div>
+                                                                                                                            <CollRepay
+                                                                                                                                wallet={this.props.wallet}
+                                                                                                                                walletConnect={this.props.walletConnect}
+                                                                                                                                accountLoading={this.props.accountLoading}
+                                                                                                                                collBRTBalanceAccount={this.props.collBRTBalanceAccount}
+                                                                                                                                collDebtBalance={this.props.collDebtBalance}
+                                                                                                                                collBRTValue={this.props.collBRTValue}
+                                                                                                                                collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
+                                                                                                                                collUserSegmentInfo={this.props.collUserSegmentInfo}
+                                                                                                                                systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                                systemCoinCollAllowance={this.props.systemCoinCollAllowance}
+                                                                                                                                reduceUSBDebtRatio={this.reduceUSBDebtRatio}
+                                                                                                                                systemCoinCollApprove={this.props.systemCoinCollApprove}
+                                                                                                                                repayUSB={this.props.repayUSB}
+                                                                                                                                i={i}
+                                                                                                                            />
+                                                                                                                        </div>
+                                                                                                                        : <div>
+                                                                                                                            <CollWithdraw
+                                                                                                                                wallet={this.props.wallet}
+                                                                                                                                walletConnect={this.props.walletConnect}
+                                                                                                                                accountLoading={this.props.accountLoading}
+                                                                                                                                collBRTBalanceAccount={this.props.collBRTBalanceAccount}
+                                                                                                                                collDebtBalance={this.props.collDebtBalance}
+                                                                                                                                collBRTValue={this.props.collBRTValue}
+                                                                                                                                collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
+                                                                                                                                collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
+                                                                                                                                collUserSegmentInfo={this.props.collUserSegmentInfo}
+                                                                                                                                systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                                reduceLPCollRatio={this.reduceLPCollRatio}
+                                                                                                                                withdrawBRTColl={this.props.withdrawBRTColl}
+                                                                                                                                i={i}
+                                                                                                                            />
+                                                                                                                        </div>}
+                                                                                                                </div>
+                                                                                                            }</div>
+                                                                                                    }</div> :
+                                                                                                <div>
+                                                                                                    {this.state.actionOpen[i][1] ?
+                                                                                                        <div>
+                                                                                                            <CollOnlyDep
+                                                                                                                wallet={this.props.wallet}
+                                                                                                                walletConnect={this.props.walletConnect}
+                                                                                                                accountLoading={this.props.accountLoading}
+                                                                                                                collBRTBalanceAccount={this.props.collBRTBalanceAccount}
+                                                                                                                collDebtBalance={this.props.collDebtBalance}
+                                                                                                                collBRTValue={this.props.collBRTValue}
+                                                                                                                collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
+                                                                                                                collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
+                                                                                                                collUserSegmentInfo={this.props.collUserSegmentInfo}
+                                                                                                                systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                addLPCollRatio={this.addLPCollRatio}
+                                                                                                                addUSBDebtRatio={this.addUSBDebtRatio}
+                                                                                                                collateralApprove={this.props.collateralApprove}
+                                                                                                                depositAndBorrow={this.props.depositAndBorrow}
+                                                                                                                i={i}
+                                                                                                            />
+                                                                                                        </div>
+                                                                                                        :
+                                                                                                        <div>
+                                                                                                            <CollDepBorrow
+                                                                                                                wallet={this.props.wallet}
+                                                                                                                walletConnect={this.props.walletConnect}
+                                                                                                                accountLoading={this.props.accountLoading}
+                                                                                                                collBRTBalanceAccount={this.props.collBRTBalanceAccount}
+                                                                                                                collDebtBalance={this.props.collDebtBalance}
+                                                                                                                collBRTValue={this.props.collBRTValue}
+                                                                                                                collateralPoolSegmentInfo={this.props.collateralPoolSegmentInfo}
+                                                                                                                collBRTSegmentAllowance={this.props.collBRTSegmentAllowance}
+                                                                                                                collUserSegmentInfo={this.props.collUserSegmentInfo}
+                                                                                                                systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                                collPoolRemainingAsset={this.props.collPoolRemainingAsset}
+                                                                                                                addLPCollRatio={this.addLPCollRatio}
+                                                                                                                addUSBDebtRatio={this.addUSBDebtRatio}
+                                                                                                                collateralApprove={this.props.collateralApprove}
+                                                                                                                depositAndBorrow={this.props.depositAndBorrow}
+                                                                                                                i={i}
+                                                                                                            />
+                                                                                                        </div>
+                                                                                                    }
+                                                                                                </div>
+                                                                                            }
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div> :
-                                                                            <div className="center borderTop" >
-                                                                                <span className="mt-3" style={{ color: 'black' }}><small>Wallet Connection to Avalanche required</small></span>
-                                                                            </div>}
-                                                                    </div> :
-                                                                    <div></div>
-                                                                }
-                                                            </div>
+                                                                            </div>
+                                                                        </div> :
+                                                                        <div className="center borderTop" >
+                                                                            <span className="mt-3" style={{ color: 'black' }}><small>Wallet Connection to Avalanche required</small></span>
+                                                                        </div>}
+                                                                </div> :
+                                                                <div></div>
+                                                            }
                                                         </div>
                                                     </div>
                                                 }

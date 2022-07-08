@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import baklava from '../baklava.png';
-import usbPicture from '../USB.png';
 import Button from 'react-bootstrap/Button'
 import bigInt from 'big-integer'
 import 'reactjs-popup/dist/index.css';
@@ -151,7 +149,7 @@ class SynBuy extends Component {
                     }}>Max</Button>
                   </div>
                   <div className="input-group-text cardbody" style={{ padding: '0 0.5rem' }}>
-                    <img src={usbPicture} height='25' className="" alt="" />
+                    <img src="/images/usb.png" height='25' className="" alt="" />
                   </div>
                 </div >
               </div>
@@ -203,7 +201,7 @@ class SynBuy extends Component {
             <div className="mb-1" style={{ color: 'red', fontSize: '15px' }}>{this.state.messageSyn} </div>
 
             <div className="mt-3">
-              <div className="float-left" style={{ color: 'grey' }}><img src={baklava} style={{ marginRight: '5px' }} height='20' alt="" /><small>Tx Fees is 0.50 USB </small></div>
+              <div className="float-left" style={{ color: 'grey' }}><img src="/images/baklava.png" style={{ marginRight: '5px' }} height='20' alt="" /><small>Tx Fees is 0.50 USB </small></div>
               <div className="float-right" >
                 {this.props.systemCoinSynAllowance > 2000000000000000000000000000 && (this.state.txUSBValidAmount == true && this.state.txSynValidAmount == true) ?
                   <Button type="submit" className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }} >Confirm</Button>

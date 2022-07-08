@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from '@material-ui/core/Button';
-import exlink from '../link.png'
 import Buttons from 'react-bootstrap/Button'
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import Popup from 'reactjs-popup';
@@ -159,13 +158,13 @@ class Kyber extends Component {
                                                                     <div className="textMiddle"><b>{this.props.poolSegmentInfoV2_3[2][i].lpName}{this.props.poolSegmentInfoV2_3[2][i].status}</b></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.poolSegmentInfoV2_3[2][i].projectLink, '_blank')
-                                                                    }}>Uses: {this.props.poolSegmentInfoV2_3[2][i].platform} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>Uses: {this.props.poolSegmentInfoV2_3[2][i].platform} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.poolSegmentInfoV2_3[2][i].getLPLink, '_blank')
-                                                                    }}>Get {this.props.poolSegmentInfoV2_3[2][i].lpName} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>Get {this.props.poolSegmentInfoV2_3[2][i].lpName} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.poolSegmentInfoV2_3[2][i].farmContract, '_blank')
-                                                                    }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>View On Explorer <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                 </div>
                                                                 <div className="float-right mr-auto">
                                                                     <table>

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from '@material-ui/core/Button';
-import exlink from '../link.png'
 import Buttons from 'react-bootstrap/Button'
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import Popup from 'reactjs-popup';
@@ -131,7 +130,7 @@ class Menu extends Component {
 
                     <div>
                         {this.props.farmloading ?
-                            <div className="" style={{ }}>
+                            <div className="" style={{}}>
                                 {this.props.poolSegmentInfoV2_3[0].map((poolSegmentInfoV2_3, key) => {
                                     let i = this.props.poolSegmentInfoV2_3[0].indexOf(poolSegmentInfoV2_3)
                                     return (
@@ -144,17 +143,28 @@ class Menu extends Component {
                                                                 <div className='rowC' style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
                                                                     this.clickfarmOpen(i)
                                                                 }}>
-                                                                    <div className="float-left">
-                                                                        <div className="textMiddle"><b>{this.props.poolSegmentInfoV2_3[0][i].lpName}{this.props.poolSegmentInfoV2_3[0][i].status}</b></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.poolSegmentInfoV2_3[0][i].projectLink, '_blank')
-                                                                        }}>Uses: {this.props.poolSegmentInfoV2_3[0][i].platform} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.poolSegmentInfoV2_3[0][i].getLPLink, '_blank')
-                                                                        }}>Get {this.props.poolSegmentInfoV2_3[0][i].lpName} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.poolSegmentInfoV2_3[0][i].farmContract, '_blank')
-                                                                        }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    <div className="float-left rowC" style={{ minWidth: '200px' }}>
+                                                                        <span className="mr-3 mt-2">
+                                                                            <div className="textMiddle" style={{ width: '48px' }}>
+                                                                                {this.props.poolSegmentInfoV2_3[0][i].icon.map((icon, key) => {
+                                                                                    return (
+                                                                                        <img key={key} className={icon.imagePosition} src={`/images/${icon.image}`} width={icon.imageSize} height={icon.imageSize} alt="" />
+                                                                                    )
+                                                                                })}
+                                                                            </div>
+                                                                        </span>
+                                                                        <span>
+                                                                            <div className="textMiddle"><b>{this.props.poolSegmentInfoV2_3[0][i].lpName}{this.props.poolSegmentInfoV2_3[0][i].status}</b></div>
+                                                                            <div className="textGrey exLink0" onClick={() => {
+                                                                                window.open(this.props.poolSegmentInfoV2_3[0][i].projectLink, '_blank')
+                                                                            }}>Uses: {this.props.poolSegmentInfoV2_3[0][i].platform} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                            <div className="textGrey exLink0" onClick={() => {
+                                                                                window.open(this.props.poolSegmentInfoV2_3[0][i].getLPLink, '_blank')
+                                                                            }}>Get {this.props.poolSegmentInfoV2_3[0][i].lpName} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                            <div className="textGrey exLink0" onClick={() => {
+                                                                                window.open(this.props.poolSegmentInfoV2_3[0][i].farmContract, '_blank')
+                                                                            }}>View On Explorer <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                        </span>
                                                                     </div>
                                                                     <div >
                                                                         <table className="float-right mr-auto">
@@ -318,23 +328,34 @@ class Menu extends Component {
                                                 {this.props.poolSegmentInfoV2_3[0][i].lpName == "BAVA-AVAX" ? <div></div> :
                                                     <div className="card mb-3 cardbody">
                                                         <div className="card-body" style={{ padding: '1rem' }}>
-                                                            <div>
-                                                                <div className='rowC' style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
+                                                            <div className="card cardbody" style={{ border: '0px' }}>
+                                                                <div className='card-body rowC' style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
                                                                     this.clickfarmOpen(i)
                                                                 }}>
-                                                                    <div className="float-left" style={{ minWidth: '160px' }}>
-                                                                        <div className="textMiddle"><b>{this.props.poolSegmentInfoV2_3[0][i].lpName}{this.props.poolSegmentInfoV2_3[0][i].status}</b></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.poolSegmentInfoV2_3[0][i].projectLink, '_blank')
-                                                                        }}>Uses: {this.props.poolSegmentInfoV2_3[0][i].platform} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.poolSegmentInfoV2_3[0][i].getLPLink, '_blank')
-                                                                        }}>Get {this.props.poolSegmentInfoV2_3[0][i].lpName} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
-                                                                        <div className="textGrey exLink0" onClick={() => {
-                                                                            window.open(this.props.poolSegmentInfoV2_3[0][i].farmContract, '_blank')
-                                                                        }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    <div className="float-left rowC" style={{ minWidth: '200px' }}>
+                                                                        <span className="mr-3 mt-2">
+                                                                            <div className="textMiddle" style={{ width: '48px' }}>
+                                                                                {this.props.poolSegmentInfoV2_3[0][i].icon.map((icon, key) => {
+                                                                                    return (
+                                                                                        <img key={key} className={icon.imagePosition} src={`/images/${icon.image}`} width={icon.imageSize} height={icon.imageSize} alt="" />
+                                                                                    )
+                                                                                })}
+                                                                            </div>
+                                                                        </span>
+                                                                        <span>
+                                                                            <div className="textMiddle"><b>{this.props.poolSegmentInfoV2_3[0][i].lpName}{this.props.poolSegmentInfoV2_3[0][i].status}</b></div>
+                                                                            <div className="textGrey exLink0" onClick={() => {
+                                                                                window.open(this.props.poolSegmentInfoV2_3[0][i].projectLink, '_blank')
+                                                                            }}>Uses: {this.props.poolSegmentInfoV2_3[0][i].platform} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                            <div className="textGrey exLink0" onClick={() => {
+                                                                                window.open(this.props.poolSegmentInfoV2_3[0][i].getLPLink, '_blank')
+                                                                            }}>Get {this.props.poolSegmentInfoV2_3[0][i].lpName} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                            <div className="textGrey exLink0" onClick={() => {
+                                                                                window.open(this.props.poolSegmentInfoV2_3[0][i].farmContract, '_blank')
+                                                                            }}>View On Explorer <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                        </span>
                                                                     </div>
-                                                                    <div>
+                                                                    <div className="ml-4">
                                                                         <table className="float-right mr-auto">
                                                                             <thead className="textBlackSmall" style={{ color: 'black' }}>
                                                                                 <tr>
@@ -383,100 +404,100 @@ class Menu extends Component {
                                                                         </table>
                                                                     </div>
                                                                 </div>
+                                                            </div>
 
 
-
-                                                                {this.state.farmV2_3Open[i] ?
-                                                                    <div>
-                                                                        {this.props.wallet || this.props.walletConnect ? <div className="borderTop "><div className="rowC mt-3">
-                                                                            <div>
-                                                                                <div className="card cardbody float-left mr-3 mb-3" style={{ width: '300px' }}>
-                                                                                    <div className="card-body" style={{ padding: '0.5rem' }}>
-                                                                                        <span className="float-left" style={{ color: 'black' }}><small>BAVA earned</small></span><br />
-                                                                                        <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.pendingSegmentRewardV2_3[0][i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div> :
-                                                                                            <div className="ml-3 lds-facebook"><div></div><div></div><div></div></div>}</small></span>
-                                                                                        <span className="float-right">
-                                                                                            <Buttons
-                                                                                                variant="success"
-                                                                                                size="sm"
-                                                                                                style={{ minWidth: '80px' }}
-                                                                                                onClick={(event) => {
-                                                                                                    event.preventDefault()
-                                                                                                    console.log(i)
-                                                                                                    this.props.harvest(i, 0, 4)
-                                                                                                }}>
-                                                                                                Harvest
-                                                                                            </Buttons></span>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div className="card cardbody float-left mr-3" style={{ width: '300px' }}>
-                                                                                    <div className="card-body" style={{ padding: '0.5rem' }}>
-                                                                                        <span className="float-left" style={{ color: 'black' }}><small>Reinvest </small><Popup
-                                                                                            trigger={open => (
-                                                                                                <span><BsFillQuestionCircleFill size={13} /></span>
-                                                                                            )}
-                                                                                            on="hover"
-                                                                                            offsetY={-10}
-                                                                                            offsetX={10}
-                                                                                            position="right center"
-                                                                                        ><span className="textInfo"><small>This farm has a 2% reinvest reward paid in WAVAX. Pressing the button is optional.</small></span>
-                                                                                        </Popup></span><br />
-                                                                                        <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.reinvestAmount[0][i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 5 })} WAVAX</div> :
-                                                                                            <div className="ml-3 lds-facebook"><div></div><div></div><div></div></div>}</small></span>
-                                                                                        <span className="float-right">
-                                                                                            <Buttons
-                                                                                                variant="info"
-                                                                                                size="sm"
-                                                                                                style={{ minWidth: '80px' }}
-                                                                                                onClick={(event) => {
-                                                                                                    event.preventDefault()
-                                                                                                    console.log(i)
-                                                                                                    this.props.reinvest(i, 0)
-                                                                                                }}>
-                                                                                                Reinvest
-                                                                                            </Buttons></span>
-                                                                                    </div>
+                                                            {this.state.farmV2_3Open[i] ?
+                                                                <div>
+                                                                    {this.props.wallet || this.props.walletConnect ? <div className="borderTop "><div className="rowC mt-3">
+                                                                        <div>
+                                                                            <div className="card cardbody float-left mr-3 mb-3" style={{ width: '300px' }}>
+                                                                                <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                    <span className="float-left" style={{ color: 'black' }}><small>BAVA earned</small></span><br />
+                                                                                    <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.pendingSegmentRewardV2_3[0][i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div> :
+                                                                                        <div className="ml-3 lds-facebook"><div></div><div></div><div></div></div>}</small></span>
+                                                                                    <span className="float-right">
+                                                                                        <Buttons
+                                                                                            variant="success"
+                                                                                            size="sm"
+                                                                                            style={{ minWidth: '80px' }}
+                                                                                            onClick={(event) => {
+                                                                                                event.preventDefault()
+                                                                                                console.log(i)
+                                                                                                this.props.harvest(i, 0, 4)
+                                                                                            }}>
+                                                                                            Harvest
+                                                                                        </Buttons></span>
                                                                                 </div>
                                                                             </div>
-                                                                            <div className="float-right">
-                                                                                <span className="card cardbody float-right" style={{ width: '650px' }}>
-                                                                                    <div className="card-body" style={{ padding: '0.5rem' }}>
-                                                                                        {this.props.lpSegmentAllowanceV2_3[0][i] > 2000000000000000000000000000 ?
-                                                                                            <div><Deposit
-                                                                                                lpBalanceAccount={this.props.lpBalanceAccountV2_3}
-                                                                                                poolSegmentInfo={this.props.poolSegmentInfoV2_3}
-                                                                                                userSegmentInfo={this.props.userSegmentInfoV2_3}
-                                                                                                i={i}
-                                                                                                n='0'
-                                                                                                v='4'
-                                                                                                deposit={this.props.deposit}
-                                                                                                withdraw={this.props.withdraw}
-                                                                                            /></div>
-                                                                                            :
-                                                                                            <div>
-                                                                                                <span className="float-left " style={{ color: 'black' }}><small>Enable Pool</small></span>
-                                                                                                <Buttons className="btn-block"
-                                                                                                    variant="outline-primary"
-                                                                                                    size="sm"
-                                                                                                    style={{ minWidth: '80px' }}
-                                                                                                    onClick={(event) => {
-                                                                                                        event.preventDefault()
-                                                                                                        this.props.approve(i, 0, 4)
-                                                                                                    }}>
-                                                                                                    Approve
-                                                                                                </Buttons>
-                                                                                            </div>}
-                                                                                    </div>
-                                                                                </span>
+                                                                            <div className="card cardbody float-left mr-3" style={{ width: '300px' }}>
+                                                                                <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                    <span className="float-left" style={{ color: 'black' }}><small>Reinvest </small><Popup
+                                                                                        trigger={open => (
+                                                                                            <span><BsFillQuestionCircleFill size={13} /></span>
+                                                                                        )}
+                                                                                        on="hover"
+                                                                                        offsetY={-10}
+                                                                                        offsetX={10}
+                                                                                        position="right center"
+                                                                                    ><span className="textInfo"><small>This farm has a 2% reinvest reward paid in WAVAX. Pressing the button is optional.</small></span>
+                                                                                    </Popup></span><br />
+                                                                                    <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.reinvestAmount[0][i], 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 5 })} WAVAX</div> :
+                                                                                        <div className="ml-3 lds-facebook"><div></div><div></div><div></div></div>}</small></span>
+                                                                                    <span className="float-right">
+                                                                                        <Buttons
+                                                                                            variant="info"
+                                                                                            size="sm"
+                                                                                            style={{ minWidth: '80px' }}
+                                                                                            onClick={(event) => {
+                                                                                                event.preventDefault()
+                                                                                                console.log(i)
+                                                                                                this.props.reinvest(i, 0)
+                                                                                            }}>
+                                                                                            Reinvest
+                                                                                        </Buttons></span>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                        </div> :
-                                                                            <div className="center borderTop" >
-                                                                                <span className="mt-3" style={{ color: 'black' }}><small>Wallet Connection to Avalanche required</small></span>
-                                                                            </div>}
+                                                                        <div className="float-right">
+                                                                            <span className="card cardbody float-right" style={{ width: '650px' }}>
+                                                                                <div className="card-body" style={{ padding: '0.5rem' }}>
+                                                                                    {this.props.lpSegmentAllowanceV2_3[0][i] > 2000000000000000000000000000 ?
+                                                                                        <div><Deposit
+                                                                                            lpBalanceAccount={this.props.lpBalanceAccountV2_3}
+                                                                                            poolSegmentInfo={this.props.poolSegmentInfoV2_3}
+                                                                                            userSegmentInfo={this.props.userSegmentInfoV2_3}
+                                                                                            i={i}
+                                                                                            n='0'
+                                                                                            v='4'
+                                                                                            deposit={this.props.deposit}
+                                                                                            withdraw={this.props.withdraw}
+                                                                                        /></div>
+                                                                                        :
+                                                                                        <div>
+                                                                                            <span className="float-left " style={{ color: 'black' }}><small>Enable Pool</small></span>
+                                                                                            <Buttons className="btn-block"
+                                                                                                variant="outline-primary"
+                                                                                                size="sm"
+                                                                                                style={{ minWidth: '80px' }}
+                                                                                                onClick={(event) => {
+                                                                                                    event.preventDefault()
+                                                                                                    this.props.approve(i, 0, 4)
+                                                                                                }}>
+                                                                                                Approve
+                                                                                            </Buttons>
+                                                                                        </div>}
+                                                                                </div>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
                                                                     </div> :
-                                                                    <div></div>}
-                                                            </div>
+                                                                        <div className="center borderTop" >
+                                                                            <span className="mt-3" style={{ color: 'black' }}><small>Wallet Connection to Avalanche required</small></span>
+                                                                        </div>}
+                                                                </div> :
+                                                                <div></div>
+                                                            }
                                                         </div>
                                                     </div>
                                                 }
@@ -484,12 +505,6 @@ class Menu extends Component {
                                         </div>
                                     )
                                 })}
-
-
-
-
-
-
                             </div>
                             :
                             <div className="center">

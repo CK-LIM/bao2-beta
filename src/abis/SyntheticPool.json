@@ -2,6 +2,11 @@
   "contractName": "SyntheticPool",
   "abi": [
     {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
       "anonymous": false,
       "inputs": [
         {
@@ -57,13 +62,19 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "systemCoinTxAmount",
+          "name": "systemCoinAmount",
           "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "uint256",
           "name": "synTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "synTokenPrice",
           "type": "uint256"
         }
       ],
@@ -99,6 +110,19 @@
       "anonymous": false,
       "inputs": [
         {
+          "indexed": false,
+          "internalType": "uint8",
+          "name": "version",
+          "type": "uint8"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
           "indexed": true,
           "internalType": "uint256",
           "name": "pid",
@@ -119,13 +143,19 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "systemCoinTxAmount",
+          "name": "systemCoinAmount",
           "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "uint256",
           "name": "synTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "synTokenPrice",
           "type": "uint256"
         }
       ],
@@ -162,19 +192,7 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "systemCoinTxAmount",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "minSystemCoinTxAmount",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "minSynTokenAmount",
+          "name": "systemCoinAmount",
           "type": "uint256"
         },
         {
@@ -187,12 +205,6 @@
           "indexed": false,
           "internalType": "uint256",
           "name": "synTokenPrice",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "openTime",
           "type": "uint256"
         }
       ],
@@ -306,7 +318,7 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "systemCoinTxAmount",
+          "name": "systemCoinAmount",
           "type": "uint256"
         },
         {
@@ -336,37 +348,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "_synToken",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_oracle",
-          "type": "address"
-        }
-      ],
-      "name": "add",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_toAdd",
-          "type": "address"
-        }
-      ],
-      "name": "addAuthorized",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -380,426 +361,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        }
-      ],
-      "name": "cancelAllOrders",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_orderId",
-          "type": "uint256"
-        }
-      ],
-      "name": "cancelOrder",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_orderId",
-          "type": "uint256"
-        }
-      ],
-      "name": "cancelOrderAuthorized",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_orderId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint128",
-          "name": "_systemCoinTxAmount",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint128",
-          "name": "_synTokenAmount",
-          "type": "uint128"
-        }
-      ],
-      "name": "closeOrder",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getPoolLength",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        }
-      ],
-      "name": "getPoolOrderLength",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        }
-      ],
-      "name": "getPoolPrice",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getReservePool",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getSystemCoin",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getTotalTxAmount",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getUSBPool",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "account",
-          "type": "address"
-        }
-      ],
-      "name": "getUserOrderLength",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "account",
-          "type": "address"
-        }
-      ],
-      "name": "getUserOrders",
-      "outputs": [
-        {
-          "components": [
-            {
-              "internalType": "address",
-              "name": "account",
-              "type": "address"
-            },
-            {
-              "internalType": "uint128",
-              "name": "systemCoinTxAmount",
-              "type": "uint128"
-            },
-            {
-              "internalType": "uint128",
-              "name": "minSystemCoinTxAmount",
-              "type": "uint128"
-            },
-            {
-              "internalType": "uint128",
-              "name": "synTokenAmount",
-              "type": "uint128"
-            },
-            {
-              "internalType": "uint128",
-              "name": "minSynTokenAmount",
-              "type": "uint128"
-            },
-            {
-              "internalType": "uint32",
-              "name": "orderId",
-              "type": "uint32"
-            },
-            {
-              "internalType": "uint64",
-              "name": "synTokenPrice",
-              "type": "uint64"
-            },
-            {
-              "internalType": "uint64",
-              "name": "openTime",
-              "type": "uint64"
-            },
-            {
-              "internalType": "uint64",
-              "name": "closeTime",
-              "type": "uint64"
-            },
-            {
-              "internalType": "uint8",
-              "name": "orderType",
-              "type": "uint8"
-            },
-            {
-              "internalType": "uint8",
-              "name": "status",
-              "type": "uint8"
-            }
-          ],
-          "internalType": "struct SyntheticPool.OrderInfo[]",
-          "name": "orders",
-          "type": "tuple[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_reservePool",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_systemCoin",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_USBPool",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_minSystemCoinTxAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_txFee",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_tolCloseMargin",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_synPoolPriceDecimal",
-          "type": "uint256"
-        }
-      ],
-      "name": "initContract",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "initialize",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint128",
-          "name": "syntheticTokenAmount",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint128",
-          "name": "_minSynTokenAmount",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint64",
-          "name": "_synTokenPrice",
-          "type": "uint64"
-        }
-      ],
-      "name": "openBuyOrder",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint8",
-          "name": "orderType",
-          "type": "uint8"
-        },
-        {
-          "internalType": "uint128",
-          "name": "_synTokenAmount",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint64",
-          "name": "_synTokenPrice",
-          "type": "uint64"
-        }
-      ],
-      "name": "openLimitOrder",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint128",
-          "name": "_synTokenAmount",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint128",
-          "name": "_minSystemCoinTxAmount",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint64",
-          "name": "_synTokenPrice",
-          "type": "uint64"
-        }
-      ],
-      "name": "openSellOrder",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -822,34 +385,24 @@
           "type": "address"
         },
         {
-          "internalType": "uint128",
-          "name": "systemCoinTxAmount",
-          "type": "uint128"
+          "internalType": "uint256",
+          "name": "systemCoinAmount",
+          "type": "uint256"
         },
         {
-          "internalType": "uint128",
-          "name": "minSystemCoinTxAmount",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint128",
+          "internalType": "uint256",
           "name": "synTokenAmount",
-          "type": "uint128"
+          "type": "uint256"
         },
         {
-          "internalType": "uint128",
-          "name": "minSynTokenAmount",
-          "type": "uint128"
+          "internalType": "uint256",
+          "name": "synTokenPrice",
+          "type": "uint256"
         },
         {
           "internalType": "uint32",
           "name": "orderId",
           "type": "uint32"
-        },
-        {
-          "internalType": "uint64",
-          "name": "synTokenPrice",
-          "type": "uint64"
         },
         {
           "internalType": "uint64",
@@ -873,7 +426,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -886,7 +440,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -899,7 +454,28 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "poolId1",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -923,8 +499,23 @@
         },
         {
           "internalType": "uint256",
+          "name": "slippage",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
           "name": "txAmount",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tradingHours",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "openOrderEnabled",
+          "type": "bool"
         },
         {
           "internalType": "bool",
@@ -938,7 +529,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -951,145 +543,12 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_toRemove",
-          "type": "address"
-        }
-      ],
-      "name": "removeAuthorized",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
       "name": "renounceOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "token",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_to",
-          "type": "address"
-        }
-      ],
-      "name": "rescueDeployedFunds",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bool",
-          "name": "newMintsEnabled",
-          "type": "bool"
-        },
-        {
-          "internalType": "bool",
-          "name": "newBurnsEnabled",
-          "type": "bool"
-        }
-      ],
-      "name": "setPoolsEnabled",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint128",
-          "name": "newSystemCoinTxFloor",
-          "type": "uint128"
-        }
-      ],
-      "name": "setPoolsMinTx",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bool",
-          "name": "newMintsEnabled",
-          "type": "bool"
-        },
-        {
-          "internalType": "bool",
-          "name": "newBurnsEnabled",
-          "type": "bool"
-        }
-      ],
-      "name": "setPoolsOracle",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "newReservePool",
-          "type": "address"
-        }
-      ],
-      "name": "setReservePool",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "newTolCloseMargin",
-          "type": "uint256"
-        }
-      ],
-      "name": "setTolCloseMargin",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "newUSBPool",
-          "type": "address"
-        }
-      ],
-      "name": "setUSBPool",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -1103,70 +562,6 @@
         }
       ],
       "name": "transferOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_orderId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint128",
-          "name": "systemCoinAmount",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint128",
-          "name": "synTokenAmount",
-          "type": "uint128"
-        }
-      ],
-      "name": "updateOrderInfo",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "pid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "oracle",
-          "type": "address"
-        }
-      ],
-      "name": "updatePoolOraclAdd",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "synToken",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_newSynPoolPrice",
-          "type": "uint256"
-        }
-      ],
-      "name": "updateSynPoolPrice",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -1200,7 +595,8 @@
       "name": "upgradeToAndCall",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -1229,50 +625,639 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_reservePool",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_systemCoin",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_USBPool",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_minSystemCoinTxAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_txFee",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_tradingHourStartDate",
+          "type": "uint256"
+        }
+      ],
+      "name": "initContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_synToken",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_oracle",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_slippage",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_tradingHours",
+          "type": "uint256"
+        }
+      ],
+      "name": "add",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
         {
           "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
           "name": "orderType",
-          "type": "uint256"
+          "type": "uint8"
         },
         {
           "internalType": "uint256",
-          "name": "inputSystemCoinAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_synTokenPrice",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "inputSynTokenAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "synTokenDecimal",
+          "name": "synTokenAmount",
           "type": "uint256"
         }
       ],
-      "name": "verifyTol",
+      "name": "openMarketOrder",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "orderType",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256",
+          "name": "synTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_synTokenLimitPrice",
+          "type": "uint256"
+        }
+      ],
+      "name": "openLimitOrder",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_orderId",
+          "type": "uint256"
+        }
+      ],
+      "name": "closeOrder",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_orderId",
+          "type": "uint256"
+        }
+      ],
+      "name": "cancelOrder",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        }
+      ],
+      "name": "cancelAllOrders",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_orderId",
+          "type": "uint256"
+        }
+      ],
+      "name": "cancelOrderAuthorized",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getSystemCoin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getUSBPool",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getReservePool",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getPoolLength",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "estimatedReturn",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPoolOrderLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getUserOrderLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getTotalTxAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getMinTxAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPoolPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getTradingHourStartDate",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getUserOrders",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "systemCoinAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "synTokenAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "synTokenPrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint32",
+              "name": "orderId",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint64",
+              "name": "openTime",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "closeTime",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint8",
+              "name": "orderType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint8",
+              "name": "status",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct SyntheticPool.OrderInfo[]",
+          "name": "orders",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        }
+      ],
+      "name": "rescueDeployedFunds",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_toAdd",
+          "type": "address"
+        }
+      ],
+      "name": "addAuthorized",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_toRemove",
+          "type": "address"
+        }
+      ],
+      "name": "removeAuthorized",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newReservePool",
+          "type": "address"
+        }
+      ],
+      "name": "setReservePool",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newUSBPool",
+          "type": "address"
+        }
+      ],
+      "name": "setUSBPool",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "newSystemCoinTxFloor",
+          "type": "uint128"
+        }
+      ],
+      "name": "setPoolsMinTx",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
           "type": "uint256"
         },
         {
           "internalType": "bool",
-          "name": "tolStatus",
+          "name": "newOpenOrderEnabled",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "newMintsEnabled",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "newBurnsEnabled",
           "type": "bool"
         }
       ],
-      "stateMutability": "view",
+      "name": "setPoolsEnabled",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newStartTimeStamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateStartDate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "newTradingHours",
+          "type": "uint256"
+        }
+      ],
+      "name": "updatePoolTradingHours",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "oracle",
+          "type": "address"
+        }
+      ],
+      "name": "updatePoolOracleAdd",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newTxFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateTxFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "pid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_orderId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint128",
+          "name": "systemCoinAmount",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "synTokenAmount",
+          "type": "uint128"
+        }
+      ],
+      "name": "updateOrderInfo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ]

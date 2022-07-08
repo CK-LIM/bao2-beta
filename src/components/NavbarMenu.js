@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
 import MediaQuery from 'react-responsive';
 import Buttons from 'react-bootstrap/Button'
-import baklava from '../baklava.png'
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import fox from '../metamask-fox.svg'
-import coin98 from '../coin98.png'
-import walletconnectLogo from '../walletconnect-logo.svg'
 import Popup from 'reactjs-popup';
 import { slide as Menu } from 'react-burger-menu'
 import 'reactjs-popup/dist/index.css';
@@ -30,7 +26,7 @@ class Navb extends Component {
           </MediaQuery>
 
           <MediaQuery minWidth={901}>
-            <NavLink className="topleft" to="/"><img src={baklava} width="35" alt="" /></NavLink>
+            <NavLink className="topleft" to="/"><img src="/images/baklava.png" width="35" alt="" /></NavLink>
           </MediaQuery>
 
           <MediaQuery minWidth={351}>
@@ -131,13 +127,13 @@ class Navb extends Component {
                         <div>
                           <div className='dropdown0' onClick={async () => {
                             await this.props.connectMetamask()
-                          }}><img src={fox} width="23" height="23" className="d-inline-block" alt="" />&nbsp; Metamask</div>
+                          }}><img src="/images/metamask-fox.svg" width="23" height="23" className="d-inline-block" alt="" />&nbsp; Metamask</div>
                           <div className='dropdown0' onClick={async () => {
                             await this.props.connectCoin98()
-                          }}><img src={coin98} width="23" height="23" className="d-inline-block" alt="" />&nbsp; Coin98</div>
+                          }}><img src="/images/coin98.png" width="23" height="23" className="d-inline-block" alt="" />&nbsp; Coin98</div>
                           <div className='dropdown' onClick={async () => {
                             await this.props.mobileWalletConnect()
-                          }}><img src={walletconnectLogo} width="26" height="23" className="d-inline-block" alt="" />&nbsp; WalletConnect</div>
+                          }}><img src="/images/walletconnect-logo.svg" width="26" height="23" className="d-inline-block" alt="" />&nbsp; WalletConnect</div>
                         </div>
                       </Popup>
                     </div>}

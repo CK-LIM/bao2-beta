@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import baklava from '../baklava.png';
-import usbPicture from '../USB.png';
 import Button from 'react-bootstrap/Button'
 import bigInt from 'big-integer'
+import MediaQuery from 'react-responsive';
 import 'reactjs-popup/dist/index.css';
 import './App.css';
 
@@ -24,7 +23,7 @@ class CollRepay extends Component {
     let maxBorrow = (parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[this.props.i], 'Ether'))) * parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i].toLocaleString('en-US'), 'Ether')) / parseFloat(this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio).toLocaleString('en-US') * 100
     let maxBorrow80 = maxBorrow * 0.8
     let newDebt = parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[this.props.i])) - parseFloat(event)
-    
+
     if (event == "") {
       this.setState({
         messageUSB: '',
@@ -46,7 +45,7 @@ class CollRepay extends Component {
         messageUSB: 'Amount more than Debt balance.',
         txValidAmount: false
       })
-    } else if ((newDebt < 10) && (newDebt > 0))  {
+    } else if ((newDebt < 10) && (newDebt > 0)) {
       this.setState({
         messageUSB: 'To keep the system at a healthy state. If full repayment cannot be achieved, the remaining USB borrowed must be higher than 10.',
         txValidAmount: false
@@ -71,7 +70,7 @@ class CollRepay extends Component {
       })
     }
 
-    if ((newDebt > maxBorrow80) && (newDebt <=maxBorrow) ) {
+    if ((newDebt > maxBorrow80) && (newDebt <= maxBorrow)) {
       this.setState({
         messageWarningCR: 'Notice: You will take a higher risk of liquidation when your Coll. Ratio is closer to Min Coll. Ratio.'
       })
@@ -96,7 +95,7 @@ class CollRepay extends Component {
   render() {
     return (
       <div id="content">
-        <form className="mb-3" onSubmit={(event) => {
+        <form className="mb-1" onSubmit={(event) => {
           event.preventDefault()
           if (this.state.txValidAmount === false) {
             alert("Invalid input! PLease check your input again")
@@ -143,7 +142,7 @@ class CollRepay extends Component {
                     }}>100%</Button>
                   </div>
                   <div className="input-group-text cardbody" style={{ padding: '0 0.5rem' }}>
-                    <img src={usbPicture} height='25' className="" alt="" />
+                    <img src="/images/usb.png" height='25' className="" alt="" />
                   </div>
                 </div >
               </div>
@@ -154,19 +153,33 @@ class CollRepay extends Component {
             <div className="mb-1 textWarningColor">{this.state.messageWarningCR} </div>
 
             <div className="mt-3">
-              <div className="float-left" style={{ color: 'grey' }}><img src={baklava} style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
-              <div className="float-right" >{this.props.systemCoinCollAllowance > 2000000000000000000000000000 && (this.state.txValidAmount === true) ?
-                <Button type="submit" className="btn btn-primary btn-sm">Confirm</Button>
-                : <Button className="textDarkMedium1 btn-sm" variant="outline">
-                  Confirm</Button>}
-              </div>
-              <div className="float-right mr-1">{this.props.systemCoinCollAllowance <= 2000000000000000000000000000 ?
-                <Button className="btn btn-primary btn-sm" onClick={(event) => {
-                  this.props.systemCoinCollApprove()
-                }}>Approve</Button>
-                : <Button className="textDarkMedium1 btn-sm" variant="outline">
-                  Approved</Button>}
-              </div>
+              <MediaQuery minWidth={561}>
+                <div className="float-left" style={{ color: 'grey' }}><img src="/images/baklava.png" style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
+                <div className="float-right" >{this.props.systemCoinCollAllowance > 2000000000000000000000000000 && (this.state.txValidAmount === true) ?
+                  <Button type="submit" className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }}>Confirm</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
+                    Confirm</Button>}
+                </div>
+                <div className="float-right mr-1">{this.props.systemCoinCollAllowance <= 2000000000000000000000000000 ?
+                  <Button className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }} onClick={(event) => {
+                    this.props.systemCoinCollApprove()
+                  }}>Approve</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">Approved</Button>}
+                </div>
+              </MediaQuery>
+              <MediaQuery maxWidth={560}>
+                <div className="float-left mr-1">{this.props.systemCoinCollAllowance <= 2000000000000000000000000000 ?
+                  <Button className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }} onClick={(event) => {
+                    this.props.systemCoinCollApprove()
+                  }}>Approve</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">Approved</Button>}
+                </div>
+                <div className="left mr-1" >{this.props.systemCoinCollAllowance > 2000000000000000000000000000 && (this.state.txValidAmount === true) ?
+                  <Button type="submit" className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }}>Confirm</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">Confirm</Button>}
+                </div>
+                <div className="left mt-2" style={{ color: 'grey' }}><img src="/images/baklava.png" style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
+              </MediaQuery>
             </div>
           </div>
         </form>

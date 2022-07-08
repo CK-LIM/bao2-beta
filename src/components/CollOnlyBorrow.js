@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import baklava from '../baklava.png';
-import usbPicture from '../USB.png';
 import Button from 'react-bootstrap/Button'
+import MediaQuery from 'react-responsive';
 import 'reactjs-popup/dist/index.css';
 import './App.css';
 
@@ -96,7 +95,7 @@ class CollOnlyBorrow extends Component {
         <div className="text-center">
         </div>
 
-        <form className="mb-3" onSubmit={(event) => {
+        <form className="mb-1" onSubmit={(event) => {
           event.preventDefault()
           if (this.state.txUSBValidAmount === false) {
             alert("Invalid input! PLease check your input again")
@@ -110,7 +109,7 @@ class CollOnlyBorrow extends Component {
             <div style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}>
               <div className="mb-1 float-left"><b>Borrow USB</b></div>
               <div className="mb-1 float-right"><b>Max: {(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ?
-                <span> {parseInt(parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[this.props.i], 'Ether') * parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i].toLocaleString('en-US'), 'Ether')) / parseFloat(this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio).toLocaleString('en-US') * 100)* 1000) / 1000} </span>
+                <span> {parseInt(parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[this.props.i], 'Ether') * parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i].toLocaleString('en-US'), 'Ether')) / parseFloat(this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio).toLocaleString('en-US') * 100) * 1000) / 1000} </span>
                 : <span > 0 </span>} USB</b></div>
             </div>
             <div className="card-body" style={{ backgroundColor: '#fffcf0', padding: '0 0' }}>
@@ -160,7 +159,7 @@ class CollOnlyBorrow extends Component {
                     }}>80%</Button>
                   </div>
                   <div className="input-group-text cardbody" style={{ padding: '0 0.5rem' }}>
-                    <img src={usbPicture} height='25' className="" alt="" />
+                    <img src="/images/usb.png" height='25' className="" alt="" />
                   </div>
                 </div >
               </div>
@@ -168,20 +167,23 @@ class CollOnlyBorrow extends Component {
             <div className="mb-1" style={{ color: 'red' }}>{this.state.messageUSB} </div>
             <div className="mb-1" style={{ color: 'red' }}>{this.state.messageCR} </div>
             <div className="mb-1 textWarningColor">{this.state.messageWarningCR} </div>
+
             <div className="mt-3">
-              <div className="float-left" style={{ color: 'grey' }}><img src={baklava} style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
-              <div className="float-right" >{(this.props.collBRTSegmentAllowance[this.props.i] > 2000000000000000000000000000 && this.state.txUSBValidAmount === true) ?
-                <Button type="submit" className="btn btn-primary btn-sm">Confirm</Button>
-                : <Button className="textDarkMedium1 btn-sm" variant="outline">
-                  Confirm</Button>}
-              </div>
-              <div className="float-right mr-1">{this.props.collBRTSegmentAllowance[this.props.i] <= 2000000000000000000000000000 ?
-                <Button className="btn btn-primary btn-sm" onClick={(event) => {
-                  this.props.collateralApprove(this.props.i)
-                }}>Approve</Button>
-                : <Button className="textDarkMedium1 btn-sm" variant="outline">
-                  Approved</Button>}
-              </div>
+              <MediaQuery minWidth={561}>
+                <div className="float-left" style={{ color: 'grey' }}><img src="/images/baklava.png" style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
+                <div className="float-right" >{(this.state.txUSBValidAmount === true) ?
+                  <Button type="submit" className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }}>Confirm</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
+                    Confirm</Button>}
+                </div>
+              </MediaQuery>
+              <MediaQuery maxWidth={560}>
+                <div className="left mr-1" >{(this.state.txUSBValidAmount === true) ?
+                  <Button type="submit" className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }}>Confirm</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">Confirm</Button>}
+                </div>
+                <div className="left mt-2" style={{ color: 'grey' }}><img src="/images/baklava.png" style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
+              </MediaQuery>
             </div>
           </div>
         </form>

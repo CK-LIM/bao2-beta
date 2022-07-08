@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import baklava from '../baklava.png';
 import Button from 'react-bootstrap/Button'
+import MediaQuery from 'react-responsive';
 import 'reactjs-popup/dist/index.css';
 import './App.css';
 
@@ -69,7 +69,7 @@ class CollOnlyDep extends Component {
         <div className="text-center">
         </div>
 
-        <form className="mb-3" onSubmit={(event) => {
+        <form className="mb-1" onSubmit={(event) => {
           event.preventDefault()
           if (this.state.txValidAmount === false) {
             alert("Invalid input! PLease check your input again")
@@ -87,9 +87,9 @@ class CollOnlyDep extends Component {
                   <input
                     type="number"
                     id="inputColor"
-                    step="any" 
+                    step="any"
                     ref={(input) => { this.input = input }}
-                    style={{ fontSize: '18px', backgroundColor: '#fffcf0'}}
+                    style={{ fontSize: '18px', backgroundColor: '#fffcf0' }}
                     className="form-control cell cardbody"
                     placeholder="0 BRT token"
                     onKeyPress={(event) => {
@@ -122,7 +122,7 @@ class CollOnlyDep extends Component {
                     }}>Max</Button>
                   </div>
                   <div className="input-group-text cardbody" style={{ padding: '0 0.5rem' }}>
-                    <img src={baklava} height='25' className="" alt="" />
+                    <img src="/images/baklava.png" height='25' className="" alt="" />
                   </div>
                 </div >
               </div>
@@ -130,19 +130,36 @@ class CollOnlyDep extends Component {
             <div style={{ color: 'red' }}>{this.state.messageBRT}</div>
 
             <div className="mt-3">
-              <div className="float-left" style={{ color: 'grey' }}><img src={baklava} style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
-              <div className="float-right" >{this.props.collBRTSegmentAllowance[this.props.i] > 2000000000000000000000000000 ?
-                <Button type="submit" className="btn btn-primary btn-sm">Confirm</Button>
-                : <Button className="textDarkMedium1 btn-sm" variant="outline">
-                  Confirm</Button>}
-              </div>
-              <div className="float-right mr-1">{this.props.collBRTSegmentAllowance[this.props.i] <= 2000000000000000000000000000 ?
-                <Button className="btn btn-primary btn-sm" onClick={(e) => {
-                  this.props.collateralApprove(this.props.i)
-                }}>Approve</Button>
-                : <Button className="textDarkMedium1 btn-sm" variant="outline">
-                  Approved</Button>}
-              </div>
+              <MediaQuery minWidth={561}>
+                <div className="float-left" style={{ color: 'grey' }}><img src="/images/baklava.png" style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
+                <div className="float-right" >{this.props.collBRTSegmentAllowance[this.props.i] > 2000000000000000000000000000 ?
+                  <Button type="submit" className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }}>Confirm</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
+                    Confirm</Button>}
+                </div>
+                <div className="float-right mr-1">{this.props.collBRTSegmentAllowance[this.props.i] <= 2000000000000000000000000000 ?
+                  <Button className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }} onClick={(e) => {
+                    this.props.collateralApprove(this.props.i)
+                  }}>Approve</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
+                    Approved</Button>}
+                </div>
+              </MediaQuery>
+              <MediaQuery maxWidth={561}>
+                <div className="float-left mr-1">{this.props.collBRTSegmentAllowance[this.props.i] <= 2000000000000000000000000000 ?
+                  <Button className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }} onClick={(e) => {
+                    this.props.collateralApprove(this.props.i)
+                  }}>Approve</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
+                    Approved</Button>}
+                </div>
+                <div className="left" >{this.props.collBRTSegmentAllowance[this.props.i] > 2000000000000000000000000000 ?
+                  <Button type="submit" className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }}>Confirm</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
+                    Confirm</Button>}
+                </div>
+                <div className="left mt-2" style={{ color: 'grey' }}><img src="/images/baklava.png" style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
+              </MediaQuery>
             </div>
           </div>
         </form>

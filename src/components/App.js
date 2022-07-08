@@ -614,15 +614,16 @@ class App extends Component {
     for (i = 0; i < this.state.collateralPoolLength; i++) {
       collUserSegmentInfo[i] = await collateralResponse0[i]
       collBRTBalanceAccount[i] = await collateralResponse1[i]
+      console.log(collBRTBalanceAccount)
       collBRTSegmentAllowance[i] = await collateralResponse2[i]
       collDebtBalance[i] = await collateralResponse3[i]
       collMaxBorrowAmount[i] = await collateralResponse4[i]
-      collRatio[i] = parseFloat(window.web3Ava.utils.fromWei(collUserSegmentInfo[i].toLocaleString('en-US'), 'Ether')) * parseFloat(window.web3Ava.utils.fromWei(this.state.collBRTValue[i].toLocaleString('en-US'), 'Ether')) / parseFloat(window.web3Ava.utils.fromWei(collDebtBalance.toLocaleString('en-US'), 'Ether')) * 100
+      collRatio[i] = parseFloat(window.web3Ava.utils.fromWei(collUserSegmentInfo[i].toLocaleString('en-US'), 'Ether')) * parseFloat(window.web3Ava.utils.fromWei(this.state.collBRTValue[i].toLocaleString('en-US'), 'Ether')) / parseFloat(window.web3Ava.utils.fromWei(collDebtBalance[i].toLocaleString('en-US'), 'Ether')) * 100
       if (isNaN(collRatio[i])) {
         collRatio[i] = 1 / 0
       }
-
       totalPendingDebt += parseInt(await collateralResponse3[i])
+      
     }
 
     for (i = 0; i < this.state.synPoolLength; i++) {
@@ -824,9 +825,14 @@ class App extends Component {
   // #############################################################################################################
   // collateral
   async loadCollateralDeposit(i) {
-    let brtAddress = (await this.state.collateralVault.methods.poolInfo(i).call()).collateralToken
-    let brtCompoundPool = new window.web3Ava.eth.Contract(BavaCompoundPool.abi, brtAddress)
-    let totalBRTDeposit = await brtCompoundPool.methods.balanceOf(this.state.collateralVault._address).call()
+    let totalBRTDeposit = "0"
+    if(i == 0) {
+      return "0"
+    } else {
+      let brtAddress = (await this.state.collateralVault.methods.poolInfo(i).call()).collateralToken
+      let brtCompoundPool = new window.web3Ava.eth.Contract(BavaCompoundPool.abi, brtAddress)
+      totalBRTDeposit = await brtCompoundPool.methods.balanceOf(this.state.collateralVault._address).call()
+    }
     return totalBRTDeposit
   }
 
@@ -836,27 +842,44 @@ class App extends Component {
   }
 
   async loadCollateralUserInfo1(i) {
-    let brtAddress = (await this.state.collateralVault.methods.poolInfo(i).call()).collateralToken
-    let brtCompoundPool = new window.web3Ava.eth.Contract(BavaCompoundPool.abi, brtAddress)
-    let userbrtBalance = await brtCompoundPool.methods.balanceOf(this.state.account).call()
-    return userbrtBalance
+    if(i == 0) {
+      return "0"
+    } else {
+      let brtAddress = (await this.state.collateralVault.methods.poolInfo(i).call()).collateralToken
+      let brtCompoundPool = new window.web3Ava.eth.Contract(BavaCompoundPool.abi, brtAddress)
+      let userbrtBalance = await brtCompoundPool.methods.balanceOf(this.state.account).call()
+      return userbrtBalance
+    }
   }
 
   async loadCollateralUserInfo2(i) {
-    let brtAddress = (await this.state.collateralVault.methods.poolInfo(i).call()).collateralToken
-    let brtCompoundPool = new window.web3Ava.eth.Contract(BavaCompoundPool.abi, brtAddress)
-    let brtAllowance = await brtCompoundPool.methods.allowance(this.state.account, this.state.collateralVault._address).call()
-    return brtAllowance
+    if(i == 0) {
+      return "0"
+    } else {
+      let brtAddress = (await this.state.collateralVault.methods.poolInfo(i).call()).collateralToken
+      let brtCompoundPool = new window.web3Ava.eth.Contract(BavaCompoundPool.abi, brtAddress)
+      let brtAllowance = await brtCompoundPool.methods.allowance(this.state.account, this.state.collateralVault._address).call()
+      return brtAllowance
+    }
   }
 
   async loadCollateralUserInfo3(i) {
-    let debtBalance = await this.state.collateralVault.methods.getAssetBalance(i, this.state.account).call()
-    return debtBalance
+    if(i == 0) {
+      return "0"
+    } else {
+      let debtBalance = await this.state.collateralVault.methods.getAssetBalance(i, this.state.account).call()
+      return debtBalance
+    }
   }
 
   async loadCollateralUserInfo4(i) {
-    let remainingMaxBorrowAmount = await this.state.collateralVault.methods.getMaxBorrowAmount(i, this.state.account, 0).call()
-    return remainingMaxBorrowAmount
+    if(i == 0) {
+      return "0"
+    } else {
+      let remainingMaxBorrowAmount = await this.state.collateralVault.methods.getMaxBorrowAmount(i, this.state.account, 0).call()
+      console.log(remainingMaxBorrowAmount)
+      return remainingMaxBorrowAmount
+    }
   }
   // #############################################################################################################
   // synthetic
@@ -930,12 +953,16 @@ class App extends Component {
   }
 
   async loadCollateralBRTValue(i) {
-    let poolData = await this.state.collateralVault.methods.poolInfo(i).call()
-    let collateralBRTValue = await this.state.avaxChainlinkOracle.methods.getBRTPrice(poolData.collateralToken).call()
-    if (collateralBRTValue[0] == true) {
-      return collateralBRTValue[1]
+    if(i == 0) {
+      return "0"
     } else {
-      return 0
+      let poolData = await this.state.collateralVault.methods.poolInfo(i).call()
+      let collateralBRTValue = await this.state.avaxChainlinkOracle.methods.getBRTPrice(poolData.collateralToken).call()
+      if (collateralBRTValue[0] == true) {
+        return collateralBRTValue[1]
+      } else {
+        return 0
+      }
     }
   }
 

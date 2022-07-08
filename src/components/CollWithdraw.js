@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import baklava from '../baklava.png';
 import Button from 'react-bootstrap/Button'
 import bigInt from 'big-integer'
+import MediaQuery from 'react-responsive';
 import 'reactjs-popup/dist/index.css';
 import './App.css';
 
@@ -23,7 +23,7 @@ class CollWithdraw extends Component {
     // let collTokenAmount = this.props.collUserSegmentInfo[this.props.i]*window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i],'Ether')
     // let collLockedAmount = (this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio / 100 * this.props.collDebtBalance[this.props.i])
     // let maxWithdrawAmount = (this.props.collUserSegmentInfo[this.props.i]*window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i],'Ether') - (this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio / 100 * this.props.collDebtBalance[this.props.i])) / window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i],'Ether')
-    
+
     let maxBorrow = (parseFloat(window.web3Ava.utils.fromWei(this.props.collUserSegmentInfo[this.props.i], 'Ether')) - parseFloat(event)) * parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i].toLocaleString('en-US'), 'Ether')) / parseFloat(this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio).toLocaleString('en-US') * 100
     let maxBorrow80 = maxBorrow * 0.8
     let newDebt = parseFloat(window.web3Ava.utils.fromWei(this.props.collDebtBalance[this.props.i]))
@@ -89,7 +89,7 @@ class CollWithdraw extends Component {
   render() {
     return (
       <div id="content">
-        <form className="mb-3" onSubmit={(event) => {
+        <form className="mb-1" onSubmit={(event) => {
           event.preventDefault()
           if (this.state.txValidAmount === false) {
             alert("Invalid input! PLease check your input again")
@@ -103,7 +103,7 @@ class CollWithdraw extends Component {
           <div style={{ minWidth: "300px" }}>
             <div style={{ color: 'black', fontSize: '16px', minWidth: "120px" }}>
               <div className="mb-1 float-left"><b>Withdraw BRT</b></div>
-              <div className="mb-1 float-right"><b>Max: {window.web3Ava.utils.fromWei(parseInt((this.props.collUserSegmentInfo[this.props.i]*window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i],'Ether') - (this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio / 100 * this.props.collDebtBalance[this.props.i])) / window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i],'Ether')).toLocaleString('en-US', {useGrouping:false}),'Ether')} BRT</b></div>
+              <div className="mb-1 float-right"><b>Max: {window.web3Ava.utils.fromWei(parseInt((this.props.collUserSegmentInfo[this.props.i] * window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i], 'Ether') - (this.props.collateralPoolSegmentInfo[this.props.i].minCollRatio / 100 * this.props.collDebtBalance[this.props.i])) / window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i], 'Ether')).toLocaleString('en-US', { useGrouping: false }), 'Ether')} BRT</b></div>
             </div>
             <div className="card-body" style={{ backgroundColor: '#fffcf0', padding: '0 0' }}>
               <div className="input-group mb-2" >
@@ -139,7 +139,7 @@ class CollWithdraw extends Component {
                         let collateralValue = parseFloat(this.props.collUserSegmentInfo[this.props.i])
                         let collateral80Value = parseFloat(this.props.collDebtBalance[this.props.i]) * 250 / 100 / parseFloat(window.web3Ava.utils.fromWei(this.props.collBRTValue[this.props.i], 'Ether'))
                         let max80WithdrawAmount = parseInt(collateralValue - collateral80Value)
-                        this.input.value = window.web3Ava.utils.fromWei(max80WithdrawAmount.toLocaleString('en-US', {useGrouping:false}), 'Ether')
+                        this.input.value = window.web3Ava.utils.fromWei(max80WithdrawAmount.toLocaleString('en-US', { useGrouping: false }), 'Ether')
                       } else {
                         this.input.value = 0
                       }
@@ -148,7 +148,7 @@ class CollWithdraw extends Component {
                     }}>{this.props.collDebtBalance[this.props.i] == 0 ? 100 : 80}%</Button>
                   </div>
                   <div className="input-group-text cardbody" style={{ padding: '0 0.5rem' }}>
-                    <img src={baklava} height='25' className="" alt="" />
+                    <img src="/images/baklava.png" height='25' className="" alt="" />
                   </div>
                 </div >
               </div>
@@ -159,12 +159,22 @@ class CollWithdraw extends Component {
             <div className="mb-1 textWarningColor">{this.state.messageWarningCR} </div>
 
             <div className="mt-3">
-              <div className="float-left" style={{ color: 'grey' }}><img src={baklava} style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
-              <div className="float-right" >{this.props.collUserSegmentInfo[this.props.i] > 0 && this.state.txValidAmount == true?
-                <Button type="submit" className="btn btn-primary btn-sm">Confirm</Button>
-                : <Button className="textDarkMedium1 btn-sm" variant="outline">
-                  Confirm</Button>}
-              </div>
+              <MediaQuery minWidth={561}>
+                <div className="float-left" style={{ color: 'grey' }}><img src="/images/baklava.png" style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
+                <div className="float-right" >{this.props.collUserSegmentInfo[this.props.i] > 0 && this.state.txValidAmount == true ?
+                  <Button type="submit" className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }}>Confirm</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
+                    Confirm</Button>}
+                </div>
+              </MediaQuery>
+              <MediaQuery maxWidth={560}>
+                <div className="left" >{this.props.collUserSegmentInfo[this.props.i] > 0 && this.state.txValidAmount == true ?
+                  <Button type="submit" className="btn btn-primary btn-sm" style={{ height: '32px', fontSize: '15px' }}>Confirm</Button>
+                  : <Button className="textDarkMedium1 btn-sm" style={{ height: '32px', fontSize: '15px' }} variant="outline">
+                    Confirm</Button>}
+                </div>
+              </MediaQuery>
+              <div className="left mt-2" style={{ color: 'grey' }}><img src="/images/baklava.png" style={{ marginRight: '5px' }} height='20' alt="" /><small>Minimum borrowing amount: 10 USB </small></div>
             </div>
           </div>
         </form>

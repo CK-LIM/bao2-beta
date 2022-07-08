@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from '@material-ui/core/Button';
-import exlink from '../link.png'
 import Buttons from 'react-bootstrap/Button'
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import Popup from 'reactjs-popup';
@@ -161,13 +160,13 @@ class Menu extends Component {
                                                                     <div className="textMiddle"><b>{this.props.poolSegmentInfoV2_2[0][i].lpName}{this.props.poolSegmentInfoV2_2[0][i].status}</b></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.poolSegmentInfoV2_2[0][i].projectLink, '_blank')
-                                                                    }}>Uses: {this.props.poolSegmentInfoV2_2[0][i].platform} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>Uses: {this.props.poolSegmentInfoV2_2[0][i].platform} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.poolSegmentInfoV2_2[0][i].getLPLink, '_blank')
-                                                                    }}>Get {this.props.poolSegmentInfoV2_2[0][i].lpName} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>Get {this.props.poolSegmentInfoV2_2[0][i].lpName} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.poolSegmentInfoV2_2[0][i].farmContract, '_blank')
-                                                                    }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>View On Explorer <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                 </div>
                                                                 <div className="float-right mr-auto">
                                                                     <table>
@@ -319,13 +318,13 @@ class Menu extends Component {
                                                                     <div className="textMiddle"><b>{this.props.bavaPoolSegmentInfo[0][i].lpName}{this.props.bavaPoolSegmentInfo[0][i].status}</b></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.bavaPoolSegmentInfo[0][i].projectLink, '_blank')
-                                                                    }}>Uses: {this.props.bavaPoolSegmentInfo[0][i].platform} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>Uses: {this.props.bavaPoolSegmentInfo[0][i].platform} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.bavaPoolSegmentInfo[0][i].getLPLink, '_blank')
-                                                                    }}>Get {this.props.bavaPoolSegmentInfo[0][i].lpName} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>Get {this.props.bavaPoolSegmentInfo[0][i].lpName} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.bavaPoolSegmentInfo[0][i].farmContract, '_blank')
-                                                                    }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>View On Explorer <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                 </div>
                                                                 <div className="float-right mr-auto">
                                                                     <table>
@@ -478,13 +477,13 @@ class Menu extends Component {
                                                                     <div className="textMiddle"><b>{this.props.poolSegmentInfo[0][i].lpName}{this.props.poolSegmentInfo[0][i].status}</b></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.poolSegmentInfo[0][i].projectLink, '_blank')
-                                                                    }}>Uses: {this.props.poolSegmentInfo[0][i].platform} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>Uses: {this.props.poolSegmentInfo[0][i].platform} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.poolSegmentInfo[0][i].getLPLink, '_blank')
-                                                                    }}>Get {this.props.poolSegmentInfo[0][i].lpName} <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>Get {this.props.poolSegmentInfo[0][i].lpName} <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                     <div className="textGrey exLink0" onClick={() => {
                                                                         window.open(this.props.bavaContract, '_blank')
-                                                                    }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
+                                                                    }}>View On Explorer <img src="/images/link.png" style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                 </div>
                                                                 <div className="float-right mr-auto">
                                                                     <table>

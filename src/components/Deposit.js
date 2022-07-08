@@ -1,8 +1,4 @@
 import React, { Component } from 'react'
-import baklava from '../baklava.png';
-import pangolin from '../pangolin.png';
-import joe from '../joe.png'
-import kyberSwap from '../kyber.png'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import bigInt from 'big-integer'
@@ -124,7 +120,7 @@ class Deposit extends Component {
                 required />
               <div className="input-group-append">
                 <div className="input-group-text cardbody" style={{ color: 'silver' }}>
-                  {this.props.poolSegmentInfo[this.props.n][this.props.i].platform == 'Pangolin' ? <img src={pangolin} height='30' className="" alt="" /> : <div>{this.props.poolSegmentInfo[this.props.n][this.props.i].platform == 'KyberSwap' ? <img src={kyberSwap} height='30' className="" alt="" />: <img src={joe} height='30' className="" alt="" />}</div>}
+                  {this.props.poolSegmentInfo[this.props.n][this.props.i].platform == 'Pangolin' ? <img src="/images/pangolin.png" height='30' className="" alt="" /> : <div>{this.props.poolSegmentInfo[this.props.n][this.props.i].platform == 'KyberSwap' ? <img src="/images/kyber.png" height='30' className="" alt="" />: <img src="/images/joe.png" height='30' className="" alt="" />}</div>}
                 </div>
               </div>
             </div >
@@ -159,7 +155,7 @@ class Deposit extends Component {
           </div>
         </form>
 
-        <div className="text-center" style={{ color: 'grey' }}><img src={baklava} height='20' alt="" />&nbsp;<small>Contract will automatically harvest BAVA rewards for you when deposit or withdraw token!</small></div>
+        <div className="text-center" style={{ color: 'grey' }}><img src="/images/baklava.png" height='20' alt="" />&nbsp;<small>Contract will automatically harvest BAVA rewards for you when deposit or withdraw token!</small></div>
       </div>
 
     );

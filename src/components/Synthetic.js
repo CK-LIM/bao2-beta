@@ -2,12 +2,9 @@ import React, { Component } from 'react'
 import './App.css';
 import Footer from './Footer'
 import MediaQuery from 'react-responsive';
-import baklava from '../baklava.png';
-import search from '../search.png';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Buttons from 'react-bootstrap/Button'
 import ToggleButton from 'react-bootstrap/ToggleButton'
-import exlink from '../link.png'
 import { BsFillQuestionCircleFill, BsGearFill } from 'react-icons/bs';
 import 'reactjs-popup/dist/index.css';
 import Popup from 'reactjs-popup';
@@ -222,7 +219,7 @@ class Airdrop extends Component {
                     <div className="input-group mb-2" >
                         <div className="input-group-prepend" >
                             <div className="input-group-text cardbodyRight" style={{ padding: '0 1.0rem' }}>
-                                <img src={search} height='25' className="" alt="" />
+                                <img src="/images/search.png" height='25' className="" alt="" />
                             </div>
                         </div >
                         {this.props.farmloading ?
@@ -252,8 +249,6 @@ class Airdrop extends Component {
                 </div>
 
 
-
-
                 <div className="ml-auto mr-auto mt-3" style={{ minWidth: '350px' }}>
                     {this.props.farmloading ?
                         <div className="" style={{ marginBottom: '500px' }}>
@@ -268,11 +263,11 @@ class Airdrop extends Component {
                                                         <div className="card cardbody" style={{ border: '0px' }}>
                                                             <div className="card-body rowC" style={{ padding: '0rem', cursor: 'pointer' }} onClick={() => {
                                                                 this.clickfarmOpen(i)
-                                                            }} >
+                                                            }}>
                                                                 <MediaQuery minWidth={901}>
                                                                     <div className="float-left rowC" style={{ minWidth: '220px' }}>
                                                                         <span className="mr-3">
-                                                                            <div className="textMiddle"><img src={`https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png`} width="55" height="55" alt="" /></div>
+                                                                            <div className="textMiddle"><img src={`https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png`} width="50" height="50" alt="" /></div>
                                                                             {/* https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png, https://testnet-dex.functionx.io/img/${this.props.synPoolSegmentInfo[i].icon}.svg, https://eodhistoricaldata.com/img/logos/US/TSLA.png, https://cdn.indiawealth.in/public/images/techstars/TSLA.png */}
                                                                         </span>
                                                                         <span>
@@ -280,9 +275,6 @@ class Airdrop extends Component {
                                                                             <div className="textGrey exLink0" onClick={() => {
                                                                                 window.open(this.props.synPoolSegmentInfo[i].projectLink, '_blank')
                                                                             }}>{this.props.synPoolSegmentInfo[i].synTokenCompany}</div>
-                                                                            <div className="textGrey exLink0" onClick={() => {
-                                                                                window.open(this.props.synPoolSegmentInfo[i].farmContract, '_blank')
-                                                                            }}>View On Explorer <img src={exlink} style={{ marginBottom: "3px" }} height='12' alt="" /></div>
                                                                         </span>
                                                                     </div>
                                                                 </MediaQuery>
@@ -290,7 +282,6 @@ class Airdrop extends Component {
                                                                     <div className="float-left rowC" style={{ minWidth: '220px' }}>
                                                                         <span className="mr-3">
                                                                             <div className="textMiddle"><img src={`https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png`} width="40" height="40" alt="" /></div>
-                                                                            {/* https://whitelist.mirror.finance/images/${this.props.synPoolSegmentInfo[i].icon}.png, https://testnet-dex.functionx.io/img/${this.props.synPoolSegmentInfo[i].icon}.svg, https://eodhistoricaldata.com/img/logos/US/TSLA.png, https://cdn.indiawealth.in/public/images/techstars/TSLA.png */}
                                                                         </span>
                                                                         <span>
                                                                             <div className="textMiddle"><b>{this.props.synPoolSegmentInfo[i].synTokenPairsymbol}{this.props.synPoolSegmentInfo[i].status}</b></div>
@@ -300,7 +291,7 @@ class Airdrop extends Component {
                                                                         </span>
                                                                     </div>
                                                                 </MediaQuery>
-                                                                <span>
+                                                                <span className="ml-5">
                                                                     <MediaQuery minWidth={901}>
                                                                         <table className="float-right">
                                                                             <thead className="textBlackSmall" style={{ color: 'black' }}>
@@ -327,12 +318,12 @@ class Airdrop extends Component {
                                                                         <table className="float-right">
                                                                             <thead className="textBlackSmall" style={{ color: 'black' }}>
                                                                                 <tr>
-                                                                                    <th scope="col" style={{textAlign: 'end'}}>Pool Price</th>
+                                                                                    <th scope="col" style={{ textAlign: 'end' }}>Pool Price</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody className="textGrey">
                                                                                 <tr>
-                                                                                    <td className="" style={{textAlign: 'end'}}><div>{(this.props.synPoolPrice[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
+                                                                                    <td className="" style={{ textAlign: 'end' }}><div>{(this.props.synPoolPrice[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -516,8 +507,7 @@ class Airdrop extends Component {
 
                                                                             <div className="card cardbody" style={{ minWidth: '350px' }}>
                                                                                 <div className="card-body" style={{ padding: '0.5rem' }}>
-
-                                                                                    <div className='ml-2 mt-2 mb-2'>{this.state.actionOpen[i][0]}
+                                                                                    <div className='ml-2 mt-2 mb-2'>
                                                                                         {this.state.actionOpen[i][0] == true ?
                                                                                             <div style={{ height: '30px' }}>
                                                                                                 <div className='float-left' style={{ paddingTop: '0px' }}>
@@ -703,91 +693,90 @@ class Airdrop extends Component {
 
 
                                                                                     <div className='borderBottom'></div>
-                                                                                    <div>
-                                                                                        <div className='ml-1 mr-1'>
-                                                                                            {this.state.actionOpen[i][0] == true ?
-                                                                                                <div>
-                                                                                                    {this.state.limitOrder[i] == true ?
-                                                                                                        <SynBuyLimit
-                                                                                                            wallet={this.props.wallet}
-                                                                                                            synPoolSegmentInfo={this.props.synPoolSegmentInfo}
-                                                                                                            walletConnect={this.props.walletConnect}
-                                                                                                            accountLoading={this.props.accountLoading}
-                                                                                                            synOraclePrice={this.props.synOraclePrice}
-                                                                                                            synPoolPrice={this.props.synPoolPrice}
-                                                                                                            synUserBalance={this.props.synUserBalance}
-                                                                                                            synUserAllowance={this.props.synUserAllowance}
-                                                                                                            slippage={this.state.slippage}
-                                                                                                            buyLimitSyn={this.buyLimitSyn}
-                                                                                                            synOpenOrder={this.props.synOpenOrder}
-                                                                                                            synOpenLimitOrder={this.props.synOpenLimitOrder}
-                                                                                                            systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
-                                                                                                            systemCoinSynAllowance={this.props.systemCoinSynAllowance}
-                                                                                                            systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                            i={i}
-                                                                                                        />
-                                                                                                        : <SynBuy
-                                                                                                            wallet={this.props.wallet}
-                                                                                                            synPoolSegmentInfo={this.props.synPoolSegmentInfo}
-                                                                                                            walletConnect={this.props.walletConnect}
-                                                                                                            accountLoading={this.props.accountLoading}
-                                                                                                            synOraclePrice={this.props.synOraclePrice}
-                                                                                                            synPoolPrice={this.props.synPoolPrice}
-                                                                                                            synUserBalance={this.props.synUserBalance}
-                                                                                                            synUserAllowance={this.props.synUserAllowance}
-                                                                                                            slippage={this.state.slippage}
-                                                                                                            buySyn={this.buySyn}
-                                                                                                            synOpenOrder={this.props.synOpenOrder}
-                                                                                                            synOpenLimitOrder={this.props.synOpenLimitOrder}
-                                                                                                            systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
-                                                                                                            systemCoinSynAllowance={this.props.systemCoinSynAllowance}
-                                                                                                            systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                            i={i}
-                                                                                                        />}</div>
-                                                                                                : <div>
-                                                                                                    {this.state.limitOrder[i] == true ?
-                                                                                                        <SynSellLimit
-                                                                                                            wallet={this.props.wallet}
-                                                                                                            synPoolSegmentInfo={this.props.synPoolSegmentInfo}
-                                                                                                            walletConnect={this.props.walletConnect}
-                                                                                                            accountLoading={this.props.accountLoading}
-                                                                                                            synOraclePrice={this.props.synOraclePrice}
-                                                                                                            synPoolPrice={this.props.synPoolPrice}
-                                                                                                            synUserBalance={this.props.synUserBalance}
-                                                                                                            synUserAllowance={this.props.synUserAllowance}
-                                                                                                            slippage={this.state.slippage}
-                                                                                                            sellLimitSyn={this.sellLimitSyn}
-                                                                                                            synOpenOrder={this.props.synOpenOrder}
-                                                                                                            synOpenLimitOrder={this.props.synOpenLimitOrder}
-                                                                                                            systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
-                                                                                                            synTokenSyntheticApprove={this.props.synTokenSyntheticApprove}
-                                                                                                            systemCoinSynAllowance={this.props.systemCoinSynAllowance}
-                                                                                                            systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                            i={i}
-                                                                                                        />
-                                                                                                        : <SynSell
-                                                                                                            wallet={this.props.wallet}
-                                                                                                            synPoolSegmentInfo={this.props.synPoolSegmentInfo}
-                                                                                                            walletConnect={this.props.walletConnect}
-                                                                                                            accountLoading={this.props.accountLoading}
-                                                                                                            synOraclePrice={this.props.synOraclePrice}
-                                                                                                            synPoolPrice={this.props.synPoolPrice}
-                                                                                                            synUserBalance={this.props.synUserBalance}
-                                                                                                            synUserAllowance={this.props.synUserAllowance}
-                                                                                                            slippage={this.state.slippage}
-                                                                                                            sellSyn={this.sellSyn}
-                                                                                                            synOpenOrder={this.props.synOpenOrder}
-                                                                                                            synOpenLimitOrder={this.props.synOpenLimitOrder}
-                                                                                                            systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
-                                                                                                            synTokenSyntheticApprove={this.props.synTokenSyntheticApprove}
-                                                                                                            systemCoinSynAllowance={this.props.systemCoinSynAllowance}
-                                                                                                            systemCoinBalance={this.props.systemCoinBalance}
-                                                                                                            i={i}
-                                                                                                        />}
-                                                                                                </div>
-                                                                                            }
-                                                                                        </div>
+                                                                                    <div className='ml-1 mr-1'>
+                                                                                        {this.state.actionOpen[i][0] == true ?
+                                                                                            <div>
+                                                                                                {this.state.limitOrder[i] == true ?
+                                                                                                    <SynBuyLimit
+                                                                                                        wallet={this.props.wallet}
+                                                                                                        synPoolSegmentInfo={this.props.synPoolSegmentInfo}
+                                                                                                        walletConnect={this.props.walletConnect}
+                                                                                                        accountLoading={this.props.accountLoading}
+                                                                                                        synOraclePrice={this.props.synOraclePrice}
+                                                                                                        synPoolPrice={this.props.synPoolPrice}
+                                                                                                        synUserBalance={this.props.synUserBalance}
+                                                                                                        synUserAllowance={this.props.synUserAllowance}
+                                                                                                        slippage={this.state.slippage}
+                                                                                                        buyLimitSyn={this.buyLimitSyn}
+                                                                                                        synOpenOrder={this.props.synOpenOrder}
+                                                                                                        synOpenLimitOrder={this.props.synOpenLimitOrder}
+                                                                                                        systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
+                                                                                                        systemCoinSynAllowance={this.props.systemCoinSynAllowance}
+                                                                                                        systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                        i={i}
+                                                                                                    />
+                                                                                                    : <SynBuy
+                                                                                                        wallet={this.props.wallet}
+                                                                                                        synPoolSegmentInfo={this.props.synPoolSegmentInfo}
+                                                                                                        walletConnect={this.props.walletConnect}
+                                                                                                        accountLoading={this.props.accountLoading}
+                                                                                                        synOraclePrice={this.props.synOraclePrice}
+                                                                                                        synPoolPrice={this.props.synPoolPrice}
+                                                                                                        synUserBalance={this.props.synUserBalance}
+                                                                                                        synUserAllowance={this.props.synUserAllowance}
+                                                                                                        slippage={this.state.slippage}
+                                                                                                        buySyn={this.buySyn}
+                                                                                                        synOpenOrder={this.props.synOpenOrder}
+                                                                                                        synOpenLimitOrder={this.props.synOpenLimitOrder}
+                                                                                                        systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
+                                                                                                        systemCoinSynAllowance={this.props.systemCoinSynAllowance}
+                                                                                                        systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                        i={i}
+                                                                                                    />}</div>
+                                                                                            : <div>
+                                                                                                {this.state.limitOrder[i] == true ?
+                                                                                                    <SynSellLimit
+                                                                                                        wallet={this.props.wallet}
+                                                                                                        synPoolSegmentInfo={this.props.synPoolSegmentInfo}
+                                                                                                        walletConnect={this.props.walletConnect}
+                                                                                                        accountLoading={this.props.accountLoading}
+                                                                                                        synOraclePrice={this.props.synOraclePrice}
+                                                                                                        synPoolPrice={this.props.synPoolPrice}
+                                                                                                        synUserBalance={this.props.synUserBalance}
+                                                                                                        synUserAllowance={this.props.synUserAllowance}
+                                                                                                        slippage={this.state.slippage}
+                                                                                                        sellLimitSyn={this.sellLimitSyn}
+                                                                                                        synOpenOrder={this.props.synOpenOrder}
+                                                                                                        synOpenLimitOrder={this.props.synOpenLimitOrder}
+                                                                                                        systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
+                                                                                                        synTokenSyntheticApprove={this.props.synTokenSyntheticApprove}
+                                                                                                        systemCoinSynAllowance={this.props.systemCoinSynAllowance}
+                                                                                                        systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                        i={i}
+                                                                                                    />
+                                                                                                    : <SynSell
+                                                                                                        wallet={this.props.wallet}
+                                                                                                        synPoolSegmentInfo={this.props.synPoolSegmentInfo}
+                                                                                                        walletConnect={this.props.walletConnect}
+                                                                                                        accountLoading={this.props.accountLoading}
+                                                                                                        synOraclePrice={this.props.synOraclePrice}
+                                                                                                        synPoolPrice={this.props.synPoolPrice}
+                                                                                                        synUserBalance={this.props.synUserBalance}
+                                                                                                        synUserAllowance={this.props.synUserAllowance}
+                                                                                                        slippage={this.state.slippage}
+                                                                                                        sellSyn={this.sellSyn}
+                                                                                                        synOpenOrder={this.props.synOpenOrder}
+                                                                                                        synOpenLimitOrder={this.props.synOpenLimitOrder}
+                                                                                                        systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
+                                                                                                        synTokenSyntheticApprove={this.props.synTokenSyntheticApprove}
+                                                                                                        systemCoinSynAllowance={this.props.systemCoinSynAllowance}
+                                                                                                        systemCoinBalance={this.props.systemCoinBalance}
+                                                                                                        i={i}
+                                                                                                    />}
+                                                                                            </div>
+                                                                                        }
                                                                                     </div>
+
                                                                                 </div>
                                                                             </div>
                                                                         </div>

@@ -1,20 +1,11 @@
 import React, { Component } from 'react'
 import MediaQuery from 'react-responsive';
 import Buttons from 'react-bootstrap/Button'
-import baklava from '../baklava.png'
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import fox from '../metamask-fox.svg'
-import coin98 from '../coin98.png'
-import walletconnectLogo from '../walletconnect-logo.svg'
 import Popup from 'reactjs-popup';
 import { slide as Menu } from 'react-burger-menu'
-import discord from '../discord.svg';
-import twitter from '../twitter.svg';
-import medium from '../medium.svg';
-import git from '../github.svg';
-import gitbook from '../docs.svg';
 import 'reactjs-popup/dist/index.css';
 import './App.css';
 
@@ -35,7 +26,7 @@ class Navb extends Component {
           </MediaQuery>
 
           <MediaQuery minWidth={1251}>
-            <NavLink className="topleft" to="/"><img src={baklava} width="35" alt="" /></NavLink>
+            <NavLink className="topleft" to="/"><img src="/images/baklava.png" width="35" alt="" /></NavLink>
           </MediaQuery>
           <MediaQuery minWidth={351}>
             <NavLink className="topleft1 textMiddleBold2 reallyBold" to="/"><b>BAKLAVA.SPACE</b></NavLink>
@@ -89,19 +80,19 @@ class Navb extends Component {
               <div className="center topright1">
                 <div className="rowC">
                   <Link className="exLink0" style={{ marginRight: '40px' }} to={{ pathname: "https://baklavaspace.gitbook.io/" }} target="_blank">
-                    <div className="center mb-2"><img src={gitbook} width="20" height="20" align="right" alt="" /></div>
+                    <div className="center mb-2"><img src="/images/docs.svg" width="20" height="20" align="right" alt="" /></div>
                   </Link>
                   <Link className="exLink0" style={{ marginRight: '40px' }} to={{ pathname: "https://twitter.com/baklavaspace" }} target="_blank">
-                    <div className="center mb-2"><img src={twitter} width="20" height="20" align="right" alt="" /></div>
+                    <div className="center mb-2"><img src="/images/twitter.svg" width="20" height="20" align="right" alt="" /></div>
                   </Link>
                   <Link className="exLink0" style={{ marginRight: '40px' }} to={{ pathname: "https://medium.com/@baklavaspace" }} target="_blank">
-                    <div className="center mb-2"><img src={medium} width="20" height="20" align="right" alt="" /></div>
+                    <div className="center mb-2"><img src="/images/medium.svg" width="20" height="20" align="right" alt="" /></div>
                   </Link>
                   <Link className="exLink0" style={{ marginRight: '40px' }} to={{ pathname: "https://github.com/baklavaspace" }} target="_blank">
-                    <div className="center mb-2"><img src={git} width="20" height="20" align="right" alt="" /></div>
+                    <div className="center mb-2"><img src="/images/github.svg" width="20" height="20" align="right" alt="" /></div>
                   </Link>
                   <Link className="exLink0" style={{ marginRight: '20px' }} to={{ pathname: "https://discord.gg/E6aYX5ukAw" }} target="_blank">
-                    <div className="center mb-2"><img src={discord} width="20" height="20" align="right" alt="" /></div>
+                    <div className="center mb-2"><img src="/images/discord.svg" width="20" height="20" align="right" alt="" /></div>
                   </Link>
                 </div>
               </div>
@@ -157,13 +148,13 @@ class Navb extends Component {
                         <div>
                           <div className='dropdown0' onClick={async () => {
                             await this.props.connectMetamask()
-                          }}><img src={fox} width="23" height="23" className="d-inline-block" alt="" />&nbsp; Metamask</div>
+                          }}><img src="/images/metamask-fox.svg" width="23" height="23" className="d-inline-block" alt="" />&nbsp; Metamask</div>
                           <div className='dropdown0' onClick={async () => {
                             await this.props.connectCoin98()
-                          }}><img src={coin98} width="23" height="23" className="d-inline-block" alt="" />&nbsp; Coin98</div>
+                          }}><img src="/images/coin98.png" width="23" height="23" className="d-inline-block" alt="" />&nbsp; Coin98</div>
                           <div className='dropdown' onClick={async () => {
                             await this.props.mobileWalletConnect()
-                          }}><img src={walletconnectLogo} width="26" height="23" className="d-inline-block" alt="" />&nbsp; WalletConnect</div>
+                          }}><img src="/images/walletconnect-logo.svg" width="26" height="23" className="d-inline-block" alt="" />&nbsp; WalletConnect</div>
                         </div>
                       </Popup>
                     </div>}

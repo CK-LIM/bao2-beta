@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import litepaper from '../Litepaper_Protocol.pdf'
-import litepaper_turkish from '../Litepaper_Protocol(turkish).pdf'
+// import litepaper from '../Litepaper_Protocol.pdf'
+// import litepaper_turkish from '../Litepaper_Protocol(turkish).pdf'
 import Button from '@material-ui/core/Button';
 import './App.css';
 
@@ -50,7 +50,8 @@ class LitePaper extends Component {
                             }}>Turkish</Button></div>}
                 </span>
                 <div className="center textMiddle">
-                    {this.state.turkish ? <object data={litepaper_turkish} type="application/pdf" width="1000px" height="950px"></object> : <object data={litepaper} type="application/pdf" width="1000px" height="950px"></object>}
+                    {/* {this.state.turkish ? <object data={litepaper_turkish} type="application/pdf" width="1000px" height="950px"></object> : <object data={litepaper} type="application/pdf" width="1000px" height="950px"></object>} */}
+                    {this.state.turkish ? <object data="/images/Litepaper_Protocol(turkish).pdf" type="application/pdf" width="1000px" height="950px"></object> : <object data="/images/Litepaper_Protocol.pdf" type="application/pdf" width="1000px" height="950px"></object>}
                 </div>
             </div>
 

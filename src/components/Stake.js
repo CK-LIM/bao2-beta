@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import bigInt from 'big-integer'
-import logo from '../logo.png'
 import Buttons from 'react-bootstrap/Button'
 import 'reactjs-popup/dist/index.css';
 import './App.css';
@@ -108,7 +107,7 @@ class Stake extends Component {
                             <table style={{ width: "900px" }}>
                                 <thead className="textBlackSmall" style={{ color: 'black' }}>
                                     <tr>
-                                        <th scope="col" width="100" style={{ border: '0px' }}><img src={logo} width="50" height="50" alt="" /></th>
+                                        <th scope="col" width="100" style={{ border: '0px' }}><img src="/images/logo.png" width="50" height="50" alt="" /></th>
                                         <th scope="col" width="120" style={{ border: '0px' }}>BAVA Balance<div className='mt-3'>{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.bavaTokenBalance, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 3 })} BAVA / $ {(window.web3Ava.utils.fromWei(this.props.bavaTokenBalance, 'Ether') * this.props.BAVAPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div> : <div className="center">
                                             <div className="lds-facebook mt-3"><div></div><div></div><div></div></div></div>}</div></th>
                                         <th scope="col" width="120" style={{ border: '0px' }}>Staked BAVA<div className='mt-3'>{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(window.web3Ava.utils.fromWei(this.props.stakeAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 3 })} BAVA / $ {(window.web3Ava.utils.fromWei(this.props.stakeAmount, 'Ether') * this.props.BAVAPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div> : <div className="center">
@@ -128,7 +127,7 @@ class Stake extends Component {
                             <table style={{ width: "900px" }}>
                                 <thead className="textBlackSmall" style={{ color: 'black' }}>
                                     <tr>
-                                        <th scope="col" width="100" style={{ border: '0px' }}><img src={logo} width="50" height="50" alt="" /></th>
+                                        <th scope="col" width="100" style={{ border: '0px' }}><img src="/images/logo.png" width="50" height="50" alt="" /></th>
                                         <th scope="col" width="120" style={{ border: '0px' }}>Total BAVA Staked<div className='mt-3'><div>{parseFloat(window.web3Ava.utils.fromWei(this.props.totalStake, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} BAVA / $ {(window.web3Ava.utils.fromWei(this.props.totalStake, 'Ether') * this.props.BAVAPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div></div></th>
                                         <th scope="col" width="120" style={{ border: '0px' }}>APR<div className='mt-3'><div>{parseFloat(this.props.rewardRate / this.props.totalStake * 31556926 * 100).toLocaleString('en-US', { maximumFractionDigits: 0 })}%</div></div></th>
                                         <th scope="col" width="120" style={{ border: '0px' }}>Your Pool%<div className='mt-3'>{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(this.props.stakeAmount / this.props.totalStake * 100).toLocaleString('en-US', { maximumFractionDigits: 5 })}% </div> : <div className="center">
@@ -247,7 +246,7 @@ class Stake extends Component {
                                                     required />
                                                 <div className="input-group-append" >
                                                     <div className="input-group-text cardbody">
-                                                        {<img src={logo} height='32' alt="" />}
+                                                        {<img src="/images/logo.png" height='32' alt="" />}
                                                     </div>
                                                 </div>
                                             </div>
