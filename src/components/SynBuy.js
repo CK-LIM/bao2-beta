@@ -92,11 +92,9 @@ class SynBuy extends Component {
           if (this.state.txUSBValidAmount === false || this.state.txSynValidAmount === false) {
             alert("Invalid input! PLease check your input again")
           } else {
-            let amount = this.input.value.toString()
-            amount = window.web3Ava.utils.toWei(amount, 'Ether')
             let synTokenAmount = window.web3Ava.utils.toWei((this.input1.value).toString(), 'babbage')
-            let minReceiveChange = window.web3Ava.utils.toWei((parseInt((this.input1.value * (10000 - this.props.slippage[this.props.i]) / 10000) * 1000) / 1000).toString(), 'babbage')
-            this.props.synOpenOrder(this.props.i, '0', '0', synTokenAmount, minReceiveChange, this.props.synPoolPrice[this.props.i])
+            let minReceiveChange = parseInt(synTokenAmount * (10000 - 100) / 10000)
+            this.props.synOpenMarketOrder(this.props.i, '0', minReceiveChange)
           }
         }}>
           <div style={{ minWidth: "300px" }}>
@@ -124,8 +122,7 @@ class SynBuy extends Component {
                     }}
                     onChange={(e) => {
                       const value = e.target.value;
-                      this.input1.value = parseInt(parseFloat(value) / parseFloat(this.props.synPoolPrice[this.props.i]) * 1000) / 1000
-                      // this.input1.value = parseInt(parseFloat(bigInt(window.web3Ava.utils.toWei(value.toString(), "Ether")).value / bigInt(this.props.synPoolPrice[this.props.i]).value) / 10000000000 * 1000) / 1000
+                      this.input1.value = parseInt(parseFloat(value) / parseFloat(this.props.synOraclePrice[this.props.i]/(10**this.props.synPriceDecimal[this.props.i])) * 1000) / 1000
                       this.changeHandler(value, this.input1.value, this.props.i)
                       this.props.buySyn(this.props.i, this.input1.value)
                     }}
@@ -143,7 +140,7 @@ class SynBuy extends Component {
                     <Button className="textTransparentButton2" size="sm" onClick={(event1) => {
                       let usbBalance = bigInt(this.props.systemCoinBalance).value - bigInt("500000000000000000").value
                       this.input.value = window.web3Ava.utils.fromWei(usbBalance.toString(), "Ether")
-                      this.input1.value = parseInt(parseFloat(this.input.value) / parseFloat(this.props.synPoolPrice[this.props.i]) * 1000) / 1000
+                      this.input1.value = parseInt(parseFloat(this.input.value) / parseFloat(this.props.synOraclePrice[this.props.i]/(10**this.props.synPriceDecimal[this.props.i])) * 1000) / 1000
                       this.changeHandler(this.input.value, this.input1.value, this.props.i)
                       this.props.buySyn(this.props.i, this.input1.value)
                     }}>Max</Button>
@@ -177,7 +174,7 @@ class SynBuy extends Component {
                     }}
                     onChange={(event) => {
                       const value = event.target.value;
-                      this.input.value = parseInt(parseFloat(value) * parseFloat(this.props.synPoolPrice[this.props.i]) * 1000000) / 1000000
+                      this.input.value = parseInt(parseFloat(value) * parseFloat(this.props.synOraclePrice[this.props.i]/(10**this.props.synPriceDecimal[this.props.i])) * 1000000) / 1000000
                       this.changeHandler(this.input.value, value, this.props.i)
                       this.props.buySyn(this.props.i, this.input1.value)
                     }}

@@ -227,6 +227,7 @@ class App extends Component {
       let synOraclePrice = []
       let synPoolPrice = []
       let synTotalSupply = []
+      let synPriceDecimal = []
 
       let returnRatioArray = this.state.myJsonMongo["ReturnRatio"]
       let returnRatioArrayV2_2 = this.state.myJsonMongo["ReturnRatioV2_2"]
@@ -255,9 +256,11 @@ class App extends Component {
       let synPoolResponse1 = []
       let synPoolResponse2 = []
       let synPoolResponse3 = []
+      let synPoolResponse4 = []
       for (let i = 0; i < this.state.synPoolLength; i++) {
-        synPoolResponse1[i] = this.loadSyntheticValue(i)
+        synPoolResponse1[i] = this.loadSyntheticOraclePrice(i)
         synPoolResponse2[i] = this.loadSyntheticTotalSupply(i)
+        synPoolResponse4[i] = this.loadSyntheticPriceDecimal(i)
       }
       synPoolResponse3 = this.loadSyntheticPoolPrice()
 
@@ -360,6 +363,7 @@ class App extends Component {
         synTokenAddresses[i] = syntokenAddress
         synPoolSegmentInfo[i] = poolInfo
         synOraclePrice[i] = await synPoolResponse1[i]
+        synPriceDecimal[i] =await synPoolResponse4[i]
         synTotalSupply[i] = await synPoolResponse2[i]
       }
       synPoolPrice = await synPoolResponse3
@@ -396,6 +400,7 @@ class App extends Component {
       this.setState({ synOraclePrice })
       this.setState({ synPoolPrice })
       this.setState({ synTotalSupply })
+      this.setState({ synPriceDecimal })
 
       this.setState({ reinvestAmount })
       this.setState({ farmloading: true })
@@ -614,7 +619,6 @@ class App extends Component {
     for (i = 0; i < this.state.collateralPoolLength; i++) {
       collUserSegmentInfo[i] = await collateralResponse0[i]
       collBRTBalanceAccount[i] = await collateralResponse1[i]
-      console.log(collBRTBalanceAccount)
       collBRTSegmentAllowance[i] = await collateralResponse2[i]
       collDebtBalance[i] = await collateralResponse3[i]
       collMaxBorrowAmount[i] = await collateralResponse4[i]
@@ -877,7 +881,6 @@ class App extends Component {
       return "0"
     } else {
       let remainingMaxBorrowAmount = await this.state.collateralVault.methods.getMaxBorrowAmount(i, this.state.account, 0).call()
-      console.log(remainingMaxBorrowAmount)
       return remainingMaxBorrowAmount
     }
   }
@@ -971,10 +974,20 @@ class App extends Component {
     return synPoolLength
   }
 
-  async loadSyntheticValue(i) {
-    const chainlinkAggreagator = new window.web3Eth.eth.Contract(ChainlinkAggreagator.abi, this.state.synPool[i].chainlink)
+  async loadSyntheticOraclePrice(i) {
+    let poolInfo = await this.state.syntheticPool.methods.poolInfo(i).call()
+    let oracleChainlink = poolInfo.oracleChainlink
+    const chainlinkAggreagator = new window.web3Ava.eth.Contract(ChainlinkAggreagator.abi, oracleChainlink)
     let synOraclePrice = await chainlinkAggreagator.methods.latestAnswer().call()
     return synOraclePrice
+  }
+
+  async loadSyntheticPriceDecimal(i) {
+    let poolInfo = await this.state.syntheticPool.methods.poolInfo(i).call()
+    let oracleChainlink = poolInfo.oracleChainlink
+    const chainlinkAggreagator = new window.web3Ava.eth.Contract(ChainlinkAggreagator.abi, oracleChainlink)
+    let synOracleDecimal = await chainlinkAggreagator.methods.decimals().call()
+    return synOracleDecimal
   }
 
   async loadSyntheticPoolPrice() {
@@ -1970,8 +1983,7 @@ class App extends Component {
     });
   }
 
-  synOpenOrder = async (i, orderType, minSystemCoinTxAmount, synTokenAmount, minSynTokenAmount, synTokenPrice) => {
-    synTokenPrice = window.web3Ava.utils.toWei((synTokenPrice/10).toFixed(5).toString(), 'shannon')
+  synOpenMarketOrder = async (i, orderType, synTokenAmount) => {
     let syntheticPool
     if (this.state.walletConnect == false && this.state.wallet == false) {
       alert("Wallet is not connected")
@@ -1982,7 +1994,7 @@ class App extends Component {
         syntheticPool = new window.web3.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
       }
       if (orderType == 0) {
-        syntheticPool.methods.openBuyOrder(i, synTokenAmount, minSynTokenAmount, synTokenPrice).send({ from: this.state.account }).then(async (result) => {
+        syntheticPool.methods.openMarketOrder(i, "0", synTokenAmount).send({ from: this.state.account }).then(async (result) => {
           this.componentWillMount()
         }).catch((err) => {
           if (err.code === 4001) {
@@ -1992,7 +2004,7 @@ class App extends Component {
           }
         });
       } else if (orderType == 1) {
-        syntheticPool.methods.openSellOrder(i, synTokenAmount, minSystemCoinTxAmount, synTokenPrice).send({ from: this.state.account }).then(async (result) => {
+        syntheticPool.methods.openMarketOrder(i, "1", synTokenAmount).send({ from: this.state.account }).then(async (result) => {
           this.componentWillMount()
         }).catch((err) => {
           if (err.code === 4001) {
@@ -2005,7 +2017,7 @@ class App extends Component {
     }
   }
 
-  synOpenLimitOrder = async (i, orderType, synTokenAmount, synTokenPrice) => {
+  synOpenLimitOrder = async (i, orderType, synTokenAmount, synTokenLimitPrice) => {
     let syntheticPool
     if (this.state.walletConnect == false && this.state.wallet == false) {
       alert("Wallet is not connected")
@@ -2015,7 +2027,7 @@ class App extends Component {
       } else if (this.state.wallet == true) {
         syntheticPool = new window.web3.eth.Contract(SyntheticPool.abi, process.env.REACT_APP_synthetic_pool_address)
       }
-      syntheticPool.methods.openLimitOrder(i, orderType, synTokenAmount, synTokenPrice).send({ from: this.state.account }).then(async (result) => {
+      syntheticPool.methods.openLimitOrder(i, orderType, synTokenAmount, synTokenLimitPrice).send({ from: this.state.account }).then(async (result) => {
         this.componentWillMount()
       }).catch((err) => {
         if (err.code === 4001) {
@@ -2709,8 +2721,9 @@ class App extends Component {
       synTotalSupply={this.state.synTotalSupply}
       systemCoinBalance={this.state.systemCoinBalance}
       synUserOrderInfo={this.state.synUserOrderInfo}
+      synPriceDecimal={this.state.synPriceDecimal}
       systemCoinSyntheticApprove={this.systemCoinSyntheticApprove}
-      synOpenOrder={this.synOpenOrder}
+      synOpenMarketOrder={this.synOpenMarketOrder}
       synOpenLimitOrder={this.synOpenLimitOrder}
       synTokenSyntheticApprove={this.synTokenSyntheticApprove}
       synCancelOrder={this.synCancelOrder}

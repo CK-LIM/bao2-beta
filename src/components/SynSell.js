@@ -117,8 +117,7 @@ class SynSell extends Component {
           } else {
             let amount = this.input.value.toString()
             amount = window.web3Ava.utils.toWei(amount, 'babbage')
-            let minReceiveChange = window.web3Ava.utils.toWei((parseInt((this.input1.value * (10000 - this.props.slippage[this.props.i]) / 10000) * 100000) / 100000).toString(), 'Ether')
-            this.props.synOpenOrder(this.props.i, '1', minReceiveChange, amount, '0', this.props.synPoolPrice[this.props.i])
+            this.props.synOpenMarketOrder(this.props.i, '1', amount)
           }
         }}>
           <div style={{ minWidth: "300px" }}>
@@ -145,7 +144,7 @@ class SynSell extends Component {
                   }
                     onChange={(e) => {
                       const value = e.target.value;
-                      let getUSB = this.props.synPoolPrice[this.props.i] * parseFloat(value)
+                      let getUSB = (this.props.synOraclePrice[this.props.i]/(10**this.props.synPriceDecimal[this.props.i])) * parseFloat(value)
                       this.input1.value = getUSB.toFixed(3);
                       this.changeHandler(this.input.value, this.input1.value, this.props.i)
                       this.props.sellSyn(this.props.i, this.input1.value)
@@ -163,7 +162,7 @@ class SynSell extends Component {
                   <div className="input-group-text cardbodyLeft" style={{ padding: '0 0.5rem' }}>
                     <Button className="textTransparentButton2" size="sm" onClick={(event1) => {
                       this.input.value = window.web3Ava.utils.fromWei(this.props.synUserBalance[this.props.i], 'babbage')
-                      let getUSB = (window.web3Ava.utils.fromWei(this.props.synUserBalance[this.props.i], 'babbage')) * this.props.synPoolPrice[this.props.i]
+                      let getUSB = (window.web3Ava.utils.fromWei(this.props.synUserBalance[this.props.i], 'babbage')) * (this.props.synOraclePrice[this.props.i]/(10**this.props.synPriceDecimal[this.props.i]))
                       this.input1.value = getUSB.toFixed(3);
                       this.changeHandler(this.input.value, this.input1.value, this.props.i)
                       this.props.sellSyn(this.props.i, this.input1.value)
@@ -203,7 +202,7 @@ class SynSell extends Component {
                     }}
                     onChange={(event) => {
                       const value = event.target.value;
-                      let getSyn = parseFloat(value) / (this.props.synPoolPrice[this.props.i])
+                      let getSyn = parseFloat(value) / (this.props.synOraclePrice[this.props.i]/(10**this.props.synPriceDecimal[this.props.i]))
                       this.input1.value = value
                       this.input.value = getSyn.toFixed(3);
                       this.changeHandler(this.input.value, this.input1.value, this.props.i)

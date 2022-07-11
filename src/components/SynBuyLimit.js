@@ -59,9 +59,9 @@ class SynBuyLimit extends Component {
         messagePrice: 'Target price must be greater than 0',
         txSynValidAmount: false
       })
-    } else if (eventPrice > this.props.synPoolPrice[this.props.i]) {
+    } else if (eventPrice > (this.props.synOraclePrice[this.props.i]/(10**this.props.synPriceDecimal[this.props.i]))) {
       this.setState({
-        messagePrice: `Target price must be between 0 and ${(this.props.synPoolPrice[this.props.i]).toLocaleString('en-US', { maximumFractionDigits: 3 })}`,
+        messagePrice: `Target price must be between 0 and ${(this.props.synOraclePrice[this.props.i]/(10**this.props.synPriceDecimal[this.props.i])).toLocaleString('en-US', { maximumFractionDigits: 3 })}`,
         txSynValidAmount: false
       })
     } else {
@@ -123,7 +123,7 @@ class SynBuyLimit extends Component {
           let synTokenAmount = this.input.value.toString()
           synTokenAmount = window.web3Ava.utils.toWei(synTokenAmount, 'babbage')
           let synTokenPrice = this.input1.value.toString()
-          synTokenPrice = parseFloat(window.web3Ava.utils.toWei(synTokenPrice, 'shannon')) / 10
+          synTokenPrice = window.web3Ava.utils.toWei(synTokenPrice, 'ether')
           this.props.synOpenLimitOrder(this.props.i, '0', synTokenAmount, synTokenPrice)
         }}>
           <div style={{ minWidth: "300px" }}>

@@ -91,6 +91,7 @@ class Airdrop extends Component {
     }
 
     buySyn(i, synAmount) {
+        console.log(synAmount)
         let ntg = 0
         let minReceiveChange = 0
 
@@ -298,17 +299,17 @@ class Airdrop extends Component {
                                                                                 <tr>
                                                                                     <th scope="col">Wallet</th>
                                                                                     <th scope="col">Oracle Price</th>
-                                                                                    <th scope="col">Pool Price</th>
+                                                                                    {/* <th scope="col">Pool Price</th> */}
                                                                                     <th scope="col">Total Supply</th>
                                                                                 </tr>
                                                                             </thead>
 
                                                                             <tbody className="textGrey">
                                                                                 <tr>
-                                                                                    <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{parseFloat(this.props.synUserBalance[i] / 1000).toLocaleString('en-US', { maximumFractionDigits: 5 })}</div>
+                                                                                    <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{(this.props.synUserBalance[i] / 1000).toLocaleString('en-US', { maximumFractionDigits: 5 })}</div>
                                                                                         : <div className="center"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
-                                                                                    <td className=""><div>{parseFloat(this.props.synOraclePrice[i] / 100000000).toLocaleString('en-US', { maximumFractionDigits: 18 })} USB</div></td>
-                                                                                    <td className=""><div>{(this.props.synPoolPrice[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
+                                                                                    <td className=""><div>{(this.props.synOraclePrice[i] / (10**this.props.synPriceDecimal[i])).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
+                                                                                    {/* <td className=""><div>{(this.props.synPoolPrice[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td> */}
                                                                                     <td className="">{this.props.synTotalSupply[i] / 1000}</td>
                                                                                 </tr>
                                                                             </tbody>
@@ -318,12 +319,12 @@ class Airdrop extends Component {
                                                                         <table className="float-right">
                                                                             <thead className="textBlackSmall" style={{ color: 'black' }}>
                                                                                 <tr>
-                                                                                    <th scope="col" style={{ textAlign: 'end' }}>Pool Price</th>
+                                                                                    <th scope="col" style={{ textAlign: 'end' }}>Oracle Price</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody className="textGrey">
                                                                                 <tr>
-                                                                                    <td className="" style={{ textAlign: 'end' }}><div>{(this.props.synPoolPrice[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
+                                                                                    <td className="" style={{ textAlign: 'end' }}><div>{(this.props.synOraclePrice[i] / (10**this.props.synPriceDecimal[i])).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -382,11 +383,11 @@ class Airdrop extends Component {
                                                                                                     <thead className="textBlackSmall" style={{ color: 'black', padding: '0px' }}>
                                                                                                         <tr>
                                                                                                             <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '55px' }}>Order</th>
-                                                                                                            <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '55px' }}>Amount</th>
-                                                                                                            <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '95px' }}>Position(USB)</th>
-                                                                                                            <th scope="col" className="center" style={{ fontSize: '12px', padding: '1px', width: '65px' }}>
+                                                                                                            <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '65px' }}>Amount</th>
+                                                                                                            <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '100px' }}>Position(USB)</th>
+                                                                                                            <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '70px' }}>
                                                                                                                 {this.props.synUserOpenOrderLength[i] > 1 ?
-                                                                                                                    <Buttons className='center cell2' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
+                                                                                                                    <Buttons className='center cell2 ml-1' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
                                                                                                                         onClick={async () => {
                                                                                                                             await this.props.synCancelAllOrder(i)
                                                                                                                         }}>Cancel All</Buttons>
@@ -401,8 +402,8 @@ class Airdrop extends Component {
                                                                                                                     <tr>
                                                                                                                         <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{orderInfo.orderType == 0 ? "Buy" : "Sell"}</div></td>
                                                                                                                         <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenAmount, 'babbage')}</div></td>
-                                                                                                                        <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{(orderInfo.synTokenPrice / 100000000).toLocaleString('en-US', { maximumFractionDigits: 3 })}</div></td>
-                                                                                                                        <td className="center" style={{ fontSize: '12px', padding: '1px', width: '65px' }}><Buttons className='center cell2' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
+                                                                                                                        <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenPrice, 'ether').toLocaleString('en-US', { maximumFractionDigits: 3 })}</div></td>
+                                                                                                                        <td className="" style={{ fontSize: '12px', padding: '1px', width: '65px' }}><Buttons className='center cell2 ml-1' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
                                                                                                                             onClick={async () => {
                                                                                                                                 await this.props.synCancelOrder(i, orderInfo.orderId)
                                                                                                                             }}>Cancel</Buttons></td>
@@ -483,7 +484,7 @@ class Airdrop extends Component {
                                                                                                                 <tr>
                                                                                                                     <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{orderInfo.orderType == 0 ? "Buy" : "Sell"}</div></td>
                                                                                                                     <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenAmount, 'babbage')}</div></td>
-                                                                                                                    <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{(orderInfo.synTokenPrice / 100000000).toLocaleString('en-US', { maximumFractionDigits: 3 })}</div></td>
+                                                                                                                    <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenPrice, 'ether').toLocaleString('en-US', { maximumFractionDigits: 3 })}</div></td>
                                                                                                                     <td className="center" style={{ fontSize: '12px', padding: '1px', width: '65px' }}><Buttons className='center cell2' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
                                                                                                                         onClick={async () => {
                                                                                                                             await this.props.synCancelOrder(i, orderInfo.orderId)
@@ -703,12 +704,13 @@ class Airdrop extends Component {
                                                                                                         walletConnect={this.props.walletConnect}
                                                                                                         accountLoading={this.props.accountLoading}
                                                                                                         synOraclePrice={this.props.synOraclePrice}
-                                                                                                        synPoolPrice={this.props.synPoolPrice}
+                                                                                                        synPriceDecimal={this.props.synPriceDecimal}
+                                                                                                        // synPoolPrice={this.props.synPoolPrice}
                                                                                                         synUserBalance={this.props.synUserBalance}
                                                                                                         synUserAllowance={this.props.synUserAllowance}
                                                                                                         slippage={this.state.slippage}
                                                                                                         buyLimitSyn={this.buyLimitSyn}
-                                                                                                        synOpenOrder={this.props.synOpenOrder}
+                                                                                                        synOpenMarketOrder={this.props.synOpenMarketOrder}
                                                                                                         synOpenLimitOrder={this.props.synOpenLimitOrder}
                                                                                                         systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
                                                                                                         systemCoinSynAllowance={this.props.systemCoinSynAllowance}
@@ -721,12 +723,13 @@ class Airdrop extends Component {
                                                                                                         walletConnect={this.props.walletConnect}
                                                                                                         accountLoading={this.props.accountLoading}
                                                                                                         synOraclePrice={this.props.synOraclePrice}
-                                                                                                        synPoolPrice={this.props.synPoolPrice}
+                                                                                                        synPriceDecimal={this.props.synPriceDecimal}
+                                                                                                        // synPoolPrice={this.props.synPoolPrice}
                                                                                                         synUserBalance={this.props.synUserBalance}
                                                                                                         synUserAllowance={this.props.synUserAllowance}
                                                                                                         slippage={this.state.slippage}
                                                                                                         buySyn={this.buySyn}
-                                                                                                        synOpenOrder={this.props.synOpenOrder}
+                                                                                                        synOpenMarketOrder={this.props.synOpenMarketOrder}
                                                                                                         synOpenLimitOrder={this.props.synOpenLimitOrder}
                                                                                                         systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
                                                                                                         systemCoinSynAllowance={this.props.systemCoinSynAllowance}
@@ -741,12 +744,13 @@ class Airdrop extends Component {
                                                                                                         walletConnect={this.props.walletConnect}
                                                                                                         accountLoading={this.props.accountLoading}
                                                                                                         synOraclePrice={this.props.synOraclePrice}
-                                                                                                        synPoolPrice={this.props.synPoolPrice}
+                                                                                                        synPriceDecimal={this.props.synPriceDecimal}
+                                                                                                        // synPoolPrice={this.props.synPoolPrice}
                                                                                                         synUserBalance={this.props.synUserBalance}
                                                                                                         synUserAllowance={this.props.synUserAllowance}
                                                                                                         slippage={this.state.slippage}
                                                                                                         sellLimitSyn={this.sellLimitSyn}
-                                                                                                        synOpenOrder={this.props.synOpenOrder}
+                                                                                                        synOpenMarketOrder={this.props.synOpenMarketOrder}
                                                                                                         synOpenLimitOrder={this.props.synOpenLimitOrder}
                                                                                                         systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
                                                                                                         synTokenSyntheticApprove={this.props.synTokenSyntheticApprove}
@@ -760,12 +764,13 @@ class Airdrop extends Component {
                                                                                                         walletConnect={this.props.walletConnect}
                                                                                                         accountLoading={this.props.accountLoading}
                                                                                                         synOraclePrice={this.props.synOraclePrice}
-                                                                                                        synPoolPrice={this.props.synPoolPrice}
+                                                                                                        synPriceDecimal={this.props.synPriceDecimal}
+                                                                                                        // synPoolPrice={this.props.synPoolPrice}
                                                                                                         synUserBalance={this.props.synUserBalance}
                                                                                                         synUserAllowance={this.props.synUserAllowance}
                                                                                                         slippage={this.state.slippage}
                                                                                                         sellSyn={this.sellSyn}
-                                                                                                        synOpenOrder={this.props.synOpenOrder}
+                                                                                                        synOpenMarketOrder={this.props.synOpenMarketOrder}
                                                                                                         synOpenLimitOrder={this.props.synOpenLimitOrder}
                                                                                                         systemCoinSyntheticApprove={this.props.systemCoinSyntheticApprove}
                                                                                                         synTokenSyntheticApprove={this.props.synTokenSyntheticApprove}
