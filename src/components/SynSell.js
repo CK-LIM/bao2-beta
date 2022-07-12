@@ -67,9 +67,9 @@ class SynSell extends Component {
         messageSyn: 'Amount more than wallet balance',
         txSynValidAmount: false
       })
-    }  else if (parseFloat(eventSyn) < 0.01) {
+    }  else if (parseFloat(eventSyn) < 0.001) {
       this.setState({
-        messageSyn: `Notice: Min tx amount must be higher than 0.01 ${this.props.synPoolSegmentInfo[this.props.i].synTokenPairsymbol}.`,
+        messageSyn: `Notice: Min tx amount must be higher than or equal to 0.001 ${this.props.synPoolSegmentInfo[this.props.i].synTokenPairsymbol}.`,
         txSynValidAmount: false
       })
     } else {
