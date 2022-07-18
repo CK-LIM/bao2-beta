@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 // import litepaper from '../Litepaper_Protocol.pdf'
 // import litepaper_turkish from '../Litepaper_Protocol(turkish).pdf'
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
+import Buttons from 'react-bootstrap/Button'
 import './App.css';
 
 class LitePaper extends Component {
@@ -35,19 +36,19 @@ class LitePaper extends Component {
             <div id="content">
                 <span className="center mb-3">
                     {this.state.turkish ? <div>
-                        <Button variant="text" size="small" color="inherit" onClick={async () => {
+                        <Buttons variant="text" size="small" color="inherit" onClick={async () => {
                             await this.clickLanguage("english", true)
-                        }}>English</Button>
-                        <Button variant="outlined" size="small" color="inherit" onClick={async () => {
+                        }}>English</Buttons>
+                        <Buttons variant="outlined" size="small" color="inherit" onClick={async () => {
                             await this.clickLanguage("turkish", true)
-                        }}>Turkish</Button></div> :
+                        }}>Turkish</Buttons></div> :
                         <div>
-                            <Button variant="outlined" size="small" color="inherit" onClick={async () => {
+                            <Buttons variant="outlined" size="small" color="inherit" onClick={async () => {
                                 await this.clickLanguage("english", true)
-                            }}>English</Button>
-                            <Button variant="text" size="small" color="inherit" onClick={async () => {
+                            }}>English</Buttons>
+                            <Buttons variant="text" size="small" color="inherit" onClick={async () => {
                                 await this.clickLanguage("turkish", true)
-                            }}>Turkish</Button></div>}
+                            }}>Turkish</Buttons></div>}
                 </span>
                 <div className="center textMiddle">
                     {/* {this.state.turkish ? <object data={litepaper_turkish} type="application/pdf" width="1000px" height="950px"></object> : <object data={litepaper} type="application/pdf" width="1000px" height="950px"></object>} */}

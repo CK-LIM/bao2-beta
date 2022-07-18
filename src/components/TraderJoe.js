@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Buttons from 'react-bootstrap/Button'
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import Popup from 'reactjs-popup';
@@ -14,7 +14,7 @@ class TraderJoe extends Component {
 
     render() {
         return (
-            <div id="content" className="mt-3" style={{ margin: "0", color: '#ff9a04' }}>
+            <div id="content" className="" style={{ margin: "0", color: '#ff9a04' }}>
                 <div >
                     <div className="ml-auto mr-auto card mb-3 cardbody" style={{ width: '1000px', height: '170px', color: 'black' }}>
                         {this.props.wallet || this.props.walletConnect ?
@@ -116,13 +116,13 @@ class TraderJoe extends Component {
                         <div className="textMiddleBold1 float-right" style={{ marginRight: '5px' }}><big>TVL $ {parseFloat(this.props.totalTVL).toLocaleString('en-US', { maximumFractionDigits: 0 })}</big></div><br /><br />
                         <span className="float-left">
                             <ButtonGroup>
-                                <Button variant="text" size="small" color="inherit" component={Link} to="/menu/">Pangolin</Button>
-                                <Button variant="outlined" size="small" color="inherit" component={Link} to="/menu/traderjoe/">Trader Joe</Button>
+                                <Buttons variant="text" size="small" color="inherit" as={Link} to="/menu/">Pangolin</Buttons>
+                                <Buttons variant="outlined" size="small" color="inherit" as={Link} to="/menu/traderjoe/">Trader Joe</Buttons>
                             </ButtonGroup>
                         </span>
                         {/* <span className="float-right mr-4">
                             <ButtonGroup>
-                                <Button variant="text" size="small" color="inherit" >Sort by</Button>
+                                <Buttons variant="text" size="small" color="inherit" >Sort by</Buttons>
                             </ButtonGroup>
                         </span> */}
                     </div>

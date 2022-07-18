@@ -3,8 +3,10 @@ import './App.css';
 import Footer from './Footer'
 import MediaQuery from 'react-responsive';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Buttons from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button'
 import ToggleButton from 'react-bootstrap/ToggleButton'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown'
 import { BsFillQuestionCircleFill, BsGearFill } from 'react-icons/bs';
 import 'reactjs-popup/dist/index.css';
 import Popup from 'reactjs-popup';
@@ -19,7 +21,7 @@ class Airdrop extends Component {
         super(props)
         this.state = {
             synPoolOpen: [false],
-            slippageButtons: [{ name: '0.5%', value: '0.5' }, { name: '1.0%', value: '1' }],
+            slippageButtons: [{ name: '0.5%', value: 0.5 }, { name: '1.0%', value: 1 }],
             slippage: [100, 100, 100, 100, 100],
             limitOrder: [false, false, false, false, false],
             searchKeyword: '',
@@ -178,25 +180,29 @@ class Airdrop extends Component {
     }
 
     async setSlipageButton(i, page, value) {
+        let ntg
         this.state.radioValue[i] = value
         this.state.messageSlippage[i] = ''
-        await this.setState(state => {
-            const slippage = state.slippage.map((item, j) => {
-                if (j === i) {
-                    return value * 100;
-                } else {
-                    return item;
-                }
-            });
-            return {
-                slippage,
-            };
-        });
+        this.state.slippage[i] = value * 100
+        // await this.setState(state => {
+        //     const slippage = state.slippage.map((item, j) => {
+        //         if (j === i) {
+        //             return value * 100;
+        //         } else {
+        //             return item;
+        //         }
+        //     });
+        //     return {
+        //         slippage,
+        //     };
+        // });
+
         if (page == 0) {
             this.buySyn(i, this.state.buyReceiveSynAmount[i])
         } else {
             this.sellSyn(i, this.state.sellReceiveUsbAmount[i])
         }
+        this.setState({ ntg })
     }
 
     countDecimals(x) {
@@ -213,7 +219,7 @@ class Airdrop extends Component {
 
     render() {
         return (
-            <div id="content" style={{ marginTop: "50px", minWidth: '350px' }}>
+            <div id="content" style={{ minWidth: '350px' }}>
                 <label className="textWhite left mb-2 mt-2" style={{ fontSize: '35px', color: 'black' }}><big><b>Trade</b></big></label>
 
                 <div className="card-body" style={{ backgroundColor: '#fffcf0', padding: '0 0rem' }}>
@@ -308,7 +314,7 @@ class Airdrop extends Component {
                                                                                 <tr>
                                                                                     <td className="">{(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ? <div>{(this.props.synUserBalance[i] / 1000).toLocaleString('en-US', { maximumFractionDigits: 5 })}</div>
                                                                                         : <div className="center"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</td>
-                                                                                    <td className=""><div>{(this.props.synOraclePrice[i] / (10**this.props.synPriceDecimal[i])).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
+                                                                                    <td className=""><div>{(this.props.synOraclePrice[i] / (10 ** this.props.synPriceDecimal[i])).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
                                                                                     {/* <td className=""><div>{(this.props.synPoolPrice[i]).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td> */}
                                                                                     <td className="">{this.props.synTotalSupply[i] / 1000}</td>
                                                                                 </tr>
@@ -324,7 +330,7 @@ class Airdrop extends Component {
                                                                             </thead>
                                                                             <tbody className="textGrey">
                                                                                 <tr>
-                                                                                    <td className="" style={{ textAlign: 'end' }}><div>{(this.props.synOraclePrice[i] / (10**this.props.synPriceDecimal[i])).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
+                                                                                    <td className="" style={{ textAlign: 'end' }}><div>{(this.props.synOraclePrice[i] / (10 ** this.props.synPriceDecimal[i])).toLocaleString('en-US', { maximumFractionDigits: 3 })} USB</div></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -359,7 +365,7 @@ class Airdrop extends Component {
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <Popup trigger={open => (
+                                                                                    {/* <Popup trigger={open => (
                                                                                         <div className="card cardbody textDarkOpenOrder mr-3 mb-2" style={{ width: '300px' }}>
                                                                                             <div className="card-body" style={{ padding: '0.5rem' }}>
                                                                                                 <div className="" style={{ marginBottom: '5px', color: 'black' }}><small>Pending Orders</small></div>
@@ -387,10 +393,10 @@ class Airdrop extends Component {
                                                                                                             <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '100px' }}>Position(USB)</th>
                                                                                                             <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '70px' }}>
                                                                                                                 {this.props.synUserOpenOrderLength[i] > 1 ?
-                                                                                                                    <Buttons className='center cell2 ml-1' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
+                                                                                                                    <Button className='center cell2 ml-1' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
                                                                                                                         onClick={async () => {
                                                                                                                             await this.props.synCancelAllOrder(i)
-                                                                                                                        }}>Cancel All</Buttons>
+                                                                                                                        }}>Cancel All</Button>
                                                                                                                     : <div style={{ padding: '1px', width: '40px' }}></div>}</th>
                                                                                                         </tr>
                                                                                                     </thead>
@@ -403,10 +409,10 @@ class Airdrop extends Component {
                                                                                                                         <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{orderInfo.orderType == 0 ? "Buy" : "Sell"}</div></td>
                                                                                                                         <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenAmount, 'babbage')}</div></td>
                                                                                                                         <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenPrice, 'ether').toLocaleString('en-US', { maximumFractionDigits: 3 })}</div></td>
-                                                                                                                        <td className="" style={{ fontSize: '12px', padding: '1px', width: '65px' }}><Buttons className='center cell2 ml-1' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
+                                                                                                                        <td className="" style={{ fontSize: '12px', padding: '1px', width: '65px' }}><Button className='center cell2 ml-1' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
                                                                                                                             onClick={async () => {
                                                                                                                                 await this.props.synCancelOrder(i, orderInfo.orderId)
-                                                                                                                            }}>Cancel</Buttons></td>
+                                                                                                                            }}>Cancel</Button></td>
                                                                                                                     </tr>
                                                                                                                 }
                                                                                                             </tbody>
@@ -416,7 +422,79 @@ class Airdrop extends Component {
                                                                                                 </table>
                                                                                                 : <div className="center" style={{ height: '20px' }}><div className="lds-facebook"><div></div><div></div><div></div></div></div>}
                                                                                         </div>
-                                                                                    </Popup>
+                                                                                    </Popup> */}
+
+
+
+
+
+
+                                                                                    <Dropdown autoClose="outside" align="end" style={{ padding: "0px" }}>
+                                                                                        <div className="card cardbody textDarkOpenOrder mr-3 mb-2" style={{ width: '300px' }}>
+                                                                                            <Dropdown.Toggle className="cell2" style={{ padding: "0px" }} variant="transparent">
+                                                                                                <div className="card-body float-left" style={{ padding: '0.4rem 0.5rem' }}>
+                                                                                                    <div className="" style={{ marginBottom: '5px', color: 'black' }}><small>Pending Orders</small></div>
+                                                                                                    <div className="float-left" style={{ color: 'black' }}><small>{this.props.accountLoading ?
+                                                                                                        <div>{this.props.synUserOpenOrderLength[i]}</div>
+                                                                                                        : <div className="float-left ml-2"><div className="lds-facebook"><div></div><div></div><div></div></div></div>}</small>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </Dropdown.Toggle>
+                                                                                        </div>
+
+
+                                                                                        <Dropdown.Menu style={{ padding: '2px', marginLeft: '0px', marginTop: '5px', width: '300px', backgroundColor: '#fffcf0', boxShadow: '0 0 10px #9ecaed', borderColor: 'green' }}>
+                                                                                            <Dropdown.Item className="cell2" style={{ padding: '0px' }}>
+                                                                                                <div>
+                                                                                                    {(this.props.wallet || this.props.walletConnect) && this.props.accountLoading ?
+                                                                                                        <table style={{ maxWidth: '280px' }}>
+                                                                                                            <thead className="textBlackSmall" style={{ color: 'black', padding: '0px' }}>
+                                                                                                                <tr>
+                                                                                                                    <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '55px' }}>Order</th>
+                                                                                                                    <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '65px' }}>Amount</th>
+                                                                                                                    <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '100px' }}>Position(USB)</th>
+                                                                                                                    <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '70px' }}>
+                                                                                                                        {this.props.synUserOpenOrderLength[i] > 1 ?
+                                                                                                                            <Button className='textGreenButton center cell2 ml-1' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
+                                                                                                                                onClick={async () => {
+                                                                                                                                    await this.props.synCancelAllOrder(i)
+                                                                                                                                }}>Cancel All</Button>
+                                                                                                                            : <div style={{ padding: '1px', width: '40px' }}></div>}</th>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            {this.props.synUserOrderInfo[i].map((orderInfo, key) => {
+                                                                                                                return (
+                                                                                                                    <tbody key={key} style={{ color: 'black', padding: '0px' }}>
+                                                                                                                        {orderInfo.status != 0 ?
+                                                                                                                            <tr></tr> :
+                                                                                                                            <tr>
+                                                                                                                                <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{orderInfo.orderType == 0 ? "Buy" : "Sell"}</div></td>
+                                                                                                                                <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenAmount, 'babbage')}</div></td>
+                                                                                                                                <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenPrice, 'ether').toLocaleString('en-US', { maximumFractionDigits: 3 })}</div></td>
+                                                                                                                                <td className="" style={{ fontSize: '12px', padding: '1px', width: '65px' }}><Button className='textGreenButton center cell2 ml-1' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
+                                                                                                                                    onClick={async () => {
+                                                                                                                                        await this.props.synCancelOrder(i, orderInfo.orderId)
+                                                                                                                                    }}>Cancel</Button></td>
+                                                                                                                            </tr>
+                                                                                                                        }
+                                                                                                                    </tbody>
+                                                                                                                )
+                                                                                                            })
+                                                                                                            }
+                                                                                                        </table>
+                                                                                                        : <div className="center" style={{ height: '20px' }}><div className="lds-facebook"><div></div><div></div><div></div></div></div>}
+                                                                                                </div>
+                                                                                            </Dropdown.Item>
+                                                                                        </Dropdown.Menu>
+                                                                                    </Dropdown>
+
+
+
+
+
+
+
+
                                                                                 </div>
                                                                             </MediaQuery>
 
@@ -441,6 +519,7 @@ class Airdrop extends Component {
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+
                                                                                 <Popup trigger={open => (
                                                                                     <div className="card cardbody textDarkOpenOrder mb-2">
                                                                                         <div className="card-body" style={{ padding: '0.5rem' }}>
@@ -469,10 +548,10 @@ class Airdrop extends Component {
                                                                                                         <th scope="col" style={{ fontSize: '12px', padding: '1px', width: '95px' }}>Position(USB)</th>
                                                                                                         <th scope="col" className="center" style={{ fontSize: '12px', padding: '1px', width: '65px' }}>
                                                                                                             {this.props.synUserOpenOrderLength[i] > 1 ?
-                                                                                                                <Buttons className='center cell2' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
+                                                                                                                <Button className='textGreenButton center cell2' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
                                                                                                                     onClick={async () => {
                                                                                                                         await this.props.synCancelAllOrder(i)
-                                                                                                                    }}>Cancel All</Buttons>
+                                                                                                                    }}>Cancel All</Button>
                                                                                                                 : <div style={{ padding: '1px', width: '40px' }}></div>}</th>
                                                                                                     </tr>
                                                                                                 </thead>
@@ -485,10 +564,10 @@ class Airdrop extends Component {
                                                                                                                     <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{orderInfo.orderType == 0 ? "Buy" : "Sell"}</div></td>
                                                                                                                     <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenAmount, 'babbage')}</div></td>
                                                                                                                     <td className="" style={{ fontSize: '12px', padding: '1px' }}><div>{window.web3Ava.utils.fromWei(orderInfo.synTokenPrice, 'ether').toLocaleString('en-US', { maximumFractionDigits: 3 })}</div></td>
-                                                                                                                    <td className="center" style={{ fontSize: '12px', padding: '1px', width: '65px' }}><Buttons className='center cell2' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
+                                                                                                                    <td className="center" style={{ fontSize: '12px', padding: '1px', width: '65px' }}><Button className='textGreenButton center cell2' style={{ fontSize: '12px', height: '20px', width: '60px', padding: '2px' }} variant="outline-success" size="sm"
                                                                                                                         onClick={async () => {
                                                                                                                             await this.props.synCancelOrder(i, orderInfo.orderId)
-                                                                                                                        }}>Cancel</Buttons></td>
+                                                                                                                        }}>Cancel</Button></td>
                                                                                                                 </tr>
                                                                                                             }
                                                                                                         </tbody>
@@ -499,6 +578,7 @@ class Airdrop extends Component {
                                                                                             : <div className="center" style={{ height: '20px' }}><div className="lds-facebook"><div></div><div></div><div></div></div></div>}
                                                                                     </div>
                                                                                 </Popup>
+
                                                                             </MediaQuery>
 
 
@@ -514,13 +594,13 @@ class Airdrop extends Component {
                                                                                                 <div className='float-left' style={{ paddingTop: '0px' }}>
                                                                                                     <ButtonGroup>
                                                                                                         <div>
-                                                                                                            <Buttons className="textTransparentButton center" style={{ textDecoration: 'none', marginRight: '5px' }} variant="link" size="sm" onClick={async () => {
+                                                                                                            <Button className="textTransparentButton center" style={{ textDecoration: 'none', marginRight: '5px' }} variant="link" size="sm" onClick={async () => {
                                                                                                                 await this.setAction(i, 0, true)
-                                                                                                            }}><b>Buy</b></Buttons></div>
+                                                                                                            }}><b>Buy</b></Button></div>
                                                                                                         <div>
-                                                                                                            <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                            <Button className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
                                                                                                                 await this.setAction(i, 1, true)
-                                                                                                            }}>Sell</Buttons></div>
+                                                                                                            }}>Sell</Button></div>
                                                                                                     </ButtonGroup>
                                                                                                 </div>
                                                                                                 <div className='float-right mr-1' style={{ paddingTop: '5px' }}>
@@ -535,7 +615,8 @@ class Airdrop extends Component {
                                                                                                         <div className='mr-2'><small>Limit Order</small></div>
                                                                                                         {this.state.limitOrder[i] == true ? <div style={{ cursor: 'not-allowed' }}><BsGearFill size={16} /></div> :
                                                                                                             <div style={{ cursor: 'pointer' }}>
-                                                                                                                <Popup trigger={open => (
+
+                                                                                                                {/* <Popup trigger={open => (
                                                                                                                     <div><BsGearFill size={16} /></div>
                                                                                                                 )}
                                                                                                                     on="click"
@@ -594,7 +675,81 @@ class Airdrop extends Component {
                                                                                                                         </div>
                                                                                                                     </div>
                                                                                                                     <div style={{ color: 'red', fontSize: '13px' }}>{this.state.messageSlippage}</div>
-                                                                                                                </Popup>
+                                                                                                                </Popup> */}
+
+
+
+
+
+                                                                                                                <Dropdown className="cell2" autoClose="outside" style={{ padding: "0px" }}>
+                                                                                                                    <Dropdown.Toggle className="cell2" style={{ padding: "0px", position: "relative", top: "-3px" }} variant="transparent">
+                                                                                                                        <div><BsGearFill size={16} /></div>
+                                                                                                                    </Dropdown.Toggle>
+                                                                                                                    <Dropdown.Menu className="cell2" style={{ padding: '10px', minWidth: '300px', backgroundColor: '#fffcf0' }}>
+                                                                                                                        <Dropdown.Item className="cell2" style={{ padding: '0px' }}>
+                                                                                                                            <div className="cell2">
+                                                                                                                                <div className="mb-2" style={{ fontSize: '18px', color: "black" }}>Slippage tolerance</div>
+                                                                                                                                <div className='rowC'>
+                                                                                                                                    {this.state.radioValue[i] == 1 ?
+                                                                                                                                        <div className='rowC'>
+                                                                                                                                            <Button className="textBlackButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px', border: "1px Solid Grey" }} variant="outline-secondary" size="sm" onClick={async () => {
+                                                                                                                                                await this.setSlipageButton(i, 0, 0.5)
+                                                                                                                                            }}><b>0.5%</b></Button>
+                                                                                                                                            <Button className="textTransparentButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                                await this.setSlipageButton(i, 0, 1)
+                                                                                                                                            }}><b>1.0%</b></Button>
+                                                                                                                                        </div> : <div>{
+                                                                                                                                            this.state.radioValue[i] == 0.5 ?
+                                                                                                                                                <div className='rowC'>
+                                                                                                                                                    <Button className="textTransparentButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                                        await this.setSlipageButton(i, 0, 0.5)
+                                                                                                                                                    }}><b>0.5%</b></Button>
+                                                                                                                                                    <Button className="textBlackButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px', border: "1px Solid Grey" }} variant="outline-secondary" size="sm" onClick={async () => {
+                                                                                                                                                        this.setSlipageButton(i, 0, 1)
+                                                                                                                                                    }}><b>1.0%</b></Button>
+                                                                                                                                                </div>
+                                                                                                                                                : <div className='rowC'>
+                                                                                                                                                    <Button className="textBlackButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px', border: "1px Solid Grey" }} variant="outline-secondary" size="sm" onClick={async () => {
+                                                                                                                                                        await this.setSlipageButton(i, 0, 1)
+                                                                                                                                                    }}><b>0.5%</b></Button>
+                                                                                                                                                    <Button className="textBlackButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px', border: "1px Solid Grey" }} variant="outline-secondary" size="sm" onClick={async () => {
+                                                                                                                                                        await this.setSlipageButton(i, 0, 1)
+                                                                                                                                                    }}><b>1.0%</b></Button>
+                                                                                                                                                </div>
+                                                                                                                                        }</div>
+                                                                                                                                    }
+                                                                                                                                    <span>
+                                                                                                                                        <div className="input-group mb-2" >
+                                                                                                                                            <input
+                                                                                                                                                type="number"
+                                                                                                                                                id="input3Color"
+                                                                                                                                                step="any"
+                                                                                                                                                ref={(input) => { this.input = input }}
+                                                                                                                                                style={{ fontSize: '18px', backgroundColor: '#fffcf0', height: '30px' }}
+                                                                                                                                                className="form-control cell cardbody"
+                                                                                                                                                placeholder={`${this.state.radioValue[i]}`}
+                                                                                                                                                onKeyPress={(event) => {
+                                                                                                                                                    if (!/[0-9.]/.test(event.key)) {
+                                                                                                                                                        event.preventDefault();
+                                                                                                                                                    }
+                                                                                                                                                }}
+                                                                                                                                                onChange={(e) => {
+                                                                                                                                                    const value = e.target.value;
+                                                                                                                                                    this.setSlippage(i, 0, value);
+                                                                                                                                                }}
+                                                                                                                                                required />
+                                                                                                                                            <div className="input-group-append" >
+                                                                                                                                                <div className="input-group-text cardbody" style={{ padding: '0 0.3rem' }}>%
+                                                                                                                                                </div>
+                                                                                                                                            </div >
+                                                                                                                                        </div >
+                                                                                                                                    </span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                            <div style={{ color: 'red', fontSize: '13px' }}>{this.state.messageSlippage}</div>
+                                                                                                                        </Dropdown.Item>
+                                                                                                                    </Dropdown.Menu>
+                                                                                                                </Dropdown>
                                                                                                             </div>
                                                                                                         }
                                                                                                     </div>
@@ -604,13 +759,13 @@ class Airdrop extends Component {
                                                                                                 <div className='float-left' style={{ paddingTop: '0px' }}>
                                                                                                     <ButtonGroup>
                                                                                                         <div>
-                                                                                                            <Buttons className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                            <Button className="textBlackButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
                                                                                                                 await this.setAction(i, 0, true)
-                                                                                                            }}><b>Buy</b></Buttons></div>
+                                                                                                            }}><b>Buy</b></Button></div>
                                                                                                         <div>
-                                                                                                            <Buttons className="textTransparentButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
+                                                                                                            <Button className="textTransparentButton center mr-1" style={{ textDecoration: 'none' }} variant="link" size="sm" onClick={async () => {
                                                                                                                 await this.setAction(i, 1, true)
-                                                                                                            }}>Sell</Buttons></div>
+                                                                                                            }}>Sell</Button></div>
                                                                                                     </ButtonGroup>
                                                                                                 </div>
                                                                                                 <div className='float-right mr-1' style={{ paddingTop: '5px' }}>
@@ -625,7 +780,7 @@ class Airdrop extends Component {
                                                                                                         <div className='mr-2'><small>Limit Order</small></div>
                                                                                                         {this.state.limitOrder[i] == true ? <div style={{ cursor: 'not-allowed' }}><BsGearFill size={16} /></div> :
                                                                                                             <div style={{ cursor: 'pointer' }}>
-                                                                                                                <Popup trigger={open => (
+                                                                                                                {/* <Popup trigger={open => (
                                                                                                                     <div><BsGearFill size={16} /></div>
                                                                                                                 )}
                                                                                                                     on="click"
@@ -643,7 +798,7 @@ class Airdrop extends Component {
                                                                                                                                     key={idx}
                                                                                                                                     id={`radio-${idx}`}
                                                                                                                                     type="checkbox"
-                                                                                                                                    className="switch2 cell2 mr-2"
+                                                                                                                                    className="cell2 mr-2"
                                                                                                                                     variant={'outline-secondary'}
                                                                                                                                     name="radio"
                                                                                                                                     size="sm"
@@ -684,7 +839,78 @@ class Airdrop extends Component {
                                                                                                                         </div>
                                                                                                                     </div>
                                                                                                                     <div style={{ color: 'red', fontSize: '13px' }}>{this.state.messageSlippage}</div>
-                                                                                                                </Popup>
+                                                                                                                </Popup> */}
+
+                                                                                                                <Dropdown className="cell2" autoClose="outside" style={{ padding: "0px" }}>
+                                                                                                                    <Dropdown.Toggle className="cell2" style={{ padding: "0px", position: "relative", top: "-3px" }} variant="transparent">
+                                                                                                                        <div><BsGearFill size={16} /></div>
+                                                                                                                    </Dropdown.Toggle>
+                                                                                                                    <Dropdown.Menu className="cell2" style={{ padding: '10px', minWidth: '300px', backgroundColor: '#fffcf0' }}>
+                                                                                                                        <Dropdown.Item className="cell2" style={{ padding: '0px' }}>
+                                                                                                                            <div className="cell2">
+                                                                                                                                <div className="mb-2" style={{ fontSize: '18px', color: "black" }}>Slippage tolerance</div>
+                                                                                                                                <div className='rowC'>
+                                                                                                                                    {this.state.radioValue[i] == 1 ?
+                                                                                                                                        <div className='rowC'>
+                                                                                                                                            <Button className="textBlackButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px', border: "1px Solid Grey" }} variant="outline-secondary" size="sm" onClick={async () => {
+                                                                                                                                                await this.setSlipageButton(i, 0, 0.5)
+                                                                                                                                            }}><b>0.5%</b></Button>
+                                                                                                                                            <Button className="textTransparentButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                                await this.setSlipageButton(i, 0, 1)
+                                                                                                                                            }}><b>1.0%</b></Button>
+                                                                                                                                        </div> : <div>{
+                                                                                                                                            this.state.radioValue[i] == 0.5 ?
+                                                                                                                                                <div className='rowC'>
+                                                                                                                                                    <Button className="textTransparentButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px' }} variant="link" size="sm" onClick={async () => {
+                                                                                                                                                        await this.setSlipageButton(i, 0, 0.5)
+                                                                                                                                                    }}><b>0.5%</b></Button>
+                                                                                                                                                    <Button className="textBlackButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px', border: "1px Solid Grey" }} variant="outline-secondary" size="sm" onClick={async () => {
+                                                                                                                                                        this.setSlipageButton(i, 0, 1)
+                                                                                                                                                    }}><b>1.0%</b></Button>
+                                                                                                                                                </div>
+                                                                                                                                                : <div className='rowC'>
+                                                                                                                                                    <Button className="textBlackButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px', border: "1px Solid Grey" }} variant="outline-secondary" size="sm" onClick={async () => {
+                                                                                                                                                        await this.setSlipageButton(i, 0, 1)
+                                                                                                                                                    }}><b>0.5%</b></Button>
+                                                                                                                                                    <Button className="textBlackButton center cell2" style={{ textDecoration: 'none', marginRight: '5px', width: '50px', height: '30px', border: "1px Solid Grey" }} variant="outline-secondary" size="sm" onClick={async () => {
+                                                                                                                                                        await this.setSlipageButton(i, 0, 1)
+                                                                                                                                                    }}><b>1.0%</b></Button>
+                                                                                                                                                </div>
+                                                                                                                                        }</div>
+                                                                                                                                    }
+                                                                                                                                    <span>
+                                                                                                                                        <div className="input-group mb-2" >
+                                                                                                                                            <input
+                                                                                                                                                type="number"
+                                                                                                                                                id="input3Color"
+                                                                                                                                                step="any"
+                                                                                                                                                ref={(input) => { this.input = input }}
+                                                                                                                                                style={{ fontSize: '18px', backgroundColor: '#fffcf0', height: '30px' }}
+                                                                                                                                                className="form-control cell cardbody"
+                                                                                                                                                placeholder={`${this.state.radioValue[i]}`}
+                                                                                                                                                onKeyPress={(event) => {
+                                                                                                                                                    if (!/[0-9.]/.test(event.key)) {
+                                                                                                                                                        event.preventDefault();
+                                                                                                                                                    }
+                                                                                                                                                }}
+                                                                                                                                                onChange={(e) => {
+                                                                                                                                                    const value = e.target.value;
+                                                                                                                                                    this.setSlippage(i, 1, value);
+                                                                                                                                                }}
+                                                                                                                                                required />
+                                                                                                                                            <div className="input-group-append" >
+                                                                                                                                                <div className="input-group-text cardbody" style={{ padding: '0 0.3rem' }}>%
+                                                                                                                                                </div>
+                                                                                                                                            </div >
+                                                                                                                                        </div >
+                                                                                                                                    </span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                            <div style={{ color: 'red', fontSize: '13px' }}>{this.state.messageSlippage}</div>
+                                                                                                                        </Dropdown.Item>
+                                                                                                                    </Dropdown.Menu>
+                                                                                                                </Dropdown>
+
                                                                                                             </div>}
                                                                                                     </div>
                                                                                                 </div>

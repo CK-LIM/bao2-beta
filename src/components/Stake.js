@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import bigInt from 'big-integer'
 import Buttons from 'react-bootstrap/Button'
+import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './App.css';
 import Footer from './Footer'
@@ -97,8 +98,9 @@ class Stake extends Component {
     }
 
     render() {
+        const contentStyle = { background: '#fffae6', border: "1px solid #596169", width: "30%", borderRadius: "15px", minWidth: "320px" };
         return (
-            <div id="content" className="mt-4" style={{ margin: "0", color: '#ff9a04' }}>
+            <div id="content" style={{ margin: "0", color: '#ff9a04' }}>
                 <label className="textWhite center mb-3" style={{ fontSize: '40px', color: 'black' }}><big><b>BAVA Staking</b></big></label>
                 <div className="center mb-4" style={{ color: 'grey' }}>Deposit and stake your BAVA tokens to maximize your yield. No Impermanent Loss.</div>
                 <div className="ml-auto mr-auto card mb-3 cardbody" style={{ width: '1000px', height: '140px', color: 'black' }}>
@@ -179,10 +181,34 @@ class Stake extends Component {
                             <div className="card-body">
                                 <div className="center">
                                     {this.props.farmloading ?
-                                        <Buttons className="textDarkMedium" variant="outline" size="lg" onClick={async () => {
-                                            await this.props.connectMetamask()
-                                        }}>Connect to display</Buttons> :
-                                        <Buttons className="textDarkMedium1" variant="outline" size="lg" >Connect to display</Buttons>
+                                        <div>
+                                            <Popup trigger={open => (<Buttons className="textDarkMedium" variant="outline" size="lg" >Connect to display</Buttons>)} modal {...{ contentStyle }}>
+                                                {close => (
+                                                    <div>
+                                                        <Buttons className="close cell2" style={{ background: "#fffae6", borderRadius: "12px", padding: "2px 5px", fontSize: "18px" }} onClick={close}>
+                                                            &times;
+                                                        </Buttons>
+                                                        <div className="textWhiteMedium mb-2" style={{ borderBottom: "1px Solid Gray", padding: "10px" }}> Connect a Wallet </div>
+                                                        <div className="center mt-4 mb-2">
+                                                            <Buttons type="button" variant="secondary" style={{ height: "50px", width: "100%", minWidth: "150px", maxWidth: "300px", padding: "6px 25px" }} onClick={async () => {
+                                                                await this.props.connectMetamask()
+                                                            }}><img src="/images/metamask-fox.svg" width="23" height="23" className="float-right" alt="" /><span className="float-left">Metamask</span></Buttons>
+                                                        </div>
+                                                        <div className="center mt-2 mb-2">
+                                                            <Buttons type="button" variant="secondary" style={{ height: "50px", width: "100%", minWidth: "150px", maxWidth: "300px", padding: "6px 25px" }} onClick={async () => {
+                                                                await this.props.connectCoin98()
+                                                            }}><img src="/images/coin98.png" width="23" height="23" className="float-right" alt="" /><span className="float-left">Coin98</span></Buttons>
+                                                        </div>
+                                                        <div className="center mt-2 mb-4">
+                                                            <Buttons type="button" variant="secondary" style={{ height: "50px", width: "100%", minWidth: "150px", maxWidth: "300px", padding: "6px 25px" }} onClick={async () => {
+                                                                await this.props.mobileWalletConnect()
+                                                            }}><img src="/images/walletconnect-logo.svg" width="26" height="23" className="float-right" alt="" /><span className="float-left">WalletConnect</span></Buttons>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </Popup>
+                                        </div>
+                                        : <Buttons className="textDarkMedium1" variant="outline" size="lg" >Connect to display</Buttons>
                                     }
                                 </div>
                             </div>
@@ -283,7 +309,7 @@ class Stake extends Component {
                         </span>
                     </div> :
                     <div>
-                    </div>}<br/><br/><br/><Footer />                
+                    </div>}<br /><br /><br /><Footer />
             </div >
         );
     }

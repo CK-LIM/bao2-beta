@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Buttons from 'react-bootstrap/Button'
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import Popup from 'reactjs-popup';
@@ -32,7 +32,7 @@ class Kyber extends Component {
 
     render() {
         return (
-            <div id="content" className="mt-3" style={{ margin: "0", color: '#ff9a04' }}>
+            <div id="content" style={{color: '#ff9a04' }}>
                 <div >
                     <div className="ml-auto mr-auto card mb-3 cardbody" style={{ height: '170px', color: 'black' }}>
                         {this.props.wallet || this.props.walletConnect ?
@@ -122,10 +122,10 @@ class Kyber extends Component {
                         <div className="textMiddleBold1 float-right" style={{ marginRight: '5px' }}><big>TVL $ {parseFloat(this.props.totalTVL).toLocaleString('en-US', { maximumFractionDigits: 0 })}</big></div><br /><br />
                         <span className="float-left">
                             <ButtonGroup>
-                                {/* <Button variant="outlined" size="small" color="inherit" component={Link} to="/menu/v2">Pangolin</Button> */}
-                                <Button className="mr-1" variant="text" size="small" color="inherit" component={Link} to="/menu/v2">Pangolin</Button>
-                                <Button className="mr-1" variant="outlined" size="small" color="inherit" component={Link} to="/menu/v2/kyber">KyberSwap</Button>
-                                <Button variant="text" size="small" color="inherit" component={Link} to="/menu/v2/traderjoe">Trader Joe</Button>
+                                {/* <Button variant="outlined" size="small" color="inherit" as={Link} to="/menu/v2">Pangolin</Button> */}
+                                <Buttons className="mr-1" variant="text" size="small" color="inherit" as={Link} to="/menu/v2">Pangolin</Buttons>
+                                <Buttons className="mr-1" variant="outlined" size="small" color="inherit" as={Link} to="/menu/v2/kyber">KyberSwap</Buttons>
+                                <Buttons variant="text" size="small" color="inherit" as={Link} to="/menu/v2/traderjoe">Trader Joe</Buttons>
                             </ButtonGroup>
                         </span>
                     </div>

@@ -363,7 +363,7 @@ class App extends Component {
         synTokenAddresses[i] = syntokenAddress
         synPoolSegmentInfo[i] = poolInfo
         synOraclePrice[i] = await synPoolResponse1[i]
-        synPriceDecimal[i] =await synPoolResponse4[i]
+        synPriceDecimal[i] = await synPoolResponse4[i]
         synTotalSupply[i] = await synPoolResponse2[i]
       }
       synPoolPrice = await synPoolResponse3
@@ -627,7 +627,7 @@ class App extends Component {
         collRatio[i] = 1 / 0
       }
       totalPendingDebt += parseInt(await collateralResponse3[i])
-      
+
     }
 
     for (i = 0; i < this.state.synPoolLength; i++) {
@@ -830,7 +830,7 @@ class App extends Component {
   // collateral
   async loadCollateralDeposit(i) {
     let totalBRTDeposit = "0"
-    if(i == 0) {
+    if (i == 0) {
       return "0"
     } else {
       let brtAddress = (await this.state.collateralVault.methods.poolInfo(i).call()).collateralToken
@@ -846,7 +846,7 @@ class App extends Component {
   }
 
   async loadCollateralUserInfo1(i) {
-    if(i == 0) {
+    if (i == 0) {
       return "0"
     } else {
       let brtAddress = (await this.state.collateralVault.methods.poolInfo(i).call()).collateralToken
@@ -857,7 +857,7 @@ class App extends Component {
   }
 
   async loadCollateralUserInfo2(i) {
-    if(i == 0) {
+    if (i == 0) {
       return "0"
     } else {
       let brtAddress = (await this.state.collateralVault.methods.poolInfo(i).call()).collateralToken
@@ -868,7 +868,7 @@ class App extends Component {
   }
 
   async loadCollateralUserInfo3(i) {
-    if(i == 0) {
+    if (i == 0) {
       return "0"
     } else {
       let debtBalance = await this.state.collateralVault.methods.getAssetBalance(i, this.state.account).call()
@@ -877,7 +877,7 @@ class App extends Component {
   }
 
   async loadCollateralUserInfo4(i) {
-    if(i == 0) {
+    if (i == 0) {
       return "0"
     } else {
       let remainingMaxBorrowAmount = await this.state.collateralVault.methods.getMaxBorrowAmount(i, this.state.account, 0).call()
@@ -956,7 +956,7 @@ class App extends Component {
   }
 
   async loadCollateralBRTValue(i) {
-    if(i == 0) {
+    if (i == 0) {
       return "0"
     } else {
       let poolData = await this.state.collateralVault.methods.poolInfo(i).call()
@@ -1006,7 +1006,7 @@ class App extends Component {
       } else if (marginXPrice[n].pair == 'AAPL:USDT') {
         this.setState({ AAPLPrice: parseFloat(marginXPrice[n].markPrice) })
       } else if (marginXPrice[n].pair == 'FB:USDT') {
-        this.setState({ FBPrice: parseFloat(marginXPrice[n].markPrice)})
+        this.setState({ FBPrice: parseFloat(marginXPrice[n].markPrice) })
       } else if (marginXPrice[n].pair == 'GOOG:USDT') {
         this.setState({ GOOGPrice: parseFloat(marginXPrice[n].markPrice) })
       } else if (marginXPrice[n].pair == 'BTC:USDT') {
@@ -1300,11 +1300,18 @@ class App extends Component {
     // window.web3Ava = new Web3(`https://api.avax.network/ext/bc/C/rpc`);
     window.web3Ava = new Web3(`https://api.avax-test.network/ext/bc/C/rpc`);
     window.web3Eth = new Web3(`https://mainnet.infura.io/v3/${process.env.REACT_APP_infuraapiKey}`);
+    window.web3Fx =  new Web3(`https://fx-json-web3.functionx.io:8545`);
 
     let responseMongo = await fetch(`https://ap-southeast-1.aws.data.mongodb-api.com/app/bdl-uyejj/endpoint/tvl`);
     const myJsonMongo = await responseMongo.json();
     this.setState({ myJsonMongo })
 
+    // let gasPrice = await window.web3Fx.eth.getGasPrice();
+    // console.log(gasPrice)
+    // gasPrice = await window.web3Eth.eth.getGasPrice();
+    // console.log(gasPrice)
+    // gasPrice = await window.web3Ava.eth.getGasPrice();
+    // console.log(gasPrice)
 
     let tokenPrice = myJsonMongo["TokenPrice"]
     this.setState({ AVAXPrice: parseFloat(tokenPrice[0].avaxPrice).toFixed(5) })
@@ -2361,8 +2368,8 @@ class App extends Component {
       loadWeb3={this.loadWeb3}
       connectMetamask={this.connectMetamask}
       mobileWalletConnect={this.mobileWalletConnect}
-      WalletDisconnect={this.WalletDisconnect}
       connectCoin98={this.connectCoin98}
+      WalletDisconnect={this.WalletDisconnect}
       networkName={this.state.networkName}
       walletConnect={this.state.walletConnect}
     />
@@ -2400,6 +2407,8 @@ class App extends Component {
       approve={this.approve}
       setI={this.setI}
       connectMetamask={this.connectMetamask}
+      mobileWalletConnect={this.mobileWalletConnect}
+      connectCoin98={this.connectCoin98}
       lpSegmentAllowance={this.state.lpSegmentAllowance}
       bavaContract={this.state.bavaContract}
       bavaTokenTotalSupply={this.state.bavaTokenTotalSupply}
@@ -2455,6 +2464,8 @@ class App extends Component {
       approve={this.approve}
       setI={this.setI}
       connectMetamask={this.connectMetamask}
+      mobileWalletConnect={this.mobileWalletConnect}
+      connectCoin98={this.connectCoin98}
       lpSegmentAllowance={this.state.lpSegmentAllowance}
       bavaContract={this.state.bavaContract}
       bavaTokenTotalSupply={this.state.bavaTokenTotalSupply}
@@ -2500,6 +2511,8 @@ class App extends Component {
       approve={this.approve}
       setI={this.setI}
       connectMetamask={this.connectMetamask}
+      mobileWalletConnect={this.mobileWalletConnect}
+      connectCoin98={this.connectCoin98}
       lpSegmentAllowance={this.state.lpSegmentAllowance}
       bavaContract={this.state.bavaContract}
       bavaTokenTotalSupply={this.state.bavaTokenTotalSupply}
@@ -2544,6 +2557,8 @@ class App extends Component {
       approve={this.approve}
       setI={this.setI}
       connectMetamask={this.connectMetamask}
+      mobileWalletConnect={this.mobileWalletConnect}
+      connectCoin98={this.connectCoin98}
       lpSegmentAllowance={this.state.lpSegmentAllowance}
       bavaContract={this.state.bavaContract}
       bavaTokenTotalSupply={this.state.bavaTokenTotalSupply}
@@ -2588,6 +2603,8 @@ class App extends Component {
       approve={this.approve}
       setI={this.setI}
       connectMetamask={this.connectMetamask}
+      mobileWalletConnect={this.mobileWalletConnect}
+      connectCoin98={this.connectCoin98}
       lpSegmentAllowance={this.state.lpSegmentAllowance}
       bavaContract={this.state.bavaContract}
       bavaTokenTotalSupply={this.state.bavaTokenTotalSupply}
@@ -2631,6 +2648,8 @@ class App extends Component {
       claimAirdrop={this.claimAirdrop}
       checkAirdrop={this.checkAirdrop}
       timeConverter={this.timeConverter}
+      mobileWalletConnect={this.mobileWalletConnect}
+      connectCoin98={this.connectCoin98}
       checkClaimAmount={this.checkClaimAmount}
       claimDistributePurse={this.claimDistributePurse}
       account={this.state.account}
@@ -2664,6 +2683,8 @@ class App extends Component {
       bavaTokenAllowance={this.state.bavaTokenAllowance}
       farmloading={this.state.farmloading}
       connectMetamask={this.connectMetamask}
+      mobileWalletConnect={this.mobileWalletConnect}
+      connectCoin98={this.connectCoin98}
       approveStake={this.approveStake}
       stake={this.stake}
       unstake={this.unstake}
@@ -2674,6 +2695,8 @@ class App extends Component {
     />
     collateralContent = <Collateral
       connectMetamask={this.connectMetamask}
+      mobileWalletConnect={this.mobileWalletConnect}
+      connectCoin98={this.connectCoin98}
       collateralApprove={this.collateralApprove}
       depositAndBorrow={this.depositAndBorrow}
       repayUSB={this.repayUSB}
@@ -2722,6 +2745,9 @@ class App extends Component {
       systemCoinBalance={this.state.systemCoinBalance}
       synUserOrderInfo={this.state.synUserOrderInfo}
       synPriceDecimal={this.state.synPriceDecimal}
+      connectMetamask={this.connectMetamask}
+      mobileWalletConnect={this.mobileWalletConnect}
+      connectCoin98={this.connectCoin98}
       systemCoinSyntheticApprove={this.systemCoinSyntheticApprove}
       synOpenMarketOrder={this.synOpenMarketOrder}
       synOpenLimitOrder={this.synOpenLimitOrder}
@@ -2749,7 +2775,7 @@ class App extends Component {
             <Route path="/synthetic" exact > {navMenuContent} </Route>
             <Route path="/collateral" exact > {navMenuContent} </Route>
           </Switch>
-          <div className="container-fluid" style={{ marginTop: "80px" }}>
+          <div className="container-fluid" style={{ position: "relative", top: "100px", marginTop: "0px" }}>
             <main role="main" className="content ml-auto mr-auto" style={{ maxWidth: '1000px' }}>
               <Switch>
                 <Route path="/" exact > {mainContent} </Route>

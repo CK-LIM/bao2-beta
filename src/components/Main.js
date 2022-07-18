@@ -7,15 +7,15 @@ class Main extends Component {
 
   render() {
     return (
-      <div id="content" style={{ marginTop: "150px" }}>
+      <div id="content" style={{ marginTop: "0px" }}>
         <MediaQuery minWidth={771}>
           <div className="text-center" >
             <img src="/images/baklava.png" width="180" height="180" className="" alt="" />
           </div>
           <div className="center text" style={{ fontSize: "45px" }}>BAKLAVA SPACE</div>
           <div className="center textMiddleBold" style={{ fontSize: "25px" }}><b>Baklava stands for "layered, rich, and sweet". </b></div>
-          <div className="center textMiddle" style={{ fontSize: "18px"}}>Baklava Space is designed as a combination of automated yield farming</div>
-          <div className="center textMiddle" style={{ fontSize: "18px"}}>for your LP tokens and a synthetic creation mechainsm using LP tokens.</div>
+          <div className="center textMiddle" style={{ fontSize: "18px" }}>Baklava Space is designed as a combination of automated yield farming</div>
+          <div className="center textMiddle" style={{ fontSize: "18px" }}>for your LP tokens and a synthetic creation mechainsm using LP tokens.</div>
           <div className="center" style={{ marginTop: "25px" }} >
             <Link className="exLink0" style={{ marginRight: '35px' }} to={{ pathname: "https://traderjoexyz.com/#/home" }} target="_blank">
               <div className="center mb-2"><img src="/images/joe.png" width="50" height="50" align="right" alt="" /></div>
@@ -40,7 +40,7 @@ class Main extends Component {
             </div>
             <div className="center text" style={{ fontSize: "45px" }}>BAKLAVA SPACE</div>
             <div className="center textMiddleBold ml-3 mr-3" style={{ fontSize: "25px" }}><b>Baklava stands for "layered, rich, and sweet". </b></div>
-            <div className="center textMiddle ml-3 mr-3" style={{ fontSize: "18px"}}>Baklava Space is designed as a combination of automated yield farming for your LP tokens and a synthetic creation mechainsm using LP tokens.</div>
+            <div className="center textMiddle ml-3 mr-3" style={{ fontSize: "18px" }}>Baklava Space is designed as a combination of automated yield farming for your LP tokens and a synthetic creation mechainsm using LP tokens.</div>
             <div className="center" style={{ marginTop: "25px" }} >
               <Link className="exLink0" style={{ marginRight: '35px' }} to={{ pathname: "https://traderjoexyz.com/#/home" }} target="_blank">
                 <div className="center mb-2"><img src="/images/joe.png" width="45" height="45" align="right" alt="" /></div>
@@ -74,7 +74,7 @@ class Main extends Component {
               </div>
             </MediaQuery>
             <MediaQuery maxHeight={700}>
-              <div className="center" style={{ marginBottom: "30px" , marginTop: "80px"}}>
+              <div className="center" style={{ marginBottom: "30px", marginTop: "80px" }}>
                 <div className="rowC">
                   <Link className="exLink0" style={{ marginRight: '40px' }} to={{ pathname: "https://baklavaspace.gitbook.io/" }} target="_blank">
                     <div className="center mb-2"><img src="/images/docs.svg" width="20" height="20" align="right" alt="" /></div>
@@ -105,7 +105,7 @@ class Main extends Component {
             </div>
             <div className="center text" style={{ fontSize: "40px" }}>BAKLAVA SPACE</div>
             <div className="center textMiddleBold ml-3 mr-3" style={{ fontSize: "20px" }}><b>Baklava stands for "layered, rich, and sweet". </b></div>
-            <div className="center textMiddle ml-3 mr-3" style={{ fontSize: "16px"}}>Baklava Space is designed as a combination of automated yield farming for your LP tokens and a synthetic creation mechainsm using LP tokens.</div>
+            <div className="center textMiddle ml-3 mr-3" style={{ fontSize: "16px" }}>Baklava Space is designed as a combination of automated yield farming for your LP tokens and a synthetic creation mechainsm using LP tokens.</div>
             <div className="center" style={{ marginTop: "30px" }} >
               <img src="/images/joe.png" width="40" height="40" className="exLink0" style={{ marginRight: "35px" }} alt="" onClick={() => {
                 window.open(`https://traderjoexyz.com/#/home`, '_blank')

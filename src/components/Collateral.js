@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Buttons from 'react-bootstrap/Button'
-import Button from '@material-ui/core/Button';
 import bigInt from 'big-integer'
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import Popup from 'reactjs-popup';
@@ -146,8 +145,9 @@ class Collateral extends Component {
 
 
     render() {
+        const contentStyle = { background: '#fffae6', border: "1px solid #596169", width: "30%", borderRadius: "15px", minWidth: "320px" };
         return (
-            <div id="content" className="mt-5" style={{ margin: "0", color: '#ff9a04' }}>
+            <div id="content" style={{color: '#ff9a04' }}>
                 <div >
                     <div className="ml-auto mr-auto card mb-3 cardbody" style={{ height: '170px', color: 'black' }}>
                         {this.props.wallet || this.props.walletConnect ?
@@ -201,10 +201,34 @@ class Collateral extends Component {
                                 </span>
                                 <span className="center mb-1">
                                     {this.props.farmloading ?
-                                        <Buttons className="textDarkMedium" variant="outline" size="lg" onClick={async () => {
-                                            await this.props.connectMetamask()
-                                        }}>Connect to display</Buttons> :
-                                        <Buttons className="textDarkMedium1" variant="outline" size="lg" >Connect to display</Buttons>
+                                        <div>
+                                        <Popup trigger={open => (<Buttons className="textDarkMedium cell2" variant="outline" size="lg" >Connect to display</Buttons>)} modal {...{ contentStyle }}>
+                                            {close => (
+                                                <div>
+                                                    <Buttons className="close cell2" style={{ background: "#fffae6", borderRadius: "12px", padding: "2px 5px", fontSize: "18px" }} onClick={close}>
+                                                        &times;
+                                                    </Buttons>
+                                                    <div className="textWhiteMedium mb-2" style={{ borderBottom: "1px Solid Gray", padding: "10px" }}> Connect a Wallet </div>
+                                                    <div className="center mt-4 mb-2">
+                                                        <Buttons type="button" variant="secondary" style={{ height: "50px", width: "100%", minWidth: "150px", maxWidth: "300px", padding: "6px 25px" }} onClick={async () => {
+                                                            await this.props.connectMetamask()
+                                                        }}><img src="/images/metamask-fox.svg" width="23" height="23" className="float-right" alt="" /><span className="float-left">Metamask</span></Buttons>
+                                                    </div>
+                                                    <div className="center mt-2 mb-2">
+                                                        <Buttons type="button" variant="secondary" style={{ height: "50px", width: "100%", minWidth: "150px", maxWidth: "300px", padding: "6px 25px" }} onClick={async () => {
+                                                            await this.props.connectCoin98()
+                                                        }}><img src="/images/coin98.png" width="23" height="23" className="float-right" alt="" /><span className="float-left">Coin98</span></Buttons>
+                                                    </div>
+                                                    <div className="center mt-2 mb-4">
+                                                        <Buttons type="button" variant="secondary" style={{ height: "50px", width: "100%", minWidth: "150px", maxWidth: "300px", padding: "6px 25px" }} onClick={async () => {
+                                                            await this.props.mobileWalletConnect()
+                                                        }}><img src="/images/walletconnect-logo.svg" width="26" height="23" className="float-right" alt="" /><span className="float-left">WalletConnect</span></Buttons>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Popup>
+                                    </div> :
+                                        <Buttons className="textDarkMedium1 cell2" variant="outline" size="lg" >Connect to display</Buttons>
                                     }
                                 </span>
                                 <span>
@@ -237,7 +261,7 @@ class Collateral extends Component {
                         <div className="textMiddleBold1 float-right" style={{ marginRight: '5px' }}><big>TVL $ {parseFloat(this.props.collTotalTVL).toLocaleString('en-US', { maximumFractionDigits: 0 })}</big></div><br /><br />
                         <span className="float-left">
                             <ButtonGroup>
-                                <Button className="mr-1" variant="outlined" size="small" color="inherit" component={Link} to="/collateral/">Pangolin</Button>
+                                <Buttons className="mr-1" variant="outlined" size="small" color="inherit" as={Link} to="/collateral/">Pangolin</Buttons>
                             </ButtonGroup>
                         </span>
                     </div>
@@ -483,7 +507,7 @@ class Collateral extends Component {
                                                                                                 </span>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div className="card cardbody mr-3 mb-2" style={{ width: '300px' }}>
+                                                                                        <div className="card cardbody mr-3" style={{ marginBottom: '6px', width: '300px' }}>
                                                                                             <div className="card-body" style={{ padding: '0.5rem' }}>
                                                                                                 <span className="float-left" style={{ color: 'black' }}><small>Collateral to be locked </small></span><br />
                                                                                                 <span className="float-left" style={{ color: 'black', marginTop: '8px' }}><small>{this.props.accountLoading ?
